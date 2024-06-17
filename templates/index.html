@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Sports Scoreboard</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <style>
+        .sport-button {
+            padding: 15px;
+            margin: 5px;
+            font-size: 1rem;
+
+            background-color: var(--primary1);
+            color: var(--black);
+
+            border: none;
+            border-radius: 5px;
+
+            cursor: pointer;
+        }
+
+        .zone {
+            display: flex;
+            flex-direction: column;
+
+            max-width: 300px;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Sports Scoreboard</h1>
+
+    <div class="zone">
+        <button class="sport-button" onclick="location.href='/currentteamback';">Current Team Backend</button>
+        <button class="sport-button" onclick="location.href='/currentteamfront';">Current Team Frontend</button>
+    </div>
+</body>
+
+</html>

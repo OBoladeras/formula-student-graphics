@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Teams</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/style.css">
+    <style>
+        .headTitle {
+            position: sticky;
+            top: 0;
+            z-index: 999;
+
+            background-color: white;
+            width: 100%;
+            height: 10rem;
+        }
+
+        .headTitle button {
+            float: right;
+
+            margin-right: 2rem;
+            margin-top: 1rem;
+            padding: 0.5rem 1rem;
+
+            font-size: 1.5rem;
+            border: none;
+            border-radius: 0.5rem;
+            background-color: var(--fss);
+            cursor: pointer;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 2rem;
+        }
+
+        th,
+        td {
+            padding: 8px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #f2f2f2;
+        }
+
+        body {
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 50px;
+        }
+
+        input[type="radio"] {
+            zoom: 1.5;
+            cursor: pointer;
+        }
+
+        @media only screen and (max-width: 1000px) {
+            table {
+                font-size: 23px;
+            }
+
+            th,
+            td {
+                padding: 6px;
+            }
+
+            h1 {
+                font-size: 75px;
+            }
+
+            input,
+            select {
+                zoom: 2;
+            }
+
+            button {
+                zoom: 1.5;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="headTitle">
+        <h1>Scoreboard</h1>
+        <button type="submit" onclick="update()">Update</button>
+    </div>
+
+    <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for team name..">
+    <select id="columnSelect" onchange="searchTable()">
+        <option value="name">Number</option>
+        <option value="name">Name</option>
+        <option value="uni">Uni</option>
+        <option value="flag">flag</option>
+    </select>
+
+    <form>
+        <table>
+            <tr>
+                <th></th>
+                <th>Number</th>
+                <th>Name</th>
+                <th>Uni</th>
+                <th>flag</th>
+            </tr>
+
+            {% for team in teams %}
+            {% if team.selected == 'true' %}
+            <tr style="background-color: var(--fss);">
+                <td style="text-align: center;"><input type="radio" name="selectedTeam" checked></td>
+                {% else %}
+            <tr>
+                <td style="text-align: center;"><input type="radio" name="selectedTeam"></td>
+                {% endif %}
+                <td>{{ team.number }}</td>
+                <td>{{ team.name }}</td>
+                <td>{{ team.uni }}</td>
+                <td>{{ team.flag }}</td>
+            </tr>
+            {% endfor %}
+
+        </table>
+    </form>
+
+
+    <script>
+        function searchTable() {
+            var input = document.getElementById("searchInput");
+            var filter = input.value.toLowerCase();
+
+            var table = document.querySelector("table");
+            var rows = table.getElementsByTagName("tr");
+
+            for (var i = 0; i < rows.length; i++) {
+                index = document.getElementById("columnSelect").selectedIndex;
+                var nameColumn = rows[i].getElementsByTagName("td")[index + 1];
+
+                if (nameColumn) {
+                    var name = nameColumn.textContent || nameColumn.innerText;
+                    if (name.toLowerCase().indexOf(filter) > -1) {
+                        rows[i].style.display = "";
+                    } else {
+                        rows[i].style.display = "none";
+                    }
+                }
+            }
+        }
+
+        function update() {
+            var selectedTeam = document.querySelector('input[name="selectedTeam"]:checked');
+
+            var dataa = selectedTeam.parentElement.parentElement;
+
+            var number = dataa.children[1].innerText;
+            var name = dataa.children[2].innerText;
+            var uni = dataa.children[3].innerText;
+            var flag = dataa.children[4].innerText;
+
+            fetch('/api/currentteam', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    number: number,
+                    name: name,
+                    uni: uni,
+                    flag: flag
+                })
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.message == 'success') {
+                        window.location.reload();
+                    } else {
+                        alert(data.message);
+                    }
+                })
+                .catch(error => {
+                    alert('Error: ' + error);
+                });
+        }
+    </script>
+</body>
+
+</html>
