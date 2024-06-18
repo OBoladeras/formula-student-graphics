@@ -5,8 +5,6 @@ body {
     height: 100vh;
 
     overflow: hidden;
-
-    background-color: darkmagenta;
 }
 
 
@@ -22,7 +20,7 @@ body {
 .flag {
     width: 30px;
     height: 25px;
-    background-image: url('static/flags/spain.png');
+    background-image: url("static/flags/spain.png");
     background-size: cover;
 }
 

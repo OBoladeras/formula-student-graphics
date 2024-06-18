@@ -6,7 +6,12 @@ function update() {
                 document.querySelector('.number').innerText = data.number;
                 document.querySelector('.teamname').innerText = data.name;
                 document.querySelector('.uni').innerText = data.uni;
-                document.querySelector('.flag').style.backgroundImage = `url('static/flags/${data.flag}.png')`;
+
+                if (data.flag == 'none') {
+                    document.querySelector('.flag').style.display = 'none';
+                } else if (document.querySelector('.flag').style.backgroundImage != `url("static/flags/${data.flag}.png")`) {
+                    document.querySelector('.flag').style.backgroundImage = `url("static/flags/${data.flag}.png")`;
+                }
             });
         update();
 
