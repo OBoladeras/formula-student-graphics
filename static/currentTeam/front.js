@@ -9,8 +9,8 @@ function update() {
 
                 if (data.flag == 'none') {
                     document.querySelector('.flag').style.display = 'none';
-                } else if (document.querySelector('.flag').style.backgroundImage != `url("static/flags/${data.flag}.png")`) {
-                    document.querySelector('.flag').style.backgroundImage = `url("static/flags/${data.flag}.png")`;
+                } else if (document.querySelector('.flag').style.backgroundImage != `url("/static/flags/${data.flag}.png")`) {
+                    document.querySelector('.flag').style.backgroundImage = `url("/static/flags/${data.flag}.png")`;
                 }
             });
         update();

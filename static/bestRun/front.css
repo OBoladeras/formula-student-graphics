@@ -1,0 +1,36 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+
+    overflow: hidden;
+
+    background-color: blueviolet;
+}
+
+h2 {
+    margin-bottom: 0.5rem;
+
+    margin-top: 1rem;
+}
+
+h3 {
+    margin: 0.5rem 0;
+}
+
+.group {
+    width: 250px;
+    height: 100px;
+    padding: 2rem;
+    margin: 2rem;
+    border-radius: var(--radius);
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+
+    background-color: white;
+}
