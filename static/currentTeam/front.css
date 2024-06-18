@@ -1,12 +1,8 @@
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
     height: 100vh;
-
-    overflow: hidden;
 }
-
 
 .contrainer {
     display: flex;
@@ -42,7 +38,6 @@ body {
 .teamname,
 .uni {
     background-color: var(--fss);
-    max-width: 220px;
     height: 30px;
 
     padding: 0 0.5rem;
@@ -57,4 +52,44 @@ body {
 
 .uni {
     border-radius: 0 0 var(--radius) 0;
+}
+
+#car {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    animation: none;
+    transform: translateX(-100%);
+
+    transition: transform 4s linear;
+}
+
+#pushedDiv {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+
+    transition: transform 4s linear;
+}
+
+
+
+@keyframes drive {
+    0% {
+        left: -800px;
+    }
+
+    100% {
+        left: 100%;
+    }
+}
+
+@keyframes push {
+    0% {
+        left: 50%
+    }
+
+    100% {
+        left: 100%;
+    }
 }

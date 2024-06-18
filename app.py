@@ -24,30 +24,30 @@ def index():
 @app.route("/currentteamback")
 def currentteamback():
     teams = []
-    with open("teams.csv", "r") as f:
+    with open("teams.csv", "r", encoding="utf-8") as f:
         reader = csv.reader(f)
 
         for row in reader:
             data = {}
-            data["number"] = row[0]
+            data["number"] = row[6]
             data["name"] = row[1]
             data["uni"] = row[2]
             data["flag"] = row[3]
 
             teams.append(data)
 
-        with open("data.json", "r") as f:
-            savedData = json.load(f)
-            try:
-                currentTeam = savedData["currentTeam"]
-            except:
-                currentTeam = {"number": "", "name": "",
-                               "uni": "", "flag": ""}
+    with open("data.json", "r") as f:
+        savedData = json.load(f)
+        try:
+            currentTeam = savedData["currentTeam"]
+        except:
+            currentTeam = {"number": "", "name": "",
+                           "uni": "", "flag": ""}
 
-        for i in range(1, len(teams)):
-            if teams[i]["number"] == currentTeam["number"]:
-                teams[i]['selected'] = 'true'
-                break
+    for i in range(1, len(teams)):
+        if teams[i]["number"] == currentTeam["number"]:
+            teams[i]['selected'] = 'true'
+            break
 
     return render_template("currentteamback.html", teams=teams[1:])
 

@@ -1,45 +1,59 @@
-number,name,uni,nationality
-32,prueba,UPC Barcelona,spain
-21,prueba2,UAB,spain
-34,prueba3,UPC Barcelona,spain
-35,prueba4,UPC Barcelona,spain
-36,prueba5,UPC Barcelona,spain
-37,prueba6,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
-38,prueba7,UPC Barcelona,spain
+Unnamed: 0,1.- Team Name,2.- Team University,3.- Team Country,4.- Type of Vehicle,5.- Class,6.- Car Number
+1,Infinity Racing,University of applied sciences kempten,Germany,Electric,Driver,52
+2,MAD Formula Team,Universidad Carlos III de Madrid,Spain,Combustion,Driver,373
+3,FST Lisboa,University of Lisbon,Portugal,Electric,Both,450
+4,Bremergy,Universität Bremen,Germany,Electric,Driver,72
+5,Scuderia Mensa HS RheinMain Racing,UAS RheinMain,Germany,Electric,Driver,65
+6,ISC FS Racing Team,Universidad Pontifica Comillas,Spain,Electric,Driver,133
+7,Formula Student Bizkaia,University of the Basque Country (UPV/EHU),Spain,Electric,Driver,48
+8,Málaga Racing Team,Universidad de Málaga,Spain,Electric,Driver,64
+9,UniBo Motorsport Electric,Alma Mater Studiorum - Università di Bologna,Italy,Electric,Driver,88
+10,Tecnun eRacing,Universidad de Navarra,Spain,Electric,Driver,14
+11,ESTACA Formula Team ,ESTACA,France,Combustion,Driver,378
+12,ULL Dynamics,Universidad de La Laguna,Spain,Electric,Driver,83
+13,e-Tech Racing,EEBE UPC Barcelona,Spain,Electric,Driver,79
+14,HorsePower Hannover,Leibniz Uni Hannover,Germany,Electric,Both,24
+15,BCN eMotorsport,UPC Barcelona,Spain,Electric,Both,454
+16,MMR Driverless,Università degli studi di Modena e Reggio Emilia,Italy,Combustion,Driverless,599
+17,FSUPV Team,Universitat Politècnica de València,Spain,Hybrid,Driver,395
+18,UPM Racing,Universidad Politécnica de Madrid,Spain,Electric,Driver,17
+19,UJI Motorsport,Universitat Jaume I,Spain,Combustion,Driver,214
+20,ENI METZ RACING TEAM,Ecole nationale d'ingénieurs de metz,France,Electric,Driver,57
+21,ISAT Formula Team,ISAT,France,Electric,Driver,58
+22,Formula Gades,University of Cadiz,Spain,Combustion,Driver,212
+23,UBRacing,University of Birmingham,United Kingdom,Electric,Driver,27
+24,eMotion Racing,UAS Ruhr West,Germany,Electric,Driver,119
+25,ARUS Andalucía Racing Team,University of Seville,Spain,Electric,Both,92
+26,Uniovi eTech Racing,University of Oviedo,Spain,Electric,Driver,28
+27,ISEL Formula Student,Instituto Superior de Engenharia de Lisboa,Portugal,Electric,Driver,4
+28,formula technion,"Technion, Israel Institute of Technology",israel,Electric,Driver,37
+29,Ü Motorsport,Universidad Rey Juan Carlos,Spain,Combustion,Driver,296
+30,LA eRacing e.V. ,UAS Landshut,Germany,Electric,Driver,97
+31,UFV Racing,Universidad Francisco de Vitoria,Spain,Combustion,Driver,269
+32,BlueStreamline,Transilvania University of Brasov,Romania,Combustion,Driver,111
+33,UPC ecoRacing,UPC Terrassa,Spain,Electric,Both,15
+34,INSA Racing Team,INSA Lyon,France,Combustion,Driver,369
+35,EUSS Motorsport,Escola Universitaria Salesiana de Sarrià,Spain,Electric,Driver,22
+36,Blue Flash Mobility Concepts,HAWK Hochschule für angewandte Wissenschaft und Kunst,Germany,Electric,Both,416
+37,Scuderia Tor Vergata,Università degli Studi di Roma Tor Vergata,Italy,Combustion,Driver,227
+38,Fast Charge,Sapienza Università di Roma,Italy,Electric,Driver,123
+39,UVigo Motorsport,University of Vigo,Spain,Combustion,Driver,314
+40,UCO Autosport,Universidad de Córdoba,Spain,Combustion,Driver,228
+41,TecnoCampus MotorSports,TecnoCampus Mataró-Maresme,Spain,Electric,Driver,73
+42,Bimasakti Racing Team,Universitas Gadjah Mada,Indonesia,Combustion,Driver,245
+43,Formula Student Vitoria,University of the Basque Country UPV/EHU (Campus of Araba),Spain,Electric,Driver,74
+44,Full Blue Racing,University of Cambridge,United Kingdom,Combustion,Driver,375
+45,Nova Racing Team,EPSEVG - Universitat Politècnica de Catalunya  ,Spain,Combustion,Driver,288
+46,FUEM,Universidad Europea de Madrid,Spain,Combustion,Driver,383
+47,Marseille Racing,Aix Marseille Université,France,Combustion,Driver,313
+48,VallRacing Team,Universidad de Valladolid,Spain,Combustion,Driver,333
+49,FESPE PZRacing Team,Universidad de las Fuerzas Armadas ESPE,Ecuador,Hybrid,Driver,177
+50,S.U.Racing Team,Satbayev University,Kazakhstan,Electric,Driver,7
+51,ENSTA Bretagne Racing Team,ENSTA Bretagne,France,Combustion,Driver,292
+52,Dynamics UPC Manresa,UPC Manresa - EPSEM,Spain,Combustion,Driver,225
+53,Formula USAL,Universidad de Salamanca ,Spain,Electric,Driver,18
+54,Delta Racing,UAS Mannheim,Germany,Electric,Driver,68
+55,Team HARE,University of Huddersfield,United Kingdom,Electric,Driver,69
+56,DHBW Engineering Stuttgart e.V.,DHBW Stuttgart,Germany,Electric,Both,477
+57,Unipr Racing Team,Università degli studi di Parma,Italy,Electric,Driverless,488
+58,PHISEC RACING,Polytechnic University of Coimbra,Portugal,Electric,Driver,65
