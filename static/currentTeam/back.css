@@ -26,7 +26,7 @@ h1 {
 
     font-size: 1.5rem;
     border: none;
-    border-radius: 0.5rem;
+    border-radius: var(--radius);
     background-color: var(--fss);
     cursor: pointer;
 }

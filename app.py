@@ -18,6 +18,9 @@ def index():
     return render_template("index.html")
 
 
+# -----------------------------
+#  Teams
+# -----------------------------
 @app.route("/currentteamback")
 def currentteamback():
     teams = []
@@ -63,6 +66,15 @@ def currentteamfront():
 
 
 # -----------------------------
+#  Best Run
+# -----------------------------
+@app.route("/bestrun")
+def bestrunback():
+    return render_template("bestrun.html")
+
+
+
+# -----------------------------
 #  F1
 # -----------------------------
 @app.route("/sport/f1/<id>")
@@ -101,27 +113,6 @@ def currentteam_api():
             json.dump(savedData, f)
 
         return jsonify({"message": "success"})
-
-
-@app.route("/api/<sport>/<id>", methods=["GET", "POST"])
-def get(sport, id):
-    # createBaseData(id, sport)
-
-    if request.method == "GET":
-        with open("data.json", "r") as f:
-            jsonData = json.load(f)
-            return jsonify(jsonData[sport][id])
-    elif request.method == "POST":
-        data = request.get_json()
-
-        with open("data.json", "r") as f:
-            jsonData = json.load(f)
-            jsonData[sport][id] = data
-
-        with open("data.json", "w") as f:
-            json.dump(jsonData, f)
-
-        return jsonify(data)
 
 
 if __name__ == "__main__":

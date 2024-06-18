@@ -29,7 +29,7 @@ body {
 
     width: 120px;
     height: 80px;
-    border-radius: 0 0.5rem 0 0.5rem;
+    border-radius: 0 var(--radius) 0 var(--radius);
 
     font-size: 3rem;
 
@@ -52,9 +52,9 @@ body {
 }
 
 .teamname {
-    border-radius: 0 0.5rem 0 0;
+    border-radius: 0 var(--radius) 0 0;
 }
 
 .uni {
-    border-radius: 0 0 0.5rem 0;
+    border-radius: 0 0 var(--radius) 0;
 }
