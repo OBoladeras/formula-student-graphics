@@ -5,70 +5,7 @@
     <title>currentteamfront</title>
 
     <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <style>
-        body {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-
-            overflow: hidden;
-
-            background-color: darkmagenta;
-        }
-
-
-        .contrainer {
-            display: flex;
-            align-items: flex-end;
-        }
-
-        .group {
-            zoom: 1.5;
-        }
-
-        .flag {
-            width: 30px;
-            height: 25px;
-            background-image: url('static/flags/spain.png');
-            background-size: cover;
-        }
-
-        .number {
-            background-color: white;
-
-            width: 120px;
-            height: 80px;
-            border-radius: 0 0.5rem 0 0.5rem;
-
-            font-size: 3rem;
-
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-
-        .teamname,
-        .uni {
-            background-color: var(--fss);
-            max-width: 220px;
-            height: 30px;
-
-            padding: 0 0.5rem;
-
-            display: flex;
-            align-items: center;
-        }
-
-        .teamname {
-            border-radius: 0 0.5rem 0 0;
-        }
-
-        .uni {
-            border-radius: 0 0 0.5rem 0;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/static/currentTeam/front.css">
 </head>
 
 <body>
@@ -82,25 +19,6 @@
             </div>
         </div>
     </div>
-
-    <script>
-        function update() {
-            setTimeout(() => {
-                fetch('/api/currentteam')
-                    .then(response => response.json())
-                    .then(data => {
-                        document.querySelector('.number').innerText = data.number;
-                        document.querySelector('.teamname').innerText = data.name;
-                        document.querySelector('.uni').innerText = data.uni;
-                        document.querySelector('.flag').style.backgroundImage = `url('static/flags/${data.flag}.png')`;
-                    });
-                update();
-
-            }, 5000);
-        }
-
-        update();
-    </script>
 </body>
 
 </html>
