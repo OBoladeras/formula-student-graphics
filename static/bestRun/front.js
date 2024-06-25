@@ -18,5 +18,5 @@ function newBestRun(type, time, name, diference) {
 
 
 setTimeout(function () {
-    // newBestRun('electric', '10:32:123', 'Jhon Doe', '-0.123');
+    newBestRun('electric', '10:32:123', 'Jhon Doe', '-0.123');
 }, 10000);

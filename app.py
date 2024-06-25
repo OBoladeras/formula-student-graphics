@@ -6,6 +6,7 @@ from flask import Flask, render_template, jsonify, send_file, request
 
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(16)
+key = "losmnHjnsytTgsbaH6hs8K9o"
 
 
 @app.route("/favicon.ico")
@@ -41,12 +42,11 @@ def currentteamback():
         try:
             currentTeam = savedData["currentTeam"]
         except:
-            currentTeam = {"number": "", "name": "",
-                           "uni": "", "flag": ""}
+            currentTeam = {"number": "", "name": "", "uni": "", "flag": ""}
 
     for i in range(1, len(teams)):
         if teams[i]["number"] == currentTeam["number"]:
-            teams[i]['selected'] = 'true'
+            teams[i]["selected"] = "true"
             break
 
     return render_template("currentteamback.html", teams=teams[1:])
@@ -59,8 +59,7 @@ def currentteamfront():
         try:
             currentTeam = savedData["currentTeam"]
         except:
-            currentTeam = {"number": "", "name": "",
-                           "uni": "", "flag": ""}
+            currentTeam = {"number": "", "name": "", "uni": "", "flag": ""}
 
     return render_template("currentteamfront.html", team=currentTeam)
 
@@ -114,5 +113,24 @@ def currentteam_api():
         return jsonify({"message": "success"})
 
 
+@app.route(f"/{key}/api", methods=["GET", "POST"])
+def api():
+    if request.method == "GET":
+        try:
+            with open("data2.json", "r") as f:
+                savedData = json.load(f)
+        except:
+            savedData = {}
+
+        return jsonify(savedData)
+    elif request.method == "POST":
+        data = request.json
+
+        with open("data2.json", "w") as f:
+            json.dump(data, f)
+
+        return jsonify({"message": "success"})
+
+
 if __name__ == "__main__":
-    app.run(host='0.0.0.0', port='8080', debug=True)
+    app.run(host="0.0.0.0", port="8080", debug=True)
