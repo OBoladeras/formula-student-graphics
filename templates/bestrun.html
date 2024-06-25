@@ -2,37 +2,103 @@
 <html>
 
 <head>
-    <title>Best Run - Front</title>
+    <title>My Web Page</title>
 
     <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <link rel="stylesheet" type="text/css" href="/static/bestRun/front.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
 
-    <script src="/static/bestRun/front.js"></script>
+            align-items: end;
+        }
+
+        .run {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+
+            height: 3rem;
+            width: 25rem;
+            border-radius: 5px;
+
+            background-color: #fff;
+        }
+
+        .icon,
+        .number,
+        .time {
+            width: 5rem;
+            height: 100%;
+
+            display: flex;
+            justify-content: center;
+            align-items: center;
+
+            color: #333;
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .icon img {
+            height: 2rem;
+        }
+
+
+        .number {
+            width: 10rem;
+            font-size: 1.5rem;
+        }
+
+        .time {
+            width: 15rem;
+        }
+
+        .name {
+            font-size: 0.8rem;
+            font-weight: normal;
+        }
+
+        .centered {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
 </head>
 
 <body>
 
-    <div class="centered" id="electric">
-        <p>New Best</p>
-        <div class="group">
-            <h3>BEST RUN ELECTRIC</h3>
-            <div>
-                <h2>1:35:356</h2>
-                <div class="name">UPC de barcelona</div>
-            </div>
+    <div class="run">
+        <div class="icon"><img src="/static/icons/gasoline.png" alt=""></div>
+        <div class="centered">
+            <div class="number">128</div>
+            <div class="name">UPC de barcelona</div>
         </div>
+        <div class="time">10:33:153</div>
     </div>
 
-    <div class="centered" id="combustion">
-        <p>New Best</p>
-        <div class="group">
-            <h3>BEST RUN COMBUSTION</h3>
-            <div>
-                <h2>1:33:567</h2>
-                <div class="name">Otra Uni</div>
-            </div>
+    <br>
+    <div class="run">
+        <div class="icon"><img src="/static/icons/gasoline.png" alt=""></div>
+        <div class="centered">
+            <div class="number">128</div>
+            <div class="name">UPC de barcelona</div>
         </div>
+        <div class="time">10:33:153</div>
     </div>
+
+    <br>
+    <div class="run">
+        <div class="icon"><img src="/static/icons/gasoline.png" alt=""></div>
+        <div class="centered">
+            <div class="number">128</div>
+            <div class="name">UPC de barcelona</div>
+        </div>
+        <div class="time">10:33:153</div>
+    </div>
+
 </body>
 
 </html>

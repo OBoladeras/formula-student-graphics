@@ -48,6 +48,10 @@ th {
     background-color: #f2f2f2;
 }
 
+tr:hover {
+    background-color: #f2f2f2;
+}
+
 input[type="radio"] {
     zoom: 1.5;
     cursor: pointer;

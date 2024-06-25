@@ -1,3 +1,4 @@
+import os
 import csv
 import json
 import secrets
@@ -14,7 +15,7 @@ def favicon():
     return send_file("static/favicon.ico", mimetype="image/x-icon")
 
 
-@app.route("/")
+@app.route("/losmnHjnsytTgsbaH6hs8K9o")
 def index():
     return render_template("index.html")
 
@@ -22,7 +23,7 @@ def index():
 # -----------------------------
 #  Teams
 # -----------------------------
-@app.route("/currentteamback")
+@app.route(f"/{key}/currentteamback")
 def currentteamback():
     teams = []
     with open("teams.csv", "r", encoding="utf-8") as f:
@@ -36,6 +37,12 @@ def currentteamback():
             data["flag"] = row[3]
 
             teams.append(data)
+
+    if not os.path.exists("data.json"):
+        with open("data.json", "w") as f:
+            json.dump(
+                {"currentTeam": {"number": "", "name": "", "uni": "", "flag": ""}}, f
+            )
 
     with open("data.json", "r") as f:
         savedData = json.load(f)
@@ -52,8 +59,14 @@ def currentteamback():
     return render_template("currentteamback.html", teams=teams[1:])
 
 
-@app.route("/currentteamfront")
+@app.route(f"/{key}/currentteamfront")
 def currentteamfront():
+    if not os.path.exists("data.json"):
+        with open("data.json", "w") as f:
+            json.dump(
+                {"currentTeam": {"number": "", "name": "", "uni": "", "flag": ""}}, f
+            )
+
     with open("data.json", "r") as f:
         savedData = json.load(f)
         try:
@@ -67,7 +80,7 @@ def currentteamfront():
 # -----------------------------
 #  Best Run
 # -----------------------------
-@app.route("/bestrun")
+@app.route(f"/{key}/bestrun")
 def bestrunback():
     return render_template("bestrun.html")
 
@@ -75,12 +88,12 @@ def bestrunback():
 # -----------------------------
 #  F1
 # -----------------------------
-@app.route("/sport/f1/<id>")
+@app.route(f"/{key}/sport/f1/<id>")
 def f1(id):
     return render_template(f"f1/backend.html")
 
 
-@app.route("/sport/f1/<id>/show")
+@app.route(f"/{key}/sport/f1/<id>/show")
 def f1_frontend(id):
     return render_template(f"f1/frontend.html")
 
@@ -89,7 +102,7 @@ def f1_frontend(id):
 # -----------------------------
 #   API
 # -----------------------------
-@app.route("/api/currentteam", methods=["GET", "POST"])
+@app.route(f"/{key}/api/currentteam", methods=["GET", "POST"])
 def currentteam_api():
     if request.method == "GET":
         with open("data.json", "r") as f:
