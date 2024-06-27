@@ -126,11 +126,11 @@ def currentteam_api():
         return jsonify({"message": "success"})
 
 
-@app.route(f"/{key}/api", methods=["GET", "POST"])
-def api():
+@app.route(f"/{key}/api/<prova>", methods=["GET", "POST"])
+def api(prova):
     if request.method == "GET":
         try:
-            with open("data2.json", "r") as f:
+            with open(f"{prova}.json", "r") as f:
                 savedData = json.load(f)
         except:
             savedData = {}
@@ -139,7 +139,7 @@ def api():
     elif request.method == "POST":
         data = request.json
 
-        with open("data2.json", "w") as f:
+        with open(f"{prova}.json", "w") as f:
             json.dump(data, f)
 
         return jsonify({"message": "success"})
