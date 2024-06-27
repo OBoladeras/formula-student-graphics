@@ -15,7 +15,7 @@ def favicon():
     return send_file("static/favicon.ico", mimetype="image/x-icon")
 
 
-@app.route("/losmnHjnsytTgsbaH6hs8K9o")
+@app.route(f"/{key}")
 def index():
     return render_template("index.html")
 
