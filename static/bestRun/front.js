@@ -1,22 +1,31 @@
+function newBest(type, data) {
+    item = document.getElementById(type);
 
-function newBestRun(type, time, name, diference) {
-    var card = document.getElementById(type);
+    item.children[0].style.width = '3.5rem';
 
-    var message = card.querySelector('p');
-    var timeElement = card.querySelector('h2');
-    var nameElement = card.querySelector('.name');
+    dataBlock = item.getElementsByClassName('run')[0];
 
-    message.style.color = "var(--fss)"
-    nameElement.innerHTML = name;
-    timeElement.innerHTML = time + `<span> ▼ ${diference}</span>`;
+    dataBlock.getElementsByClassName('time')[0].innerHTML = data.time;
+    dataBlock.getElementsByClassName('number')[0].innerHTML = data.number;
+    dataBlock.getElementsByClassName('uni')[0].innerHTML = data.uni;
+    dataBlock.getElementsByClassName('name')[0].innerHTML = data.teamname;
+
+    dataBlock.getElementsByClassName('time')[0].style.color = 'var(--best-time)';
 
     setTimeout(function () {
-        message.style.color = "transparent"
-        timeElement.innerHTML = time;
-    }, 10000);
+        item.children[0].style.width = '0px';
+        dataBlock.getElementsByClassName('time')[0].style.color = '#fff';
+    }, 5000);
 }
 
 
+data = {
+    'time': '10:33.000',
+    'number': '52',
+    'uni': 'New Name Example',
+    'teamname': 'New Team Example'
+};
+
 setTimeout(function () {
-    newBestRun('electric', '10:32:123', 'Jhon Doe', '-0.123');
-}, 10000);
+    newBest('hybrid', data);
+}, 5000);

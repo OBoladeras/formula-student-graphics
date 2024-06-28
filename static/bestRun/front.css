@@ -23,6 +23,25 @@ body {
     background-color: #313131;
 }
 
+.item {
+    display: flex;
+    align-items: center;
+    background-color: var(--best-time);
+
+    border-radius: 7.5px 0 0 7.5px;
+}
+
+.time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--time);
+
+    transition: width 1s ease;
+    overflow: hidden;
+    white-space: nowrap;
+}
 
 .icon {
     height: 100%;
