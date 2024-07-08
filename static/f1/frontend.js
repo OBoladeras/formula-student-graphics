@@ -29,7 +29,7 @@ function createDriver(driver) {
 function getDrivers() {
     grid = document.getElementById('grid');
 
-    fetch('/api/f1/' + id, {
+    fetch('/losmnHjnsytTgsbaH6hs8K9o/api/f1', {
         method: 'GET',
         headers: {
             'Content-Type': 'application/json',
@@ -70,8 +70,8 @@ function updateTimer(targetTime) {
 }
 
 
-
-fetch('/api/f1/' + id, {
+/*
+fetch('/losmnHjnsytTgsbaH6hs8K9o/api/f1', {
     method: 'GET',
     headers: {
         'Content-Type': 'application/json',
@@ -93,6 +93,6 @@ fetch('/api/f1/' + id, {
         updateTimer(targetTime);
     })
 
-
+*/
 
 getDrivers();

@@ -88,13 +88,8 @@ def bestrunback():
 # -----------------------------
 #  F1
 # -----------------------------
-@app.route(f"/{key}/sport/f1/<id>")
-def f1(id):
-    return render_template(f"f1/backend.html")
-
-
-@app.route(f"/{key}/sport/f1/<id>/show")
-def f1_frontend(id):
+@app.route(f"/{key}/f1")
+def f1():
     return render_template(f"f1/frontend.html")
 
 
@@ -143,6 +138,18 @@ def api(prova):
             json.dump(data, f)
 
         return jsonify({"message": "success"})
+
+    return jsonify({"message": "error"})
+
+
+@app.route(f"/{key}/api/f1", methods=["GET"])
+def f1_api():
+    with open("f1.json", "r") as f:
+        savedData = json.load(f)
+
+    return jsonify(savedData)
+
+
 
 
 if __name__ == "__main__":

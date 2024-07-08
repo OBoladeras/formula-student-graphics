@@ -12,17 +12,39 @@
 <body>
     <div class="mainDiv">
         <div>
-            <img src="https://www.formulastudent.es/wp-content/uploads/2020/02/cropped-FSS-blanco-rojo-2.png" alt="">
+            <img src="https://www.formulastudent.es/wp-content/uploads/2020/02/cropped-FSS-blanco-rojo-2.png"
+                alt="FSS-logo">
         </div>
 
         <div class="timeDiv">
             <span id="timer"></span>
         </div>
 
-        <div id="grid"></div>
+        <div id="grid">
+            <div class="driver">
+                <div class="state">DNF</div>
+                <div class="info">
+                    <div class="base">
+                        <p>Infinity Racing</p>
+                        <div class="times">
+                            <p>108.32</p>
+                            <p>120.15</p>
+                            <p>90.66</p>
+                        </div>
+                    </div>
+                    <div class="number">33</div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <script src="/static/f1/frontend.js"></script>
+
+    <script>
+        setTimeout(() => {
+            window.location.reload();
+        }, 5000);
+    </script>
 </body>
 
 </html>

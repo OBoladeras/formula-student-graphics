@@ -39,47 +39,53 @@ img {
     padding: 0.5rem;
 }
 
-.driver {
+
+
+
+.driver .state {
+    background-color: red;
+    width: 1rem;
+    border-radius: 7px 7px 0 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.driver .info div {
+    padding: 0;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+
+    color: white;
+    background-color: #232323;
+}
+
+.info .base {
+    width: 65%;
+}
+
+.info .number {
+    width: 25%;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.info p {
+    margin: 0;
+}
+
+.info .times {
     display: flex;
     justify-content: space-between;
     align-items: center;
-
-    padding: 0.5rem 0.5rem;
-    color: white;
 }
 
-.driver h2,
-.driver h3,
-.driver img {
-    padding-top: 0;
-    padding-bottom: 0;
-    margin-top: 0;
-    margin-bottom: 0;
-
-    text-align: left;
-}
-
-.driver .position {
-    color: #ffffff80;
-    width: 15%;
-}
-
-.driver img {
-    width: 15%;
-    text-align: center;
-    align-self: center;
-}
-
-.driver h3 {
-    width: 40%;
-    text-align: right;
-}
-
-.driver .name {
-    padding-left: 10%;
-}
-
-.driver .name,
-.driver .time {
-    width: 35%;
+.info p {
+    font-size: 13px;
 }
