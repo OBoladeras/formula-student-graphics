@@ -68,6 +68,10 @@ img {
 
 .info .base {
     width: 65%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .info .number {

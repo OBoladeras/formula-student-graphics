@@ -3,7 +3,8 @@ import csv
 import json
 import secrets
 from flask import Flask, render_template, jsonify, send_file, request
-
+# presentació
+# millor temps
 
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(16)
@@ -79,6 +80,15 @@ def currentteamfront():
 
 # -----------------------------
 #  Best Run
+# SKIPPAD
+# ACCELERATION
+# AUTOCROS
+
+    """
+    no hybrid
+    separate on bottom and fade to right
+
+    """
 # -----------------------------
 @app.route(f"/{key}/bestrun")
 def bestrunback():
@@ -86,11 +96,17 @@ def bestrunback():
 
 
 # -----------------------------
-#  F1
+# F1
+# ENDURANCE
 # -----------------------------
 @app.route(f"/{key}/f1")
 def f1():
-    return render_template(f"f1/frontend.html")
+    return render_template(f"f1.html")
+
+
+@app.route(f"/{key}/f2")
+def f2():
+    return render_template(f"f2.html")
 
 
 # ------------------------------------------------------------------------------------
@@ -148,8 +164,6 @@ def f1_api():
         savedData = json.load(f)
 
     return jsonify(savedData)
-
-
 
 
 if __name__ == "__main__":
