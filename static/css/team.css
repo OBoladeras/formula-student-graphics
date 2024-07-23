@@ -1,0 +1,76 @@
+body {
+    display: flex;
+    justify-content: center;
+    height: 100vh;
+}
+
+.contrainer {
+    display: flex;
+    align-items: flex-end;
+}
+
+.group {
+    zoom: 1.5;
+}
+
+.flag {
+    width: 40px;
+    height: 25px;
+    background-image: url("/static/flags/Spain.png");
+    background-size: cover;
+}
+
+.number {
+    color: #1d1d1d;
+    background-color: white;
+
+    width: 120px;
+    height: 100%;
+    padding: 8px;
+    border-radius: 0 var(--radius) 0 var(--radius);
+
+    font-size: 3rem;
+    font-weight: 600;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.teamname,
+.uni {
+    color: #fff;
+    height: 30px;
+
+    padding: 0 0.5rem;
+    margin-left: 1rem;
+
+    display: flex;
+    align-items: center;
+}
+
+.teamname {
+    font-size: 1.5rem;
+}
+
+#text {
+    width: 100%;
+
+    background-color: #1d1d1d;
+    border-radius: 0 var(--radius) var(--radius) 0;
+
+    transition: width 2s ease;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+#car {
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    animation: none;
+    transform: translateX(-100%);
+
+    transition: transform 4s linear;
+}

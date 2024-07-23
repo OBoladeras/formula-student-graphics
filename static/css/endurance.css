@@ -1,0 +1,95 @@
+.mainDiv {
+    background-color: #2f2f33;
+    max-width: 20rem;
+
+    border: #232323 solid 10px;
+    border-right: 0;
+    border-radius: 1rem 0 0 1rem;
+}
+
+.mainDiv div {
+    padding: 0.4rem 1rem;
+}
+
+
+img {
+    width: 100%;
+    height: 100%;
+}
+
+.timeDiv {
+    background-image: linear-gradient(180deg, rgba(0, 0, 0, 0.829) 53%, white 200%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#timer {
+    font-size: 30px;
+    font-weight: bold;
+
+    color: white;
+
+}
+
+#grid {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    padding: 0.5rem;
+}
+
+
+
+
+.driver .state {
+    background-color: red;
+    width: 1rem;
+    border-radius: 7px 7px 0 0;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.driver .info div {
+    padding: 0;
+}
+
+.info {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 10%;
+
+    color: white;
+    background-color: #232323;
+}
+
+.info .base {
+    width: 65%;
+
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.info .number {
+    width: 25%;
+    font-size: 3rem;
+    font-weight: bold;
+}
+
+.info p {
+    margin: 0;
+}
+
+.info .times {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.info p {
+    font-size: 13px;
+}

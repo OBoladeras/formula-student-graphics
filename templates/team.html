@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Current Team - Front</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/team.css">
+
+    <script src="/static/js/team.js"></script>
+</head>
+
+<body>
+    <div class="group">
+        <div class="flag"></div>
+        <div class="contrainer">
+            <div class="number" id="number">{{ team.number }}</div>
+            <div id="text">
+                <div class="teamname" id="name">{{ team.name }}</div>
+                <div class="uni" id="uni">{{ team.uni }}</div>
+            </div>
+        </div>
+    </div>
+
+    <script>currentNum = "{{ team.number }}";</script>
+    {% include 'config.html' %}
+</body>
+
+</html>

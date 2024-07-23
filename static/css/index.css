@@ -1,0 +1,32 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+
+    background-color: #f4f4f4;
+}
+
+.sport-button {
+    padding: 15px;
+    margin: 5px;
+    font-size: 1rem;
+
+    background-color: var(--primary1);
+    color: var(--black);
+
+    border: none;
+    border-radius: 5px;
+
+    cursor: pointer;
+    width: 100%;
+}
+
+.zone {
+    display: flex;
+    flex-direction: column;
+
+    max-width: 300px;
+}

@@ -1,0 +1,94 @@
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+
+    align-items: end;
+    color: #fff;
+}
+
+.run {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    height: 3rem;
+    width: 35rem;
+    border-radius: 7.5px;
+
+    color: #fff;
+    background-color: #313131;
+}
+
+.item {
+    display: flex;
+    align-items: center;
+    background-color: var(--best-time);
+
+    border-radius: 7.5px 0 0 7.5px;
+}
+
+.time {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: var(--time);
+
+    transition: width 1s ease;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.icon {
+    height: 100%;
+    width: 50px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    background-color: rgba(255, 255, 255, 0.1);
+    border-radius: 7.5px 0 0 7.5px;
+}
+
+.icon img {
+    height: 2rem;
+}
+
+.time {
+    width: 125px;
+    margin: 0;
+
+    font-size: 1.7rem;
+    font-weight: 600;
+    text-align: center;
+}
+
+.number {
+    width: 75px;
+    margin: 0;
+
+    font-size: 2.5rem;
+    font-weight: 800;
+    text-align: center;
+}
+
+.centered p {
+    margin: 0;
+}
+
+.name {
+    font-size: 1rem;
+    font-weight: 600;
+}
+
+.uni {
+    font-size: 0.7rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 400;
+}
