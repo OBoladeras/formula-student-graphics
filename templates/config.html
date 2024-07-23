@@ -1,33 +1,5 @@
 <!-- config.html -->
 
 <!-- Basic files from all pages -->
-<link rel="stylesheet" href="/static/style.css">
-<script type="text/javascript" src="/static/base.js"></script>
-
-
-<!-- Files for each sport -->
-<script>
-    var script = document.createElement('script');
-    script.type = 'text/javascript';
-    script.src = `/static/${sport}/frontend.js`;
-
-    document.head.appendChild(script);
-</script>
-
-
-<!-- Files if config requires -->
-{% if conf['scoreboard_center'] == 'True' %}
-<link rel="stylesheet" href="/static/scoreboard_center.css">
-{% else %}
-<style>
-    #board {
-        overflow: hidden;
-        transform-origin: top left;
-    }
-</style>
-{% endif %}
-
-
-{% if conf['scoreboard_res'] %}
-<script>scaleToResolution('{{conf["scoreboard_res"][0]}}', '{{conf["scoreboard_res"][1]}}');</script>
-{% endif %}
+<link rel="stylesheet" href="/static/css/style.css">
+<script type="text/javascript" src="/static/js/base.js"></script>

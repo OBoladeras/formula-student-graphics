@@ -3,8 +3,7 @@ import csv
 import json
 import secrets
 from flask import Flask, render_template, jsonify, send_file, request
-# presentació
-# millor temps
+
 
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(16)
@@ -24,15 +23,15 @@ def index():
 # -----------------------------
 #  Teams
 # -----------------------------
-@app.route(f"/{key}/currentteamback")
-def currentteamback():
+@app.route(f"/{key}/teams")
+def teams():
     teams = []
-    with open("teams.csv", "r", encoding="utf-8") as f:
+    with open("teams.csv", "r", encoding="UTF-8") as f:
         reader = csv.reader(f)
 
         for row in reader:
             data = {}
-            data["number"] = row[6]
+            data["number"] = row[5]
             data["name"] = row[1]
             data["uni"] = row[2]
             data["flag"] = row[3]
@@ -57,11 +56,11 @@ def currentteamback():
             teams[i]["selected"] = "true"
             break
 
-    return render_template("currentteamback.html", teams=teams[1:])
+    return render_template("teams.html", teams=teams[1:])
 
 
-@app.route(f"/{key}/currentteamfront")
-def currentteamfront():
+@app.route(f"/{key}/team")
+def team():
     if not os.path.exists("data.json"):
         with open("data.json", "w") as f:
             json.dump(
@@ -75,7 +74,7 @@ def currentteamfront():
         except:
             currentTeam = {"number": "", "name": "", "uni": "", "flag": ""}
 
-    return render_template("currentteamfront.html", team=currentTeam)
+    return render_template("team.html", team=currentTeam)
 
 
 # -----------------------------
@@ -84,29 +83,24 @@ def currentteamfront():
 # ACCELERATION
 # AUTOCROS
 
-    """
-    no hybrid
-    separate on bottom and fade to right
+"""
+no hybrid
+separate on bottom and fade to right
 
-    """
+"""
 # -----------------------------
 @app.route(f"/{key}/bestrun")
-def bestrunback():
+def bestrun():
     return render_template("bestrun.html")
 
 
 # -----------------------------
-# F1
 # ENDURANCE
 # -----------------------------
-@app.route(f"/{key}/f1")
-def f1():
-    return render_template(f"f1.html")
+@app.route(f"/{key}/endurance")
+def fendurance():
+    return render_template("endurance.html")
 
-
-@app.route(f"/{key}/f2")
-def f2():
-    return render_template(f"f2.html")
 
 
 # ------------------------------------------------------------------------------------

@@ -1,7 +1,7 @@
 import pandas as pd
 
 
-def xlsx_to_csv(input_file, output_file):
+def xlsx_to_csv(input_file: str, output_file: str) -> None:
     try:
         df = pd.read_excel(input_file)
 

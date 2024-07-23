@@ -4,43 +4,23 @@
 <head>
     <title>Sports Scoreboard</title>
 
-    <link rel="stylesheet" type="text/css" href="/static/style.css">
-    <style>
-        .sport-button {
-            padding: 15px;
-            margin: 5px;
-            font-size: 1rem;
-
-            background-color: var(--primary1);
-            color: var(--black);
-
-            border: none;
-            border-radius: 5px;
-
-            cursor: pointer;
-        }
-
-        .zone {
-            display: flex;
-            flex-direction: column;
-
-            max-width: 300px;
-        }
-    </style>
+    <link rel="stylesheet" type="text/css" href="/static/css/index.css">
 </head>
 
 <body>
     <h1>Sports Scoreboard</h1>
 
     <div class="zone">
-        <button class="sport-button" onclick="location.href='/losmnHjnsytTgsbaH6hs8K9o/currentteamback';">Current Team Backend</button>
-        <button class="sport-button" onclick="location.href='/losmnHjnsytTgsbaH6hs8K9o/currentteamfront';">Current Team Frontend</button>
+        <a href="/losmnHjnsytTgsbaH6hs8K9o/teams"><button class="sport-button">Current Team Backend</button></a>
+        <a href="/losmnHjnsytTgsbaH6hs8K9o/team"><button class="sport-button">Current Team Frontend</button></a>
     </div>
 
     <br>
     <div class="zone">
-        <button class="sport-button" onclick="location.href='/losmnHjnsytTgsbaH6hs8K9o/bestrun';">Best Run</button>
+        <a href="/losmnHjnsytTgsbaH6hs8K9o/bestrun"><button class="sport-button">Best Run</button></a>
     </div>
+
+    {% include 'config.html' %}
 </body>
 
 </html>
