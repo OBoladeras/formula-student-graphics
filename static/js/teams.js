@@ -30,7 +30,7 @@ function update() {
     var uni = dataa.children[3].innerText;
     var flag = dataa.children[4].innerText;
 
-    fetch('/losmnHjnsytTgsbaH6hs8K9o/api/currentteam', {
+    fetch('/losmnHjnsytTgsbaH6hs8K9o/api/team', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'

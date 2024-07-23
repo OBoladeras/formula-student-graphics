@@ -27,5 +27,14 @@ data = {
 };
 
 setTimeout(function () {
-    newBest('hybrid', data);
+    newBest('fuel', data);
 }, 5000);
+
+
+setTimeout(() => {
+    document.getElementById('last').classList.add('hide');
+
+    setTimeout(() => {
+        document.getElementById('last').classList.remove('hide');
+    }, 1500);
+}, 1000);

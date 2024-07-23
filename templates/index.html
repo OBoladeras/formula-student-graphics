@@ -13,12 +13,56 @@
     <div class="zone">
         <a href="/losmnHjnsytTgsbaH6hs8K9o/teams"><button class="sport-button">Current Team Backend</button></a>
         <a href="/losmnHjnsytTgsbaH6hs8K9o/team"><button class="sport-button">Current Team Frontend</button></a>
-    </div>
 
-    <br>
-    <div class="zone">
+        <p></p>
         <a href="/losmnHjnsytTgsbaH6hs8K9o/bestrun"><button class="sport-button">Best Run</button></a>
     </div>
+
+    <p></p>
+    <p></p>
+    <div class="radio-inputs">
+        <label class="radio">
+            <input id="skidpad" type="radio" name="radio" />
+            <span class="name" onclick="change('skidpad')">SKIDPAD</span>
+        </label>
+
+        <label class="radio">
+            <input id="acceleration" type="radio" name="radio" />
+            <span class="name" onclick="change('acceleration')">ACCELERATION</span>
+        </label>
+
+        <label class="radio">
+            <input id="autocros" type="radio" name="radio" />
+            <span class="name" onclick="change('autocros')">AUTOCROS</span>
+        </label>
+    </div>
+
+    <script>
+        document.getElementById("{{ race }}".toLowerCase()).checked = true;
+
+        function change(race) {
+            confirmation = confirm("Are you sure you want to change race to " + race + "?");
+
+            if (confirmation) {
+                fetch("/losmnHjnsytTgsbaH6hs8K9o", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "race": race.toLowerCase()
+                    })
+                }).then(response => {
+                    if (response.ok) {
+                        location.reload();
+                    }
+                });
+            }
+            else {
+                location.reload();
+            }
+        }   
+    </script>
 
     {% include 'config.html' %}
 </body>

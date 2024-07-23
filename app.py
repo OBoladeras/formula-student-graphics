@@ -1,5 +1,5 @@
 import os
-import csv
+from backend import files
 import json
 import secrets
 from flask import Flask, render_template, jsonify, send_file, request
@@ -7,6 +7,7 @@ from flask import Flask, render_template, jsonify, send_file, request
 
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(16)
+backend = files()
 key = "losmnHjnsytTgsbaH6hs8K9o"
 
 
@@ -15,9 +16,12 @@ def favicon():
     return send_file("static/favicon.ico", mimetype="image/x-icon")
 
 
-@app.route(f"/{key}")
+@app.route(f"/{key}", methods=["GET", "POST"])
 def index():
-    return render_template("index.html")
+    if request.method == "POST":
+        return jsonify({"message": backend.race(request.json["race"])})
+
+    return render_template("index.html", race=backend.race())
 
 
 # -----------------------------
@@ -25,69 +29,19 @@ def index():
 # -----------------------------
 @app.route(f"/{key}/teams")
 def teams():
-    teams = []
-    with open("teams.csv", "r", encoding="UTF-8") as f:
-        reader = csv.reader(f)
-
-        for row in reader:
-            data = {}
-            data["number"] = row[5]
-            data["name"] = row[1]
-            data["uni"] = row[2]
-            data["flag"] = row[3]
-
-            teams.append(data)
-
-    if not os.path.exists("data.json"):
-        with open("data.json", "w") as f:
-            json.dump(
-                {"currentTeam": {"number": "", "name": "", "uni": "", "flag": ""}}, f
-            )
-
-    with open("data.json", "r") as f:
-        savedData = json.load(f)
-        try:
-            currentTeam = savedData["currentTeam"]
-        except:
-            currentTeam = {"number": "", "name": "", "uni": "", "flag": ""}
-
-    for i in range(1, len(teams)):
-        if teams[i]["number"] == currentTeam["number"]:
-            teams[i]["selected"] = "true"
-            break
-
-    return render_template("teams.html", teams=teams[1:])
+    return render_template("teams.html", teams=backend.teams())
 
 
 @app.route(f"/{key}/team")
 def team():
-    if not os.path.exists("data.json"):
-        with open("data.json", "w") as f:
-            json.dump(
-                {"currentTeam": {"number": "", "name": "", "uni": "", "flag": ""}}, f
-            )
-
-    with open("data.json", "r") as f:
-        savedData = json.load(f)
-        try:
-            currentTeam = savedData["currentTeam"]
-        except:
-            currentTeam = {"number": "", "name": "", "uni": "", "flag": ""}
-
-    return render_template("team.html", team=currentTeam)
+    return render_template("team.html", team=backend.team())
 
 
 # -----------------------------
 #  Best Run
-# SKIPPAD
+# SKIDPAD
 # ACCELERATION
 # AUTOCROS
-
-"""
-no hybrid
-separate on bottom and fade to right
-
-"""
 # -----------------------------
 @app.route(f"/{key}/bestrun")
 def bestrun():
@@ -102,18 +56,17 @@ def fendurance():
     return render_template("endurance.html")
 
 
-
 # ------------------------------------------------------------------------------------
 # -----------------------------
 #   API
 # -----------------------------
-@app.route(f"/{key}/api/currentteam", methods=["GET", "POST"])
-def currentteam_api():
-    if request.method == "GET":
-        with open("data.json", "r") as f:
-            savedData = json.load(f)
 
-        return jsonify(savedData["currentTeam"])
+# API endpoint to get or save the current team
+@app.route(f"/{key}/api/team", methods=["GET", "POST"])
+def team_api():
+    if request.method == "GET":
+        return jsonify(backend.team())
+
     elif request.method == "POST":
         data = {}
         data["number"] = request.json["number"]
@@ -121,16 +74,13 @@ def currentteam_api():
         data["uni"] = request.json["uni"]
         data["flag"] = request.json["flag"]
 
-        with open("data.json", "r") as f:
-            savedData = json.load(f)
-            savedData["currentTeam"] = data
-
-        with open("data.json", "w") as f:
-            json.dump(savedData, f)
-
-        return jsonify({"message": "success"})
+        return jsonify({"message": backend.saveTeam(data)})
 
 
+
+
+
+# Test of where to send the data
 @app.route(f"/{key}/api/<prova>", methods=["GET", "POST"])
 def api(prova):
     if request.method == "GET":
@@ -150,14 +100,6 @@ def api(prova):
         return jsonify({"message": "success"})
 
     return jsonify({"message": "error"})
-
-
-@app.route(f"/{key}/api/f1", methods=["GET"])
-def f1_api():
-    with open("f1.json", "r") as f:
-        savedData = json.load(f)
-
-    return jsonify(savedData)
 
 
 if __name__ == "__main__":

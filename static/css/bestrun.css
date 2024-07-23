@@ -7,6 +7,8 @@ body {
 
     align-items: end;
     color: #fff;
+
+    margin: 1rem;
 }
 
 .run {
@@ -22,10 +24,26 @@ body {
     background-color: #313131;
 }
 
+#last {
+    width: 31rem;
+    padding-left: 1rem;
+    background: #313131;
+    border-radius: 7.5px;
+
+    position: fixed;
+    bottom: 1rem;
+    right: 1rem;
+    transition: right 1.5s;
+}
+
+#last.hide {
+    right: -35rem;
+}
+
 .item {
     display: flex;
     align-items: center;
-    background-color: var(--best-time);
+    background: linear-gradient(to right, var(--best-time), transparent);
 
     border-radius: 7.5px 0 0 7.5px;
 }
