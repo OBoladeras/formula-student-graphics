@@ -1,0 +1,14 @@
+[Unit]
+Description=FSS                     
+After=network.target
+
+[Service]
+WorkingDirectory=/home/toni/FSS
+ExecStart=/home/toni/FSS/.venv/bin/gunicorn --bind 0.0.0.0:8080 app:app
+WorkingDirectory=/home/toni/FSS/
+User=toni
+Restart=always
+
+[Install]
+WantedBy=multi-user.target
+
