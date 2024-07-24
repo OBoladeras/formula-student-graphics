@@ -52,8 +52,16 @@ def bestrun():
 #   ENDURANCE
 # -----------------------------
 @app.route(f"/{key}/endurance")
-def fendurance():
+def endurance():
     return render_template("endurance.html")
+
+
+# -----------------------------
+#   EXTRA
+# -----------------------------
+@app.route(f"/{key}/extra")
+def extra():
+    return render_template("extra.html")
 
 
 # ------------------------------------------------------------------------------------
@@ -85,6 +93,11 @@ def best_api():
 @app.route(f"/{key}/api/endurance")
 def endurance_api():
     return jsonify(raceTimes.endurance())
+
+
+@app.route(f"/{key}/api/extra")
+def extra_api():
+    return jsonify(raceTimes.extra())
 
 
 if __name__ == "__main__":

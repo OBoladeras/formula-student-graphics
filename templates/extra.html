@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Endurance Times</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/extra.css">
+</head>
+
+<body>
+    <div class="main">
+        <div class="head">
+            <div>
+                <h1 style="font-size: 3rem;">Live Results</h1>
+                <h2>Endurance</h2>
+            </div>
+
+            <img src="https://www.formulastudent.es/wp-content/uploads/2020/02/cropped-FSS-blanco-rojo-2.png" alt="">
+        </div>
+
+        <div class="drivers">
+            <!-- Example Driver -->
+            <div class="driver">
+                <div class="position">1</div>
+                <img src="/static/flags/Spain.png" alt="">
+                <div class="info">
+                    <p class="name">#353 Valais Wallis Racing Team</p>
+                    <div class="times">
+                        <p style="color: rgb(86, 167, 86);">BEST - 1:02.821</p>
+                        <p style="color: rgb(98, 98, 222);">LAST - 1:02.861</p>
+                    </div>
+                </div>
+
+                <div class="lap">
+                    <p class="lapHead">LAP</p>
+                    <p>20</p>
+                </div>
+                <div class="lap" style="margin-left: 0;">
+                    <p class="lapHead class">CLASS</p>
+                    <p>CV</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% include 'config.html' %}
+    <script src="/static/js/extra.js"></script>
+</body>
+
+</html>

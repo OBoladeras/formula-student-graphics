@@ -187,3 +187,43 @@ class times():
             data.append(tmp)
 
         return data[:9]
+
+    def extra(self) -> list:
+        url = "http://www.pde-racing.com/tol/temps1434.asp"
+
+        response = requests.get(url)
+        decoded_data = html.unescape(response.text)
+
+        rows = decoded_data.split('\n')
+
+        structured_data = []
+        for row in rows:
+            fields = row.split('$')
+            if len(fields) > 1:
+                structured_data.append(fields)
+
+        df = pd.DataFrame(structured_data)
+
+        df.dropna(how='all', axis=1, inplace=True)
+        df.dropna(how='all', axis=0, inplace=True)
+
+        list = df.values.tolist()[2:]
+        teams = files().teams()
+
+        data = []
+        for i in list:
+            tmp = {"flag": ""}
+
+            for j in teams:
+                if j["number"].strip() == i[3].strip():
+                    tmp["flag"] = j["flag"]
+
+            tmp["name"] = f"#{i[3]} {i[4]}"
+            tmp["class"] = i[5]
+            tmp["lap"] = i[7]
+            tmp['last'] = i[8]
+            tmp['best'] = i[14]
+
+            data.append(tmp)
+
+        return data
