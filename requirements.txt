@@ -1,6 +1,9 @@
 flask
 
+urllib3==1.26.14
+
 lxml
 pandas
 html5lib
+requests
 beautifulsoup4
