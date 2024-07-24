@@ -2,4 +2,5 @@ flask
 
 lxml
 pandas
+html5lib
 beautifulsoup4

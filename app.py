@@ -25,7 +25,7 @@ def index():
 
 
 # -----------------------------
-#  Teams
+#   Teams
 # -----------------------------
 @app.route(f"/{key}/teams")
 def teams():
@@ -49,7 +49,7 @@ def bestrun():
 
 
 # -----------------------------
-# ENDURANCE
+#   ENDURANCE
 # -----------------------------
 @app.route(f"/{key}/endurance")
 def fendurance():
@@ -77,36 +77,14 @@ def team_api():
         return jsonify({"message": backend.saveTeam(data)})
 
 
-@app.route(f"/{key}/api/last")
-def last_api():
-    return jsonify(backend.last())
-
-
 @app.route(f"/{key}/api/best")
 def best_api():
     return jsonify(raceTimes.bestTime(backend.race()))
 
 
-# Test of where to send the data
-@app.route(f"/{key}/api/<prova>", methods=["GET", "POST"])
-def api(prova):
-    if request.method == "GET":
-        try:
-            with open(f"{prova}.json", "r") as f:
-                savedData = json.load(f)
-        except:
-            savedData = {}
-
-        return jsonify(savedData)
-    elif request.method == "POST":
-        data = request.json
-
-        with open(f"{prova}.json", "w") as f:
-            json.dump(data, f)
-
-        return jsonify({"message": "success"})
-
-    return jsonify({"message": "error"})
+@app.route(f"/{key}/api/endurance")
+def endurance_api():
+    return jsonify(raceTimes.endurance())
 
 
 if __name__ == "__main__":

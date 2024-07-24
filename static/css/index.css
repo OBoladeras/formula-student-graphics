@@ -43,7 +43,7 @@ body {
     background-color: #70c489;
     box-sizing: border-box;
     font-size: 14px;
-    width: 30%;
+    min-width: 30%;
     padding: 1rem 1rem 0 1rem;
 }
 

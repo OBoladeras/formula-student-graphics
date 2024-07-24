@@ -2,24 +2,31 @@
 <html>
 
 <head>
-    <title>Sports Scoreboard</title>
+    <title>FSS - Graphics</title>
 
     <link rel="stylesheet" type="text/css" href="/static/css/index.css">
 </head>
 
 <body>
-    <h1>Sports Scoreboard</h1>
+    <h1 style="margin-bottom: 0;">Formula Student Spain</h1>
+    <h2 style="margin-top: 0.5rem;">Graphics</h2>
 
     <div class="zone">
-        <a href="/losmnHjnsytTgsbaH6hs8K9o/teams"><button class="sport-button">Current Team Backend</button></a>
-        <a href="/losmnHjnsytTgsbaH6hs8K9o/team"><button class="sport-button">Current Team Frontend</button></a>
+        <p></p>
+        <a href="/losmnHjnsytTgsbaH6hs8K9o/teams"><button class="sport-button">Current Team Selector</button></a>
+        <a href="/losmnHjnsytTgsbaH6hs8K9o/team"><button class="sport-button">Current Team</button></a>
 
         <p></p>
         <a href="/losmnHjnsytTgsbaH6hs8K9o/bestrun"><button class="sport-button">Best Run</button></a>
+
+        <p></p>
+        <a href="/losmnHjnsytTgsbaH6hs8K9o/endurance"><button class="sport-button">Endurance</button></a>
     </div>
 
     <p></p>
-    <p></p>
+
+
+    <h3>↓↓ Current Race ↓↓</h3>
     <div class="radio-inputs">
         <label class="radio">
             <input id="skidpad" type="radio" name="radio" />
@@ -34,6 +41,11 @@
         <label class="radio">
             <input id="autocross" type="radio" name="radio" />
             <span class="name" onclick="change('autocross')">AUTOCROSS</span>
+        </label>
+
+        <label class="radio">
+            <input id="endurance" type="radio" name="radio" />
+            <span class="name" onclick="change('endurance')">ENDURANCE</span>
         </label>
     </div>
 

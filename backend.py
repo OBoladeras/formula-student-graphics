@@ -1,6 +1,7 @@
 import os
 import csv
 import json
+import html
 import requests
 import pandas as pd
 from io import StringIO
@@ -149,3 +150,40 @@ class times():
             return data
 
         return data
+
+    def endurance(self) -> list:
+        url = "http://www.pde-racing.com/tol/temps1434.asp"
+
+        response = requests.get(url)
+        decoded_data = html.unescape(response.text)
+
+        rows = decoded_data.split('\n')
+
+        structured_data = []
+        for row in rows:
+            fields = row.split('$')
+            if len(fields) > 1:
+                structured_data.append(fields)
+
+        df = pd.DataFrame(structured_data)
+
+        df.dropna(how='all', axis=1, inplace=True)
+        df.dropna(how='all', axis=0, inplace=True)
+
+        list = df.values.tolist()[2:]
+        data = []
+        for i in list:
+            tmp = {}
+
+            if i[5].lower() == 'ev':
+                tmp["name"] = f"⚡ {i[4]}"
+            if i[5].lower() == 'cv':
+                tmp["name"] = f"⛽ {i[4]}"
+
+            tmp['number'] = i[3]
+            tmp['best'] = i[14]
+            tmp['last'] = i[8]
+
+            data.append(tmp)
+
+        return data[:9]

@@ -1,10 +1,11 @@
 .mainDiv {
     background-color: #2f2f33;
-    max-width: 20rem;
+    width: 22rem;
 
     border: #232323 solid 10px;
     border-right: 0;
     border-radius: 1rem 0 0 1rem;
+
 }
 
 .mainDiv div {
@@ -13,8 +14,9 @@
 
 
 img {
-    width: 100%;
-    height: 100%;
+    width: 90%;
+
+    padding: 2.5% 5%;
 }
 
 .timeDiv {
@@ -40,7 +42,14 @@ img {
 }
 
 
+.name {
+    font-size: 20px !important;
+    font-weight: bold;
+}
 
+.driver {
+    padding: 0 !important;
+}
 
 .driver .state {
     background-color: red;
@@ -61,9 +70,9 @@ img {
     justify-content: center;
     align-items: center;
     gap: 10%;
+    padding: 0.7rem !important;
 
     color: white;
-    background-color: #232323;
 }
 
 .info .base {
@@ -72,11 +81,12 @@ img {
     display: flex;
     flex-direction: column;
     gap: 10px;
+    font-size: 2rem;
 }
 
 .info .number {
     width: 25%;
-    font-size: 3rem;
+    font-size: 2.5rem;
     font-weight: bold;
 }
 
@@ -86,10 +96,10 @@ img {
 
 .info .times {
     display: flex;
-    justify-content: space-between;
     align-items: center;
+    gap: 1rem;
 }
 
 .info p {
-    font-size: 13px;
+    font-size: 15px;
 }
