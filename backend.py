@@ -1,7 +1,10 @@
 import os
 import csv
 import json
-from datetime import datetime, timedelta
+import requests
+import pandas as pd
+from io import StringIO
+from bs4 import BeautifulSoup
 
 
 class files():
@@ -23,6 +26,7 @@ class files():
                 data["name"] = row[1]
                 data["uni"] = row[2]
                 data["flag"] = row[3]
+                data["type"] = row[4]
 
                 teams.append(data)
 
@@ -76,52 +80,72 @@ class files():
         return race
 
 
-class api():
-    def __init__(self, race: str) -> None:
-        self.race = race.lower()
+class times():
+    def __init__(self) -> None:
+        pass
 
-    def read(self) -> tuple:
-        if not os.path.exists(f"{self.race}.json"):
-            if os.path.exists(f"{self.race.upper()}.json"):
-                self.race = self.race.upper()
-            else:
-                return []
+    def bestTime(self, race: str) -> dict:
+        data = {"fuel": {}, "electric": {}, "race": race}
+        print(race)
 
-        with open(f"{self.race}.json", "r") as f:
-            return json.load(f)
+        if race == "skidpad":
+            url = 'http://fss2023.ddns.net/Skidpad.aspx'
+        elif race == "acceleration":
+            url = 'http://fss2023.ddns.net/Acceleracio.aspx'
+        elif race == "autocross":
+            url = 'http://fss2023.ddns.net/Autocross.aspx'
 
-    def best(self) -> dict:
-        data = self.read()
-        teams = files().teams()
+        response = requests.get(url)
+        html_content = response.text
+        soup = BeautifulSoup(html_content, 'html.parser')
 
-        if self.race.lower() == "skidpad":
-            dataByTeams = {}
-            for i in data:
-                if i["TempsVolta"] in ["", "DNF"]:
-                    continue
+        if race in ["skidpad", "acceleration", "autocross"]:
+            table1 = soup.find('table', id='GridView_Resultats')
+            table1_html = str(table1)
+            df1 = pd.read_html(StringIO(table1_html))[0]
 
-                time = datetime.strptime(
-                    i["TempsVolta"], "%H:%M:%S.%f").microsecond
+            table2 = soup.find('table')
+            table2_html = str(table2)
+            df2 = pd.read_html(StringIO(table2_html))[0]
 
-                if dataByTeams.get(i["Dorsal"]) == None:
-                    dataByTeams[i["Dorsal"]] = {}
+            allRuns = df1.values.tolist()
+            bestRuns = df2.values.tolist()
 
-                if dataByTeams[i["Dorsal"]].get(i["Cursa"]) == None:
-                    dataByTeams[i["Dorsal"]][i["Cursa"]] = time
+            # Get the best time for each category
+            clean = []
+            for i in bestRuns[0]:
+                j = i.split("-")
+                tmp = []
+                for k in j:
+                    if "combustion" in k.lower() or "electric" in k.lower():
+                        if "combustion" in k.lower():
+                            tmp.append("combustion")
+                        else:
+                            tmp.append("electric")
+                        tmp.append(k.strip().split(" ")[-1])
+                    else:
+                        tmp.append(k.strip())
 
-                dataByTeams[i["Dorsal"]][i["Cursa"]] += time
+                clean.append(tmp)
 
-            best = {'Dorsal': '', 'TempsVolta': 9 ** 9 * 9}
-            for key, i in dataByTeams.items():
-                for key2, j in i.items():
-                    if j < best["TempsVolta"]:
-                        best["Dorsal"] = key
-                        best["TempsVolta"] = j
+            # Get the name of the team for each best time
+            for i in clean:
+                for j in allRuns:
+                    if int(i[1]) == int(j[0]):
+                        clean[clean.index(i)].insert(2, j[3])
+                        break
 
-            best["TempsVolta"] = best["TempsVolta"] / 1000000 * 60
-            return best
+            # Create the dictionary with the data
+            data["fuel"]["time"] = clean[0][4]
+            data["fuel"]["number"] = clean[0][1]
+            data["fuel"]["uni"] = clean[0][3]
+            data["fuel"]["name"] = clean[0][2]
 
+            data["electric"]["time"] = clean[1][4]
+            data["electric"]["number"] = clean[1][1]
+            data["electric"]["uni"] = clean[1][3]
+            data["electric"]["name"] = clean[1][2]
 
-print(
-    api("skidpad").best()
-)
+            return data
+
+        return data

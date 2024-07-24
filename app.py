@@ -1,13 +1,13 @@
-import os
-from backend import files
 import json
 import secrets
+from backend import files, times
 from flask import Flask, render_template, jsonify, send_file, request
 
 
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(16)
 backend = files()
+raceTimes = times()
 key = "losmnHjnsytTgsbaH6hs8K9o"
 
 
@@ -38,10 +38,10 @@ def team():
 
 
 # -----------------------------
-#  Best Run
-# SKIDPAD
-# ACCELERATION
-# AUTOCROS
+#   Best Run
+#       SKIDPAD
+#       ACCELERATION
+#       AUTOCROS
 # -----------------------------
 @app.route(f"/{key}/bestrun")
 def bestrun():
@@ -77,7 +77,14 @@ def team_api():
         return jsonify({"message": backend.saveTeam(data)})
 
 
+@app.route(f"/{key}/api/last")
+def last_api():
+    return jsonify(backend.last())
 
+
+@app.route(f"/{key}/api/best")
+def best_api():
+    return jsonify(raceTimes.bestTime(backend.race()))
 
 
 # Test of where to send the data
