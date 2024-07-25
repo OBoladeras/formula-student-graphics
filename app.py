@@ -57,11 +57,11 @@ def endurance():
 
 
 # -----------------------------
-#   EXTRA
+#   STANDINGS
 # -----------------------------
-@app.route(f"/{key}/extra")
-def extra():
-    return render_template("extra.html")
+@app.route(f"/{key}/standings")
+def standings():
+    return render_template("standings.html")
 
 
 # ------------------------------------------------------------------------------------
@@ -95,9 +95,9 @@ def endurance_api():
     return jsonify(raceTimes.endurance())
 
 
-@app.route(f"/{key}/api/extra")
-def extra_api():
-    return jsonify(raceTimes.extra(files().race()))
+@app.route(f"/{key}/api/standings")
+def standings_api():
+    return jsonify(raceTimes.standings(files().race()))
 
 
 if __name__ == "__main__":

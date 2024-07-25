@@ -85,6 +85,27 @@ class times():
     def __init__(self) -> None:
         pass
 
+    def readEndurance(self) -> list:
+        url = "http://www.pde-racing.com/tol/temps1434.asp"
+
+        response = requests.get(url)
+        decoded_data = html.unescape(response.text)
+
+        rows = decoded_data.split('\n')
+
+        structured_data = []
+        for row in rows:
+            fields = row.split('$')
+            if len(fields) > 1:
+                structured_data.append(fields)
+
+        df = pd.DataFrame(structured_data)
+
+        df.dropna(how='all', axis=1, inplace=True)
+        df.dropna(how='all', axis=0, inplace=True)
+
+        return df.values.tolist()[2:]
+
     def bestTime(self, race: str) -> dict:
         data = {"fuel": {}, "electric": {}, "race": race}
 
@@ -95,11 +116,11 @@ class times():
         elif race == "autocross":
             url = 'http://fss2023.ddns.net/Autocross.aspx'
 
-        response = requests.get(url)
-        html_content = response.text
-        soup = BeautifulSoup(html_content, 'html.parser')
-
         if race in ["skidpad", "acceleration", "autocross"]:
+            response = requests.get(url)
+            html_content = response.text
+            soup = BeautifulSoup(html_content, 'html.parser')
+
             table1 = soup.find('table', id='GridView_Resultats')
             table1_html = str(table1)
             df1 = pd.read_html(StringIO(table1_html))[0]
@@ -145,32 +166,38 @@ class times():
             data["electric"]["number"] = clean[1][1]
             data["electric"]["uni"] = clean[1][3]
             data["electric"]["name"] = clean[1][2]
+        elif race == "endurance":
+            list = self.readEndurance()
 
-            return data
+            for i in list:
+                if i[5].lower() == 'ev' and data["electric"] == {}:
+                    data["electric"]["time"] = i[14]
+                    data["electric"]["number"] = i[3]
+                    data["electric"]["name"] = i[4]
+
+                    for j in files().teams():
+                        if j["number"].strip() == i[3].strip():
+                            data["electric"]["uni"] = j["uni"]
+                            break
+
+                elif i[5].lower() == 'cv' and data["fuel"] == {}:
+                    data["fuel"]["time"] = i[14]
+                    data["fuel"]["number"] = i[3]
+                    data["fuel"]["name"] = i[4]
+                    for j in files().teams():
+                        if j["number"].strip() == i[3].strip():
+                            data["fuel"]["uni"] = j["uni"]
+                            break
+
+                if data["fuel"] != {} and data["electric"] != {}:
+                    break
 
         return data
 
     def endurance(self) -> list:
-        url = "http://www.pde-racing.com/tol/temps1434.asp"
-
-        response = requests.get(url)
-        decoded_data = html.unescape(response.text)
-
-        rows = decoded_data.split('\n')
-
-        structured_data = []
-        for row in rows:
-            fields = row.split('$')
-            if len(fields) > 1:
-                structured_data.append(fields)
-
-        df = pd.DataFrame(structured_data)
-
-        df.dropna(how='all', axis=1, inplace=True)
-        df.dropna(how='all', axis=0, inplace=True)
-
-        list = df.values.tolist()[2:]
         data = []
+        list = self.readEndurance()
+
         for i in list:
             tmp = {}
 
@@ -187,7 +214,7 @@ class times():
 
         return data[:9]
 
-    def extra(self, race: str) -> list:
+    def standings(self, race: str) -> list:
         data = [race, ]
         if race == "skidpad":
             url = 'http://fss2023.ddns.net/Skidpad.aspx'
@@ -197,25 +224,7 @@ class times():
             url = 'http://fss2023.ddns.net/Autocross.aspx'
 
         if race == "endurance":
-            url = "http://www.pde-racing.com/tol/temps1434.asp"
-
-            response = requests.get(url)
-            decoded_data = html.unescape(response.text)
-
-            rows = decoded_data.split('\n')
-
-            structured_data = []
-            for row in rows:
-                fields = row.split('$')
-                if len(fields) > 1:
-                    structured_data.append(fields)
-
-            df = pd.DataFrame(structured_data)
-
-            df.dropna(how='all', axis=1, inplace=True)
-            df.dropna(how='all', axis=0, inplace=True)
-
-            list = df.values.tolist()[2:]
+            list = self.readEndurance()
             teams = files().teams()
 
             for i in list:
@@ -264,4 +273,4 @@ class times():
 
 
 if __name__ == "__main__":
-    times().extra("skidpad")
+    pass

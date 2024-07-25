@@ -85,7 +85,7 @@ function createDriver(data, p, race) {
 }
 
 function getDrivers() {
-    fetch('/losmnHjnsytTgsbaH6hs8K9o/api/extra')
+    fetch('/losmnHjnsytTgsbaH6hs8K9o/api/standings')
         .then(response => response.json())
         .then(data => {
             race = data[0];
