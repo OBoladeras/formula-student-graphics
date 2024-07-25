@@ -97,7 +97,7 @@ def endurance_api():
 
 @app.route(f"/{key}/api/extra")
 def extra_api():
-    return jsonify(raceTimes.extra())
+    return jsonify(raceTimes.extra(files().race()))
 
 
 if __name__ == "__main__":

@@ -6,8 +6,6 @@ body {
     margin: 5rem;
     padding: 3rem;
 
-    height: 100vh;
-
     color: white;
     background: linear-gradient(to bottom, #545454cc, transparent);
     border-radius: 0.5rem;

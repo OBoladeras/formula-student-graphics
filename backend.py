@@ -87,7 +87,6 @@ class times():
 
     def bestTime(self, race: str) -> dict:
         data = {"fuel": {}, "electric": {}, "race": race}
-        print(race)
 
         if race == "skidpad":
             url = 'http://fss2023.ddns.net/Skidpad.aspx'
@@ -188,42 +187,81 @@ class times():
 
         return data[:9]
 
-    def extra(self) -> list:
-        url = "http://www.pde-racing.com/tol/temps1434.asp"
+    def extra(self, race: str) -> list:
+        data = [race, ]
+        if race == "skidpad":
+            url = 'http://fss2023.ddns.net/Skidpad.aspx'
+        elif race == "acceleration":
+            url = 'http://fss2023.ddns.net/Acceleracio.aspx'
+        elif race == "autocross":
+            url = 'http://fss2023.ddns.net/Autocross.aspx'
 
-        response = requests.get(url)
-        decoded_data = html.unescape(response.text)
+        if race == "endurance":
+            url = "http://www.pde-racing.com/tol/temps1434.asp"
 
-        rows = decoded_data.split('\n')
+            response = requests.get(url)
+            decoded_data = html.unescape(response.text)
 
-        structured_data = []
-        for row in rows:
-            fields = row.split('$')
-            if len(fields) > 1:
-                structured_data.append(fields)
+            rows = decoded_data.split('\n')
 
-        df = pd.DataFrame(structured_data)
+            structured_data = []
+            for row in rows:
+                fields = row.split('$')
+                if len(fields) > 1:
+                    structured_data.append(fields)
 
-        df.dropna(how='all', axis=1, inplace=True)
-        df.dropna(how='all', axis=0, inplace=True)
+            df = pd.DataFrame(structured_data)
 
-        list = df.values.tolist()[2:]
-        teams = files().teams()
+            df.dropna(how='all', axis=1, inplace=True)
+            df.dropna(how='all', axis=0, inplace=True)
 
-        data = []
-        for i in list:
-            tmp = {"flag": ""}
+            list = df.values.tolist()[2:]
+            teams = files().teams()
 
-            for j in teams:
-                if j["number"].strip() == i[3].strip():
-                    tmp["flag"] = j["flag"]
+            for i in list:
+                tmp = {"flag": ""}
 
-            tmp["name"] = f"#{i[3]} {i[4]}"
-            tmp["class"] = i[5]
-            tmp["lap"] = i[7]
-            tmp['last'] = i[8]
-            tmp['best'] = i[14]
+                for j in teams:
+                    if j["number"].strip() == i[3].strip():
+                        tmp["flag"] = j["flag"]
 
-            data.append(tmp)
+                tmp["name"] = f"#{i[3]} {i[4]}"
+                tmp["class"] = i[5]
+                tmp["lap"] = i[7]
+                tmp['last'] = i[8]
+                tmp['best'] = i[14]
+
+                data.append(tmp)
+        else:
+            response = requests.get(url)
+            html_content = response.text
+            soup = BeautifulSoup(html_content, 'html.parser')
+
+            table = soup.find('table', id='GridView_Resultats')
+            table_html = str(table)
+            df = pd.read_html(StringIO(table_html))[0]
+
+            allRuns = df.values.tolist()
+
+            numbers = []
+            for i in allRuns:
+                if i[0] in numbers:
+                    continue
+
+                tmp = {}
+                tmp["name"] = f"#{i[0]} {i[3]}"
+                tmp["uni"] = i[4]
+                tmp["time"] = i[-1]
+
+                for j in files().teams():
+                    if str(j["number"]).strip() == str(i[0]).strip():
+                        tmp["flag"] = j["flag"]
+
+                numbers.append(i[0])
+                data.append(tmp)
 
         return data
+
+
+if __name__ == "__main__":
+    times().extra("skidpad")
