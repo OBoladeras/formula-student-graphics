@@ -1,13 +1,12 @@
-import json
 import secrets
 from backend import files, times
 from flask import Flask, render_template, jsonify, send_file, request
 
 
-app = Flask(__name__)
-app.secret_key = secrets.token_urlsafe(16)
 backend = files()
 raceTimes = times()
+app = Flask(__name__)
+app.secret_key = secrets.token_urlsafe(16)
 key = "losmnHjnsytTgsbaH6hs8K9o"
 
 
@@ -68,8 +67,6 @@ def standings():
 # -----------------------------
 #   API
 # -----------------------------
-
-# API endpoint to get or save the current team
 @app.route(f"/{key}/api/team", methods=["GET", "POST"])
 def team_api():
     if request.method == "GET":
