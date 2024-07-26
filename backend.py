@@ -35,8 +35,9 @@ class files():
             if teams[i]["number"] == currentTeam["number"]:
                 teams[i]["selected"] = "true"
                 break
+        
+        return sorted(teams[1:], key=lambda x: int(x["number"]))
 
-        return teams[1:]
 
     def team(self) -> dict:
         try:
