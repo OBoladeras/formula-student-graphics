@@ -1,9 +1,11 @@
 body {
     margin: 0;
+
+    overflow: hidden;
 }
 
 .main {
-    margin: 5rem;
+    margin: 10rem;
     padding: 3rem;
 
     color: white;

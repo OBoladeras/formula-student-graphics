@@ -10,7 +10,17 @@ function newDriver(data) {
 
     let name = document.createElement("p");
     name.classList.add("name");
-    name.innerText = data.name;
+    icon = document.createElement("img");
+    icon.classList.add("iconoS");
+    if (data.class == "cv") {
+        icon.src = "/static/icons/fuel.png";
+    }
+    else {
+        icon.src = "/static/icons/electric.png";
+    }
+    name.innerHTML = '';
+    name.appendChild(icon);
+    name.appendChild(document.createTextNode(data.name));
 
     let times = document.createElement("div");
     times.classList.add("times");

@@ -1,3 +1,5 @@
+data = []
+
 function createDriver(data, p, race) {
     const driver = document.createElement('div');
     driver.classList.add('driver');
@@ -89,14 +91,34 @@ function getDrivers() {
         .then(response => response.json())
         .then(data => {
             race = data[0];
-            document.querySelector('.drivers').innerHTML = '';
             document.getElementById("raceName").innerHTML = race.charAt(0).toUpperCase() + race.slice(1);
 
-            for (let i = 1; i < data.length; i++) {
-                createDriver(data[i], i, race);
-            }
+            globalThis.data = data;
         });
 }
 
+function displayDriversInBatches(startIndex, batchSize, delay) {
+    let endIndex = Math.min(startIndex + batchSize, data.length);
+
+    document.querySelector('.drivers').innerHTML = '';
+    for (let i = startIndex; i < endIndex; i++) {
+        createDriver(data[i], i, data[0]);
+    }
+
+    let nextStartIndex = endIndex;
+
+    if (endIndex >= data.length) {
+        nextStartIndex = 1;
+    }
+
+    setTimeout(() => {
+        document.querySelector('.drivers').innerHTML = '';
+        displayDriversInBatches(nextStartIndex, batchSize, delay);
+    }, delay);
+}
+
 getDrivers();
-setInterval(getDrivers, 10000);
+setInterval(getDrivers, 40000);
+setTimeout(() => {
+    displayDriversInBatches(1, 6, 10000);
+}, 5000);

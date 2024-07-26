@@ -201,11 +201,8 @@ class times():
         for i in list:
             tmp = {}
 
-            if i[5].lower() == 'ev':
-                tmp["name"] = f"⚡ {i[4]}"
-            if i[5].lower() == 'cv':
-                tmp["name"] = f"⛽ {i[4]}"
-
+            tmp["name"] = i[4]
+            tmp["class"] = i[5].lower()
             tmp['number'] = i[3]
             tmp['best'] = i[14]
             tmp['last'] = i[8]

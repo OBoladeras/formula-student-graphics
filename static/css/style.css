@@ -22,6 +22,14 @@ body {
     font-family: 'Montserrat', sans-serif;
 }
 
+.iconoS {
+    width: 1rem;
+    height: 1rem;
+
+    padding-left: 0;
+    padding-right: 20px;
+}
+
 th,
 td {
     text-align: center;
