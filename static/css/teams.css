@@ -57,6 +57,18 @@ input[type="radio"] {
     cursor: pointer;
 }
 
+tr.clickable-row {
+    cursor: pointer;
+}
+
+tr.clickable-row input[type="radio"] {
+    display: none;
+}
+
+tr.clickable-row.selected {
+    background-color: var(--fss);
+}
+
 @media only screen and (max-width: 1000px) {
     table {
         font-size: 23px;

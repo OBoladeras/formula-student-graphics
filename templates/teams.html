@@ -7,6 +7,10 @@
     <link rel="stylesheet" type="text/css" href="/static/css/teams.css">
 
     <script src="/static/js/teams.js"></script>
+    <style>
+
+    </style>
+
 </head>
 
 
@@ -35,13 +39,15 @@
             </tr>
 
             {% for team in teams %}
-            {% if team.selected == 'true' %}
-            <tr style="background-color: var(--fss);">
-                <td style="text-align: center;"><input type="radio" name="selectedTeam" checked></td>
+            {% if team.selected=='true' %}
+            <tr class="clickable-row selected" data-team-id="{{ team.id }}">
                 {% else %}
-            <tr>
-                <td style="text-align: center;"><input type="radio" name="selectedTeam"></td>
+            <tr class="clickable-row" data-team-id="{{ team.id }}">
                 {% endif %}
+                <td style="text-align: center;">
+                    <input type="radio" name="selectedTeam" value="{{ team.id }}" id="team-{{ team.id }}" {% if
+                        team.selected=='true' %}checked{% endif %}>
+                </td>
                 <td>{{ team.number }}</td>
                 <td>{{ team.name }}</td>
                 <td>{{ team.uni }}</td>
@@ -50,6 +56,17 @@
             {% endfor %}
         </table>
     </form>
+
+    <script>
+        document.querySelectorAll('.clickable-row').forEach(row => {
+            row.addEventListener('click', function () {
+                const radio = this.querySelector('input[type="radio"]');
+                radio.checked = true;
+                document.querySelectorAll('.clickable-row').forEach(r => r.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+    </script>
     {% include 'config.html' %}
 </body>
 
