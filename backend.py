@@ -35,9 +35,8 @@ class files():
             if teams[i]["number"] == currentTeam["number"]:
                 teams[i]["selected"] = "true"
                 break
-        
-        return sorted(teams[1:], key=lambda x: int(x["number"]))
 
+        return sorted(teams[1:], key=lambda x: int(x["number"]))
 
     def team(self) -> dict:
         try:
@@ -111,11 +110,11 @@ class times():
         data = {"fuel": {}, "electric": {}, "race": race}
 
         if race == "skidpad":
-            url = 'http://fss2023.ddns.net/Skidpad.aspx'
+            url = 'http://fss2024.ddns.net/Skidpad.aspx'
         elif race == "acceleration":
-            url = 'http://fss2023.ddns.net/Acceleracio.aspx'
+            url = 'http://fss2024.ddns.net/Acceleracio.aspx'
         elif race == "autocross":
-            url = 'http://fss2023.ddns.net/Autocross.aspx'
+            url = 'http://fss2024.ddns.net/Autocross.aspx'
 
         if race in ["skidpad", "acceleration", "autocross"]:
             response = requests.get(url)
@@ -215,11 +214,11 @@ class times():
     def standings(self, race: str) -> list:
         data = [race, ]
         if race == "skidpad":
-            url = 'http://fss2023.ddns.net/Skidpad.aspx'
+            url = 'http://fss2024.ddns.net/Skidpad.aspx'
         elif race == "acceleration":
-            url = 'http://fss2023.ddns.net/Acceleracio.aspx'
+            url = 'http://fss2024.ddns.net/Acceleracio.aspx'
         elif race == "autocross":
-            url = 'http://fss2023.ddns.net/Autocross.aspx'
+            url = 'http://fss2024.ddns.net/Autocross.aspx'
 
         if race == "endurance":
             list = self.readEndurance()
