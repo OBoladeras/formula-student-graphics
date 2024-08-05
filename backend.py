@@ -291,7 +291,7 @@ class times():
                 tmp = {}
                 tmp["name"] = f"#{i[0]} {i[3]}"
                 tmp["uni"] = i[4]
-                tmp["time"] = f"{i[-1][0]},{i[-1][1:]}"
+                tmp["time"] = f"{str(i[-1])[0]},{str(i[-1])[1:]}"
 
                 for j in files().teams():
                     if str(j["number"]).strip() == str(i[0]).strip():
