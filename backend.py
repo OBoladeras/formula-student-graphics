@@ -107,6 +107,25 @@ class times():
         return df.values.tolist()[2:]
 
     def bestTime(self, race: str) -> dict:
+        def split_first_last_hyphen(s):
+            first_split = s.split('-', 1)
+
+            if len(first_split) == 1:
+                return first_split
+
+            first_part = first_split[0]
+            remaining_part = first_split[1]
+
+            last_hyphen_index = remaining_part.rfind('-')
+
+            if last_hyphen_index == -1:
+                return [first_part, remaining_part]
+
+            second_part = remaining_part[:last_hyphen_index]
+            third_part = remaining_part[last_hyphen_index + 1:]
+
+            return [first_part, second_part, third_part]
+
         data = {"fuel": {
             "time": "",
                     "number": "",
@@ -145,7 +164,7 @@ class times():
             # Get the best time for each category
             clean = []
             for i in bestRuns[0]:
-                j = i.split("-")
+                j = split_first_last_hyphen(i)
                 tmp = []
                 for k in j:
                     if "combustion" in k.lower() or "electric" in k.lower():
@@ -272,7 +291,7 @@ class times():
                 tmp = {}
                 tmp["name"] = f"#{i[0]} {i[3]}"
                 tmp["uni"] = i[4]
-                tmp["time"] = i[-1]
+                tmp["time"] = f"{i[-1][0],i[-1][1:]}"
 
                 for j in files().teams():
                     if str(j["number"]).strip() == str(i[0]).strip():
