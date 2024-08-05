@@ -8,21 +8,21 @@ function update() {
                 }
                 currentNum = data.number;
 
-                document.getElementById("text").style.width = "0px";
+                document.querySelector('.teamname').innerText = data.name;
+                document.querySelector('.uni').innerText = data.uni;
+                document.querySelector('.number').innerText = data.number;
 
-                setTimeout(() => {
-                    document.getElementById("text").style.width = "100%";
+                carPhoto = document.getElementById('carPhoto');
 
-                    document.querySelector('.teamname').innerText = data.name;
-                    document.querySelector('.uni').innerText = data.uni;
-                    document.querySelector('.number').innerText = data.number;
+                if (carPhoto.src != `/static/cars/${data.number}.png`) {
+                    carPhoto.src = `/static/cars/${data.number}.png`;
+                }
 
-                    if (data.flag == 'none') {
-                        document.querySelector('.flag').style.display = 'none';
-                    } else if (document.querySelector('.flag').style.backgroundImage != `url("/static/flags/${data.flag}.png")`) {
-                        document.querySelector('.flag').style.backgroundImage = `url("/static/flags/${data.flag}.png")`;
-                    }
-                }, 2000);
+                if (data.flag == 'none') {
+                    document.querySelector('.flag').style.display = 'none';
+                } else if (document.querySelector('.flag').style.backgroundImage != `url("/static/flags/${data.flag}.png")`) {
+                    document.querySelector('.flag').style.backgroundImage = `url("/static/flags/${data.flag}.png")`;
+                }
             });
         update();
     }, 5000);
