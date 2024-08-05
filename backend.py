@@ -107,10 +107,20 @@ class times():
         return df.values.tolist()[2:]
 
     def bestTime(self, race: str) -> dict:
-        data = {"fuel": {}, "electric": {}, "race": race}
+        data = {"fuel": {
+            "time": "",
+                    "number": "",
+                    "uni": "",
+                    "name": ""
+        }, "electric": {
+            "time": "",
+                    "number": "",
+                    "uni": "",
+                    "name": ""
+        }, "race": race}
 
         if race == "skidpad":
-            url = 'http://fss2024.ddns.net/Skidpad.aspx'
+            url = 'http://fss2024.ddns.net/SkidPad.aspx'
         elif race == "acceleration":
             url = 'http://fss2024.ddns.net/Acceleracio.aspx'
         elif race == "autocross":
@@ -152,20 +162,25 @@ class times():
             # Get the name of the team for each best time
             for i in clean:
                 for j in allRuns:
-                    if int(i[1]) == int(j[0]):
-                        clean[clean.index(i)].insert(2, j[3])
-                        break
+                    try:
+                        if int(i[1]) == int(j[0]):
+                            clean[clean.index(i)].insert(2, j[3])
+                            break
+                    except:
+                        pass
 
             # Create the dictionary with the data
-            data["fuel"]["time"] = clean[0][4]
-            data["fuel"]["number"] = clean[0][1]
-            data["fuel"]["uni"] = clean[0][3]
-            data["fuel"]["name"] = clean[0][2]
+            if len(clean[0]) == 5:
+                data["fuel"]["time"] = clean[0][4]
+                data["fuel"]["number"] = clean[0][1]
+                data["fuel"]["uni"] = clean[0][3]
+                data["fuel"]["name"] = clean[0][2]
 
-            data["electric"]["time"] = clean[1][4]
-            data["electric"]["number"] = clean[1][1]
-            data["electric"]["uni"] = clean[1][3]
-            data["electric"]["name"] = clean[1][2]
+            if len(clean[1]) == 5:
+                data["electric"]["time"] = clean[1][4]
+                data["electric"]["number"] = clean[1][1]
+                data["electric"]["uni"] = clean[1][3]
+                data["electric"]["name"] = clean[1][2]
         elif race == "endurance":
             list = self.readEndurance()
 
@@ -214,7 +229,7 @@ class times():
     def standings(self, race: str) -> list:
         data = [race, ]
         if race == "skidpad":
-            url = 'http://fss2024.ddns.net/Skidpad.aspx'
+            url = 'http://fss2024.ddns.net/SkidPad.aspx'
         elif race == "acceleration":
             url = 'http://fss2024.ddns.net/Acceleracio.aspx'
         elif race == "autocross":
