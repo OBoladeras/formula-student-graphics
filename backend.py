@@ -291,7 +291,10 @@ class times():
                 tmp = {}
                 tmp["name"] = f"#{i[0]} {i[3]}"
                 tmp["uni"] = i[4]
-                tmp["time"] = f"{str(i[-1])[0]},{str(i[-1])[1:]}"
+                if race in ["skidpad", "acceleration"]:
+                    tmp["time"] = f"{str(i[-1])[0]},{str(i[-1])[1:]}"
+                else:
+                    tmp["time"] = f"{str(i[-1])[:2]},{str(i[-1])[2:]}"
 
                 for j in files().teams():
                     if str(j["number"]).strip() == str(i[0]).strip():
