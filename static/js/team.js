@@ -25,7 +25,7 @@ function update() {
                 }
             });
         update();
-    }, 5000);
+    }, 1500);
 }
 
 update();
