@@ -266,14 +266,24 @@ class times():
                 tmp = {"flag": ""}
 
                 for j in teams:
-                    if j["number"].strip() == i[3].strip():
+
+                    number = i[3].strip()
+                    if str(number[0]) == "0":
+                        number = number[1:]
+
+                    if j["number"].strip() == number:
                         tmp["flag"] = j["flag"]
 
                 tmp["name"] = f"#{i[3]} {i[4]}"
                 tmp["class"] = i[5]
                 tmp["lap"] = i[7]
-                tmp['last'] = i[8]
+                if i[8] == "Retirado":
+                    tmp['last'] = "DNF"
+                else:
+                    tmp['last'] = i[8]
                 tmp['best'] = i[14]
+
+                print(tmp)
 
                 data.append(tmp)
         else:
