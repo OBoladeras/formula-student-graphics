@@ -239,7 +239,11 @@ class times():
             tmp["class"] = i[5].lower()
             tmp['number'] = i[3]
             tmp['best'] = i[14]
-            tmp['last'] = i[8]
+            print(i[8])
+            if i[8] == "Retirado":
+                tmp['last'] = "DNF"
+            else:
+                tmp['last'] = i[8]
 
             data.append(tmp)
 
