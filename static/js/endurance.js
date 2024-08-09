@@ -53,7 +53,7 @@ function newDriver(data) {
 
 
 function getDrivers() {
-    fetch("/losmnHjnsytTgsbaH6hs8K9o/api/endurance")
+    fetch("/api/endurance")
         .then(response => response.json())
         .then(data => {
             document.getElementById("grid").innerHTML = "";

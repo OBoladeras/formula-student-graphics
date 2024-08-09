@@ -22,7 +22,7 @@ function newBest(type) {
 
 
 function getLast() {
-    fetch('/losmnHjnsytTgsbaH6hs8K9o/api/last')
+    fetch('/api/last')
         .then(response => response.json())
         .then(data => {
             if (best != data) {
@@ -46,7 +46,7 @@ function getLast() {
 function getBest() {
     globalThis.best = best;
 
-    fetch('/losmnHjnsytTgsbaH6hs8K9o/api/best')
+    fetch('/api/best')
         .then(response => response.json())
         .then(data => {
             race = data.race;

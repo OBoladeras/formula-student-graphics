@@ -7,7 +7,6 @@ backend = files()
 raceTimes = times()
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(16)
-key = "losmnHjnsytTgsbaH6hs8K9o"
 
 
 @app.route("/favicon.ico")
@@ -15,7 +14,7 @@ def favicon():
     return send_file("static/favicon.ico", mimetype="image/x-icon")
 
 
-@app.route(f"/{key}", methods=["GET", "POST"])
+@app.route("/", methods=["GET", "POST"])
 def index():
     if request.method == "POST":
         return jsonify({"message": backend.race(request.json["race"])})
@@ -26,12 +25,12 @@ def index():
 # -----------------------------
 #   Teams
 # -----------------------------
-@app.route(f"/{key}/teams")
+@app.route("/teams")
 def teams():
     return render_template("teams.html", teams=backend.teams())
 
 
-@app.route(f"/{key}/team")
+@app.route("/team")
 def team():
     return render_template("team.html", team=backend.team())
 
@@ -42,7 +41,7 @@ def team():
 #       ACCELERATION
 #       AUTOCROS
 # -----------------------------
-@app.route(f"/{key}/bestrun")
+@app.route("/bestrun")
 def bestrun():
     return render_template("bestrun.html")
 
@@ -50,7 +49,7 @@ def bestrun():
 # -----------------------------
 #   ENDURANCE
 # -----------------------------
-@app.route(f"/{key}/endurance")
+@app.route("/endurance")
 def endurance():
     return render_template("endurance.html")
 
@@ -58,7 +57,7 @@ def endurance():
 # -----------------------------
 #   STANDINGS
 # -----------------------------
-@app.route(f"/{key}/standings")
+@app.route("/standings")
 def standings():
     return render_template("standings.html")
 
@@ -67,7 +66,7 @@ def standings():
 # -----------------------------
 #   API
 # -----------------------------
-@app.route(f"/{key}/api/team", methods=["GET", "POST"])
+@app.route("/api/team", methods=["GET", "POST"])
 def team_api():
     if request.method == "GET":
         return jsonify(backend.team())
@@ -82,17 +81,17 @@ def team_api():
         return jsonify({"message": backend.saveTeam(data)})
 
 
-@app.route(f"/{key}/api/best")
+@app.route("/api/best")
 def best_api():
     return jsonify(raceTimes.bestTime(backend.race()))
 
 
-@app.route(f"/{key}/api/endurance")
+@app.route("/api/endurance")
 def endurance_api():
     return jsonify(raceTimes.endurance())
 
 
-@app.route(f"/{key}/api/standings")
+@app.route("/api/standings")
 def standings_api():
     return jsonify(raceTimes.standings(files().race()))
 

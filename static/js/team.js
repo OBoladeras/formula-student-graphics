@@ -1,6 +1,6 @@
 function update() {
     setTimeout(() => {
-        fetch('/losmnHjnsytTgsbaH6hs8K9o/api/team')
+        fetch('/api/team')
             .then(response => response.json())
             .then(data => {
                 if (currentNum == data.number) {

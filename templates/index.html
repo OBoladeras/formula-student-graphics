@@ -13,15 +13,15 @@
 
     <div class="zone">
         <p></p>
-        <a href="/losmnHjnsytTgsbaH6hs8K9o/teams"><button class="sport-button">Current Team Selector</button></a>
-        <a href="/losmnHjnsytTgsbaH6hs8K9o/team"><button class="sport-button">Current Team</button></a>
+        <a href="/teams"><button class="sport-button">Current Team Selector</button></a>
+        <a href="/team"><button class="sport-button">Current Team</button></a>
 
         <p></p>
-        <a href="/losmnHjnsytTgsbaH6hs8K9o/bestrun"><button class="sport-button">Best Run</button></a>
+        <a href="/bestrun"><button class="sport-button">Best Run</button></a>
 
         <p></p>
-        <a href="/losmnHjnsytTgsbaH6hs8K9o/endurance"><button class="sport-button">Endurance</button></a>
-        <a href="/losmnHjnsytTgsbaH6hs8K9o/standings"><button class="sport-button">Standings</button></a>
+        <a href="/endurance"><button class="sport-button">Endurance</button></a>
+        <a href="/standings"><button class="sport-button">Standings</button></a>
     </div>
 
     <p></p>
@@ -57,7 +57,7 @@
             confirmation = confirm("Are you sure you want to change race to " + race + "?");
 
             if (confirmation) {
-                fetch("/losmnHjnsytTgsbaH6hs8K9o", {
+                fetch("/", {
                     method: "POST",
                     headers: {
                         "Content-Type": "application/json"
