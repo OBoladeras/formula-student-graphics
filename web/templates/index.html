@@ -10,7 +10,6 @@
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
-
         * {
             font-family: 'Montserrat';
             font-weight: 300;
@@ -47,6 +46,13 @@
             -webkit-animation: reveal-center 1s ease-out forwards;
         }
     </style>
+
+    <script>
+        // globals per recordar l'estat seleccionat
+        globalThis.category_selected = null;
+        globalThis.subcategory_selected = null;
+    </script>
+
 </head>
 
 <body class="bg-[#232323] text-white font-sans mt-12 mx-4 sm:mx-10 md:mx-20">
@@ -94,11 +100,10 @@
     <!-- Category Cards -->
     <section class="mt-20 mx-12">
         <div class="mx-auto grid grid-cols-1 md:grid-cols-3 gap-12 text-2xl">
-            {% set categories = ['COMBUSTION & ELECTRIC', 'DRIVERLESS', 'CLASSIC CUP'] %}
-            {% for category in categories %}
-            <div id="{{ category | lower | replace(' ', '-') }}"
-                class="relative py-4 px-4 bg-[#444444] text-center font-bold cursor-pointer group font-medium italic">
-                {{ category }}
+            {% for category_key in data %}
+            <div id="{{ category_key }}"
+                class="relative py-4 px-4 bg-[#444444] text-center font-bold cursor-pointer group font-medium italic category-select">
+                {{ data[category_key].name }}
                 <div
                     class="absolute top-0 left-0 w-full h-1 bg-[#C8102E] scale-x-0 group-hover:scale-x-100 transition-transform duration-300 origin-left">
                 </div>
@@ -107,37 +112,37 @@
         </div>
     </section>
 
-    <section class="mt-2 mx-12 bg-[#C8102E]">
-        <div class="mx-auto grid grid-cols-1 md:grid-cols-4 mt-6 text-2xl">
-            <div
-                class="relative py-4 px-4 bg-[#C8102E] text-center font-bold cursor-pointer group uppercase font-medium italic">
-                Endurance
+    {% set categories = ['combustion&electric', 'driverless', 'classic-cup'] %}
+    {% set subcategories = ['endurance', 'acceleration', 'autocross', 'skidpad'] %}
+    {% for category_key in data %}
+    <section id="{{ category_key }}-results" class="mt-2 mx-12 bg-[#C8102E] results-section" style="display: none;">
+
+        <div class="mx-auto grid grid-cols-1 md:grid-cols-{{data[category_key]['times']|length}} mt-6 text-2xl">
+            {% for subcategory in data[category_key]['times'] %}
+            <!-- Use data attributes instead of id -->
+            <div class="relative py-4 px-4 bg-[#991031] text-center font-bold cursor-pointer group uppercase font-medium italic subcategory-select"
+                data-subcategory="{{ subcategory }}" data-category="{{ category_key }}">
+                {{ subcategory }}
             </div>
-            <div
-                class="relative py-4 px-4 bg-[#991031] text-center font-bold cursor-pointer group uppercase font-medium italic">
-                Acceleration
-            </div>
-            <div
-                class="relative py-4 px-4 bg-[#991031] text-center font-bold cursor-pointer group uppercase font-medium italic">
-                Autocross
-            </div>
-            <div
-                class="relative py-4 px-4 bg-[#991031] text-center font-bold cursor-pointer group uppercase font-medium italic">
-                Skidpad
-            </div>
+            {% endfor %}
         </div>
 
-        <!-- Results Table Section -->
-        <section class="mt-2">
+        {% for subcategory in data[category_key]['times'] %}
+        <section class="mt-2 results-table" id="{{ subcategory }}-{{ category_key }}-results" style="display: none;">
             <div class="mx-12 pb-12 overflow-x-auto">
                 <table
                     class="w-full text-sm text-white bg-neutral-800 border border-gray-700 overflow-hidden min-w-[900px] text-2xl">
                     <thead class="bg-[#444444] text-xs uppercase text-white text-l">
                         <tr>
+                            {% if subcategory == 'endurance' %}
                             {% set table_headings = [
-                            "#", "Num", "Team", "Driver", "Lap", "Car", "Last Time", "Prev Time",  "Best Time", "In Lap", 
+                            "#", "Num", "Team", "Driver", "Lap", "Car", "Last Time", "Prev Time", "Best Time", "In Lap",
                             "2nd Best"]
                             %}
+                            {% else %}
+                            {% set table_headings = ["#", "Round", "Driver", "Team", "University", "Result"] %}
+                            {% endif %}
+
                             {% for heading in table_headings %}
                             {% if loop.first %}<th class="px-3 py-4 text-center font-bold border-r border-white">{{
                                 heading }}</th>{% else %}
@@ -146,28 +151,100 @@
                             {% endfor %}
                         </tr>
                     </thead>
+
                     <tbody class="divide-y divide-white text-sm text-black">
-                        {% for team in endurance["cv"] %}
-                        <tr class="odd:bg-white even:bg-[#E5E5E5] hover:bg-[#E5E5E5] transition">
-                            {% for info in team %}
-                            {% if loop.index == 6 %}
-                            <td class="px-3 py-4 text-center"><img src="{{info}}" alt="" class="w-12 h-12 mx-auto"></td>
-                            {% else %}
-                            <td class="px-3 py-4 text-center">{{info}}</td>
-                            {% endif %}
-                            {% endfor %}
-                        </tr>
+                        <div id="endurance-cv">
+                            {% for team in data[category_key]['times'][subcategory] %}
+                            <tr class="odd:bg-white even:bg-[#E5E5E5] hover:bg-[#E5E5E5] transition">
+                                {% for info in team %}
+                                {% if loop.index == 6 and subcategory == "endurance" %}
+                                <td class="px-3 py-4 text-center"><img src="{{info}}" alt="" class="w-12 mx-auto"
+                                        loading="lazy"></td>
+                                {% else %}
+                                <td class="px-3 py-4 text-center text-lg">{{info}}</td>
+                                {% endif %}
+                                {% endfor %}
+                            </tr>
+                        </div>
                         {% endfor %}
-                    </tbody>
-                </table>
+            </div>
+            </tbody>
+            </table>
             </div>
         </section>
+        {% endfor %}
     </section>
+    {% endfor %}
+
 
     <!-- Footer -->
     <footer class="mt-20 text-center text-sm text-gray-400 py-8">
         &copy; 2025 Formula Student Spain. All rights reserved.
     </footer>
+
+    <!-- Scripts -->
+    <script>
+        const categorySelect = document.querySelectorAll('.category-select');
+        const subcategorySelect = document.querySelectorAll('.subcategory-select');
+        const resultsSections = document.querySelectorAll('.results-section');
+
+        // Gestió de clics a categories
+        categorySelect.forEach((categoryEl) => {
+            categoryEl.addEventListener('click', () => {
+                const selectedCategory = categoryEl.id;
+                globalThis.category_selected = selectedCategory;
+
+                // Destaquem la categoria seleccionada
+                categorySelect.forEach((cat) => {
+                    cat.querySelector('div').classList.add('scale-x-0');
+                });
+                categoryEl.querySelector('div').classList.remove('scale-x-0');
+
+                // Amaguem totes les seccions, mostrem només la que toca
+                resultsSections.forEach((section) => {
+                    section.style.display = 'none';
+                });
+                const sectionToShow = document.getElementById(`${selectedCategory}-results`);
+                if (sectionToShow) sectionToShow.style.display = 'block';
+            });
+        });
+
+        // Gestió de clics a subcategories
+        subcategorySelect.forEach((subEl) => {
+            subEl.addEventListener('click', () => {
+                const subcategory = subEl.dataset.subcategory;
+                const category = subEl.dataset.category;
+                globalThis.subcategory_selected = subcategory;
+                globalThis.category_selected = category; // ens assegurem que hi és
+
+                // Actualitzem estils de botons
+                document.querySelectorAll('.subcategory-select').forEach((btn) => {
+                    btn.classList.remove('bg-[#C8102E]');
+                    btn.classList.add('bg-[#991031]');
+                });
+                subEl.classList.remove('bg-[#991031]');
+                subEl.classList.add('bg-[#C8102E]');
+
+                // Amaguem totes les taules de resultats
+                document.querySelectorAll('.results-table').forEach((table) => {
+                    table.style.display = 'none';
+                });
+
+                // Mostrem la taula corresponent
+                const table_id = `${subcategory}-${category}-results`;
+                console.log('Table ID: ', table_id);
+
+                const resultTable = document.getElementById(table_id);
+                if (resultTable) {
+                    resultTable.style.display = 'block';
+                    // resultTable.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                    console.warn('No s\'ha trobat cap taula amb ID:', table_id);
+                }
+            });
+        });
+    </script>
+
 </body>
 
 </html>

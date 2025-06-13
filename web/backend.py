@@ -83,10 +83,20 @@ class files():
 
 class times():
     def __init__(self) -> None:
-        pass
+        self.categories = ["combustion&electric", "driverless", "classic-cup"]
+        self.subcategories = ["endurance",
+                              "skidpad", "acceleration", "autocross"]
 
-    def readEndurance(self) -> list:
-        url = "http://www.pde-racing.com/tol/temps1434.asp"
+    def readEndurance(self, category: str) -> list:
+        if category not in self.categories:
+            raise ValueError("Invalid category. Choose from: " +
+                             ", ".join(self.categories))
+        if category == "combustion&electric":
+            url = "http://www.pde-racing.com/tol/temps1434.asp"
+        elif category == "driverless":
+            url = "http://www.pde-racing.com/tol/temps1433.asp"
+        elif category == "classic-cup":
+            url = "http://www.pde-racing.com/tol/temps1515.asp"
 
         response = requests.get(url)
         decoded_data = html.unescape(response.text)
@@ -105,8 +115,7 @@ class times():
         df.dropna(how='all', axis=0, inplace=True)
 
         data = df.values.tolist()[2:]
-        ev = []
-        cv = []
+        clean_data = []
         for team in data:
             team.pop(0)
             team.pop(0)
@@ -125,14 +134,70 @@ class times():
             team.pop(-1)
             team.pop(-1)
             team.pop(-1)
+            
+            clean_data.append(team)
 
 
-            if vehicle == "ev":
-                ev.append(team)
-            else:
-                cv.append(team)
+        return clean_data
 
-        return {'ev': ev, 'cv' :cv}
+    def readAcceleration(self, category: str) -> list:
+        if category not in self.categories:
+            raise ValueError("Invalid category. Choose from: " +
+                             ", ".join(self.categories))
+        if category == "combustion&electric":
+            url = "http://fss2024.ddns.net/Acceleracio.aspx"
+        elif category == "driverless":
+            url = "http://fss2024.ddns.net/DL_Acceleracio.aspx"
+        elif category == "classic-cup":
+            url = "http://fss2024.ddns.net/CUP_Acceleracio.aspx"
+
+        response = requests.get(url)
+        html_content = response.text
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        table = soup.find('table', id='GridView_Resultats')
+        table_html = str(table)
+        df = pd.read_html(StringIO(table_html))[0]
+
+        return df.values.tolist()
+
+    def readAutocross(self, category: str) -> list:
+        if category not in self.categories:
+            raise ValueError("Invalid category. Choose from: " +
+                             ", ".join(self.categories))
+        if category == "combustion&electric":
+            url = "http://fss2024.ddns.net/Autocross.aspx"
+        elif category == "classic-cup":
+            url = "http://fss2024.ddns.net/CUP_Autocross.aspx"
+
+        response = requests.get(url)
+        html_content = response.text
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        table = soup.find('table', id='GridView_Resultats')
+        table_html = str(table)
+        df = pd.read_html(StringIO(table_html))[0]
+
+        return df.values.tolist()
+
+    def readSkidpad(self, category: str) -> list:
+        if category not in self.categories:
+            raise ValueError("Invalid category. Choose from: " +
+                             ", ".join(self.categories))
+        if category == "combustion&electric":
+            url = "http://fss2024.ddns.net/SkidPad.aspx"
+        elif category == "driverless":
+            url = "http://fss2024.ddns.net/SkidPad.aspx"
+
+        response = requests.get(url)
+        html_content = response.text
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        table = soup.find('table', id='GridView_Resultats')
+        table_html = str(table)
+        df = pd.read_html(StringIO(table_html))[0]
+
+        return df.values.tolist()
 
     def bestTime(self, race: str) -> dict:
         def split_first_last_hyphen(s):
