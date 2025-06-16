@@ -46,9 +46,34 @@
             -webkit-animation: reveal-center 1s ease-out forwards;
         }
     </style>
+    <style>
+        .subcategory-select {
+            position: relative;
+            overflow: hidden;
+            transition: color 0.3s ease-in-out;
+            z-index: 0;
+        }
+
+        .subcategory-select::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            bottom: 0;
+            width: 100%;
+            background-color: #C8102E;
+            z-index: -1;
+            transform: translateX(-100%);
+            transition: transform 0.4s ease;
+            right: 0;
+            /* right-to-left */
+        }
+
+        .subcategory-select.active::before {
+            transform: translateX(0%);
+        }
+    </style>
 
     <script>
-        // globals per recordar l'estat seleccionat
         globalThis.category_selected = null;
         globalThis.subcategory_selected = null;
     </script>
@@ -120,7 +145,7 @@
         <div class="mx-auto grid grid-cols-1 md:grid-cols-{{data[category_key]['times']|length}} mt-6 text-2xl">
             {% for subcategory in data[category_key]['times'] %}
             <!-- Use data attributes instead of id -->
-            <div class="relative py-4 px-4 bg-[#991031] text-center font-bold cursor-pointer group uppercase font-medium italic subcategory-select"
+            <div class="relative py-4 px-4 bg-[#991031] text-center font-bold cursor-pointer group uppercase font-medium italic subcategory-select transition-all duration-300 ease-in-out transform"
                 data-subcategory="{{ subcategory }}" data-category="{{ category_key }}">
                 {{ subcategory }}
             </div>
@@ -134,13 +159,11 @@
                     class="w-full text-sm text-white bg-neutral-800 border border-gray-700 overflow-hidden min-w-[900px] text-2xl">
                     <thead class="bg-[#444444] text-xs uppercase text-white text-l">
                         <tr>
-                            {% if subcategory == 'endurance' %}
-                            {% set table_headings = [
-                            "#", "Num", "Team", "Driver", "Lap", "Car", "Last Time", "Prev Time", "Best Time", "In Lap",
-                            "2nd Best"]
-                            %}
+                            {% if subcategory in ('endurance', 'trackdrive') %}
+                            {% set table_headings = ["#", "Num", "Team", "Driver",
+                            "Lap", "Car", "Last Time", "Prev Time", "Best Time", "In Lap", "2nd Best"] %}
                             {% else %}
-                            {% set table_headings = ["#", "Round", "Driver", "Team", "University", "Result"] %}
+                            {% set table_headings = ["#", "Num", "Round", "Driver", "Team", "University", "Result"] %}
                             {% endif %}
 
                             {% for heading in table_headings %}
@@ -153,23 +176,27 @@
                     </thead>
 
                     <tbody class="divide-y divide-white text-sm text-black">
-                        <div id="endurance-cv">
+                        <div>
                             {% for team in data[category_key]['times'][subcategory] %}
                             <tr class="odd:bg-white even:bg-[#E5E5E5] hover:bg-[#E5E5E5] transition">
+
                                 {% for info in team %}
-                                {% if loop.index == 6 and subcategory == "endurance" %}
+                                {% if subcategory in ("endurance", 'trackdrive') %}
+                                {% if loop.index == 6 %}
                                 <td class="px-3 py-4 text-center"><img src="{{info}}" alt="" class="w-12 mx-auto"
                                         loading="lazy"></td>
                                 {% else %}
-                                <td class="px-3 py-4 text-center text-lg">{{info}}</td>
+                                <td class="px-3 py-4 text-center text-lg">{{ info }}</td>
+                                {% endif %}
+                                {% else %}
+                                <td class="px-3 py-4 text-center text-lg">{{ info }}</td>
                                 {% endif %}
                                 {% endfor %}
                             </tr>
                         </div>
                         {% endfor %}
-            </div>
-            </tbody>
-            </table>
+                    </tbody>
+                </table>
             </div>
         </section>
         {% endfor %}
@@ -224,6 +251,16 @@
                 });
                 subEl.classList.remove('bg-[#991031]');
                 subEl.classList.add('bg-[#C8102E]');
+
+                subcategorySelect.forEach((btn) => {
+                    btn.classList.remove('active');
+                    btn.classList.remove('bg-[#C8102E]');
+                    btn.classList.add('bg-[#991031]');
+                });
+                subEl.classList.remove('bg-[#991031]');
+                subEl.classList.add('bg-[#C8102E]');
+                subEl.classList.add('active');
+
 
                 // Amaguem totes les taules de resultats
                 document.querySelectorAll('.results-table').forEach((table) => {

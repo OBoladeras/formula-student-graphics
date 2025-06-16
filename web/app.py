@@ -1,5 +1,7 @@
 from backend import times
-from flask import Flask, render_template
+from functools import lru_cache
+from flask import Flask, render_template, jsonify
+
 
 app = Flask(__name__)
 
@@ -44,6 +46,17 @@ def index():
         
 
     return render_template('index.html', data=data, endurance=None)
+
+
+@app.route('/api/results/<cat>/<sub>')
+def api_results(cat: str, sub: str):
+    loader = times()
+
+    try:
+        return jsonify({'rows': loader.get_data_from(cat, sub)})
+    except ValueError as e:
+        return jsonify({'error': str(e)}), 400
+
 
 
 if __name__ == '__main__':
