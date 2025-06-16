@@ -1,7 +1,5 @@
 from backend import times
-from functools import lru_cache
 from flask import Flask, render_template, jsonify
-
 
 app = Flask(__name__)
 
@@ -9,43 +7,39 @@ app = Flask(__name__)
 @app.route('/', methods=['GET'])
 def index():
     time_loader = times()
+
     data = {
         "combustion&electric": {
             "name": "Combustion & Electric",
             "times": {
-                "endurance": time_loader.readEndurance("combustion&electric"),
-                "acceleration": time_loader.readAcceleration("combustion&electric"),
-                "autocross": time_loader.readAutocross("combustion&electric"),
-                "skidpad": time_loader.readSkidpad("combustion&electric"),
+                "endurance": [],
+                "acceleration": [],
+                "autocross": [],
+                "skidpad": []
             }
 
         },
         "driverless": {
             "name": "Driverless",
             "times": {
-                "trackdrive": time_loader.readEndurance("driverless"),
-                "acceleration": time_loader.readAcceleration("driverless"),
+                "trackdrive": [],
+                "acceleration": [],
                 # "autocross": time_loader.readAutocross("driverless"), Check this!!!!!!!!!!!!!!!!!
-                "skidpad": time_loader.readSkidpad("driverless"),
+                "skidpad": [],
             }
         },
         "classic-cup": {
             "name": "Classic Cup",
             "times": {
-                "endurance": time_loader.readEndurance("classic-cup"),
-                "acceleration": time_loader.readAcceleration("classic-cup"),
-                "autocross": time_loader.readAutocross("classic-cup"),
+                "endurance": [],
+                "acceleration": [],
+                "autocross": [],
             }
         },
     }
 
+    return render_template('index.html', data=data)
 
-    import json
-    with open('data.json', 'w') as file:
-        json.dump(data, file, indent=4)
-        
-
-    return render_template('index.html', data=data, endurance=None)
 
 
 @app.route('/api/results/<cat>/<sub>')

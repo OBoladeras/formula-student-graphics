@@ -146,16 +146,50 @@
             {% for subcategory in data[category_key]['times'] %}
             <!-- Use data attributes instead of id -->
             <div class="relative py-4 px-4 bg-[#991031] text-center font-bold cursor-pointer group uppercase font-medium italic subcategory-select transition-all duration-300 ease-in-out transform"
-                data-subcategory="{{ subcategory }}" data-category="{{ category_key }}">
+                data-subcategory="{{ subcategory }}" data-category="{{ category_key }}"
+                onclick="loadSubcat('{{ category_key }}', '{{ subcategory }}')">
+                {{ data[category_key]['times'][subcategory].name }}
                 {{ subcategory }}
             </div>
             {% endfor %}
         </div>
 
+
+
+        <script>
+            document.getElementById('filter-button').addEventListener('click', () => {
+                const selectedCategory = globalThis.category_selected;
+                const selectedSubcategory = globalThis.subcategory_selected;
+
+                if (selectedCategory && selectedSubcategory) {
+                    const tableId = `${selectedSubcategory}-${selectedCategory}-results`;
+                    const resultTable = document.getElementById(tableId);
+
+                    if (resultTable) {
+                        resultTable.style.display = 'block';
+                        resultTable.scrollIntoView({ behavior: 'smooth' });
+                        loadSubcat(selectedCategory, selectedSubcategory);
+                    } else {
+                        alert('No results available for the selected category and subcategory.');
+                    }
+
+                } else {
+                    alert('Please select a category and subcategory first.');
+                }
+            });
+        </script>
+
         {% for subcategory in data[category_key]['times'] %}
         <section class="mt-2 results-table" id="{{ subcategory }}-{{ category_key }}-results" style="display: none;">
+            <div class="mt-4 text-center">
+                <button id="filter-button"
+                    class="px-6 py-2 my-5 bg-[#444444] text-white font-bold rounded hover:bg-[#C8102E] transition-colors duration-300  ">
+                    Filter Results
+                </button>
+            </div>
+
             <div class="mx-12 pb-12 overflow-x-auto">
-                <table
+                <table id="{{ subcategory }}-{{ category_key }}-results"
                     class="w-full text-sm text-white bg-neutral-800 border border-gray-700 overflow-hidden min-w-[900px] text-2xl">
                     <thead class="bg-[#444444] text-xs uppercase text-white text-l">
                         <tr>
@@ -175,27 +209,7 @@
                         </tr>
                     </thead>
 
-                    <tbody class="divide-y divide-white text-sm text-black">
-                        <div>
-                            {% for team in data[category_key]['times'][subcategory] %}
-                            <tr class="odd:bg-white even:bg-[#E5E5E5] hover:bg-[#E5E5E5] transition">
-
-                                {% for info in team %}
-                                {% if subcategory in ("endurance", 'trackdrive') %}
-                                {% if loop.index == 6 %}
-                                <td class="px-3 py-4 text-center"><img src="{{info}}" alt="" class="w-12 mx-auto"
-                                        loading="lazy"></td>
-                                {% else %}
-                                <td class="px-3 py-4 text-center text-lg">{{ info }}</td>
-                                {% endif %}
-                                {% else %}
-                                <td class="px-3 py-4 text-center text-lg">{{ info }}</td>
-                                {% endif %}
-                                {% endfor %}
-                            </tr>
-                        </div>
-                        {% endfor %}
-                    </tbody>
+                    <tbody class="divide-y divide-white text-sm text-black"></tbody>
                 </table>
             </div>
         </section>
@@ -211,23 +225,65 @@
 
     <!-- Scripts -->
     <script>
+        function loadSubcat(cat, sub) {
+            fetch(`/api/results/${cat}/${sub}`)
+                .then(res => res.json())
+                .then(json => {
+                    const tableId = `${sub}-${cat}-results`;
+                    const resultTable = document.getElementById(tableId);
+
+                    if (!resultTable) {
+                        console.warn('No table found with ID:', tableId);
+                        return;
+                    }
+
+                    if (resultTable) {
+                        const tbody = resultTable.querySelector('tbody');
+                        tbody.innerHTML = '';
+
+                        data = json.rows;
+
+                        data.forEach(team => {
+                            const row = document.createElement('tr');
+                            row.className = 'odd:bg-white even:bg-[#E5E5E5] hover:bg-[#E5E5E5] transition';
+                            team.forEach(info => {
+                                const cell = document.createElement('td');
+                                cell.className = 'px-3 py-4 text-center text-lg';
+                                if (String(info).endsWith('.png') || String(info).endsWith('.jpg') || String(info).endsWith('.jpeg')) {
+                                    const img = document.createElement('img');
+                                    img.src = info;
+                                    img.alt = '';
+                                    img.className = 'w-12 mx-auto h-12 object-cover';
+                                    cell.appendChild(img);
+                                } else {
+                                    cell.textContent = info;
+                                }
+                                row.appendChild(cell);
+                            });
+                            tbody.appendChild(row);
+                        });
+                    } else {
+                        console.warn('No s\'ha trobat cap taula amb ID:', tableId);
+                    }
+                });
+        }        
+    </script>
+
+    <script>
         const categorySelect = document.querySelectorAll('.category-select');
         const subcategorySelect = document.querySelectorAll('.subcategory-select');
         const resultsSections = document.querySelectorAll('.results-section');
 
-        // Gestió de clics a categories
         categorySelect.forEach((categoryEl) => {
             categoryEl.addEventListener('click', () => {
                 const selectedCategory = categoryEl.id;
                 globalThis.category_selected = selectedCategory;
 
-                // Destaquem la categoria seleccionada
                 categorySelect.forEach((cat) => {
                     cat.querySelector('div').classList.add('scale-x-0');
                 });
                 categoryEl.querySelector('div').classList.remove('scale-x-0');
 
-                // Amaguem totes les seccions, mostrem només la que toca
                 resultsSections.forEach((section) => {
                     section.style.display = 'none';
                 });
@@ -236,15 +292,13 @@
             });
         });
 
-        // Gestió de clics a subcategories
         subcategorySelect.forEach((subEl) => {
             subEl.addEventListener('click', () => {
                 const subcategory = subEl.dataset.subcategory;
                 const category = subEl.dataset.category;
                 globalThis.subcategory_selected = subcategory;
-                globalThis.category_selected = category; // ens assegurem que hi és
+                globalThis.category_selected = category;
 
-                // Actualitzem estils de botons
                 document.querySelectorAll('.subcategory-select').forEach((btn) => {
                     btn.classList.remove('bg-[#C8102E]');
                     btn.classList.add('bg-[#991031]');
@@ -262,12 +316,10 @@
                 subEl.classList.add('active');
 
 
-                // Amaguem totes les taules de resultats
                 document.querySelectorAll('.results-table').forEach((table) => {
                     table.style.display = 'none';
                 });
 
-                // Mostrem la taula corresponent
                 const table_id = `${subcategory}-${category}-results`;
                 console.log('Table ID: ', table_id);
 
