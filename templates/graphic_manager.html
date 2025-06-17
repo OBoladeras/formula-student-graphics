@@ -6,6 +6,8 @@
     <title>Graphics Manager</title>
     <script src="/static/js/graphic_manager.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <script>globalThis.graphic_status = {};</script>
 </head>
 
 <body class="bg-gray-100 text-gray-800 font-sans p-8 h-screen">
@@ -22,9 +24,28 @@
                 <p>Current team is the team that will be displayed on the graphics.</p>
 
                 <div>
+                    <!-- show the visualizer status, showed or not -->
+                    {% if graphics_data["current_team"] == True %}
+                    <div class="bg-green-100 text-green-800 p-3 rounded-lg max-w-xs text-center mx-auto my-4"
+                        id="current_team_status">
+                        <p class="font-semibold">Visualizer is active.</p>
+                    </div>
+                    <script>graphic_status["current_team"] = true;</script>
+                    {% else %}
+                    <div class="bg-red-100 text-red-800 p-3 rounded-lg max-w-xs text-center mx-auto my-4"
+                        id="current_team_status">
+                        <p class="font-semibold">Visualizer is not active.</p>
+                    </div>
+                    <script>graphic_status["current_team"] = false;</script>
+                    {% endif %}
+
                     <button id="toggleGraphicButton" onclick="toggleGraphic('current_team')"
                         class="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
+                        {% if graphics_data["current_team"] == True %}
+                        Hide Graphic
+                        {% else %}
                         Show Graphic
+                        {% endif %}
                     </button>
                 </div>
                 <img id="current_team" src="/static/images/current_team/image.png" alt="" class="mt-4 w-2xl h-auto">
@@ -108,35 +129,59 @@
     </script>
 
     <script>
-        let graphicVisible = false;
         function toggleGraphic(graphic_name) {
-            graphicVisible = !graphicVisible;
+            graphic_Visible = graphic_status[graphic_name];
+            graphicVisible = !graphic_Visible;
+            graphic_status[graphic_name] = graphicVisible;
+
             const button = document.getElementById("toggleGraphicButton");
+
             if (graphicVisible) {
                 showGraphic(graphic_name);
                 button.textContent = "Hide Graphic";
-                button.classList.remove("bg-green-600");
-                button.classList.remove("hover:bg-green-700");
-                button.classList.add("bg-red-600");
-                button.classList.add("hover:bg-red-700");
-
             } else {
                 hideGraphic(graphic_name);
                 button.textContent = "Show Graphic";
-                button.classList.remove("bg-red-600");
-                button.classList.remove("hover:bg-red-700");
-                button.classList.add("bg-green-600");
-                button.classList.add("hover:bg-green-700");
             }
         }
 
         function showGraphic(graphic_name) {
-            console.log("Showing graphic");
-            current_team = document.getElementById(graphic_name);
+            graphic_status = document.getElementById(graphic_name + "_status");
+
+            graphic_status.classList.remove("bg-red-100", "text-red-800");
+            graphic_status.classList.add("bg-green-100", "text-green-800");
+            text = graphic_status.querySelector("p");
+            text.textContent = "Visualizer is active.";
+
+
+            fetch(`/graphics_status/${graphic_name}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    show: true
+                })
+            })
         }
 
         function hideGraphic(graphic_name) {
-            console.log("Hiding graphic");
+            graphic_status = document.getElementById(graphic_name + "_status");
+            graphic_status.classList.remove("bg-green-100", "text-green-800");
+            graphic_status.classList.add("bg-red-100", "text-red-800");
+
+            text = graphic_status.querySelector("p");
+            text.textContent = "Visualizer is not active.";
+
+            fetch(`/graphics_status/${graphic_name}`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify({
+                    show: false
+                })
+            })
         }
     </script>
 

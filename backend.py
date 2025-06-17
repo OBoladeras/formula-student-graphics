@@ -38,30 +38,6 @@ class files():
 
 
 
-
-    def team(self) -> dict:
-        try:
-            with open("data.json", "r", encoding="UTF-8") as f:
-                savedData = json.load(f)
-                currentTeam = savedData["currentTeam"]
-        except:
-            currentTeam = {"number": "", "name": "", "uni": "", "flag": ""}
-
-        return currentTeam
-
-    def saveTeam(self, data: dict) -> str:
-        try:
-            with open("data.json", "r", encoding="UTF-8") as f:
-                savedData = json.load(f)
-                savedData["currentTeam"] = data
-        except:
-            savedData = {"currentTeam": data}
-
-        with open("data.json", "w", encoding="UTF-8") as f:
-            json.dump(savedData, f)
-
-        return "success"
-
     def race(self, race: str = "") -> str:
         try:
             with open("data.json", "r", encoding="UTF-8") as f:

@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>Current Team</title>
+    <title>Vmix</title>
 
     <link rel="stylesheet" type="text/css" href="/static/css/team.css">
     <script src="/static/js/vmix.js"></script>
@@ -11,7 +11,11 @@
 <body>
     {% include 'graphics/current_team.html' %}
 
-    <script>currentNum = "{{ current_num }}";</script>
+    <script>
+        globalThis.current_team_number = -10;
+        globalThis.graphics_status = {};
+    </script>
+
     {% include 'config.html' %}
 </body>
 
