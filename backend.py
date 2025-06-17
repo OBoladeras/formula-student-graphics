@@ -23,11 +23,8 @@ class files():
 
             for row in reader:
                 data = {}
-                data["number"] = row[5]
+                data["number"] = row[0]
                 data["name"] = row[1]
-                data["uni"] = row[2]
-                data["flag"] = row[3]
-                data["type"] = row[4]
 
                 teams.append(data)
 
@@ -37,6 +34,10 @@ class files():
                 break
 
         return sorted(teams[1:], key=lambda x: int(x["number"]))
+
+
+
+
 
     def team(self) -> dict:
         try:

@@ -1,44 +1,61 @@
-Unnamed: 0,1.- Team Name,2.- Team University,3.- Team Country,4.- Type of Vehicle,5.- Car Number,Intranet
-1.0,Infinity Racing,University of applied sciences kempten,Germany,Electric with Driver,52,Yes
-2.0,MAD Formula Team,Universidad Carlos III de Madrid,Spain,Combustion with Driver,373,Yes
-3.0,FST Lisboa,University of Lisbon,Portugal,"Electric with Driver, Driverless Electric",50,Yes
-4.0,Bremergy,Universität Bremen,Germany,Electric with Driver,72,Yes
-5.0,Scuderia Mensa HS RheinMain Racing,UAS RheinMain,Germany,Electric with Driver,65,yes
-6.0,ISC FS Racing Team,Universidad Pontifica Comillas,Spain,Electric with Driver,133,Yes
-7.0,Formula Student Bizkaia,University of the Basque Country (UPV/EHU),Spain,Electric with Driver,48,Yes
-8.0,Málaga Racing Team,Universidad de Málaga,Spain,Electric with Driver,64,Yes
-9.0,UniBo Motorsport Electric,Alma Mater Studiorum - Università di Bologna,Italy,Electric with Driver,88,Yes
-10.0,Tecnun eRacing,Universidad de Navarra,Spain,Electric with Driver,14,yes
-11.0,ESTACA Formula Team ,ESTACA,France,Combustion with Driver,378,Yes
-12.0,e-Tech Racing,EEBE UPC Barcelona,Spain,Electric with Driver,79,Yes
-13.0,HorsePower Hannover,Leibniz Uni Hannover,Germany,Electric with Driver,24,Yes
-14.0,BCN eMotorsport,UPC Barcelona,Spain,"Electric with Driver, Driverless Electric",54,Yes
-15.0,FSUPV Team,Universitat Politècnica de València,Spain,Hybrid with Driver,395,Yes
-16.0,UPM Racing,Universidad Politécnica de Madrid,Spain,Electric with Driver,17,Yes
-17.0,UJI Motorsport,Universitat Jaume I,Spain,Combustion with Driver,214,Yes
-18.0,ENI METZ RACING TEAM,Ecole nationale d'ingénieurs de metz,France,Electric with Driver,57,Yes
-19.0,Formula Gades,University of Cadiz,Spain,Combustion with Driver,212,Yes
-20.0,ARUS Andalucía Racing Team,University of Seville,Spain,"Electric with Driver, Driverless Electric",92,Yes
-21.0,Uniovi eTech Racing,University of Oviedo,Spain,Electric with Driver,28,Yes
-22.0,ISEL Formula Student,Instituto Superior de Engenharia de Lisboa,Portugal,Electric with Driver,4,Yes
-23.0,Ü Motorsport,Universidad Rey Juan Carlos,Spain,Combustion with Driver,296,Yes
-24.0,LA eRacing e.V. ,UAS Landshut,Germany,Electric with Driver,97,Yes
-25.0,UFV Racing,Universidad Francisco de Vitoria,Spain,Combustion with Driver,269,Yes
-26.0,BlueStreamline,Transilvania University of Brasov,Romania,Combustion with Driver,111,Yes
-27.0,UPC ecoRacing,UPC Terrassa,Spain,"Electric with Driver, Driverless Electric",15,Yes
-28.0,INSA Racing Team,INSA Lyon,France,Combustion with Driver,369,Yes
-29.0,EUSS Motorsport,Escola Universitaria Salesiana de Sarrià,Spain,Electric with Driver,22,Yes
-30.0,Blue Flash Mobility Concepts,HAWK Hochschule für angewandte Wissenschaft und Kunst,Germany,"Electric with Driver, Driverless Electric",16,Yes
-31.0,Scuderia Tor Vergata,Università degli Studi di Roma Tor Vergata,Italy,Combustion with Driver,227,Yes
-32.0,UVigo Motorsport,University of Vigo,Spain,Combustion with Driver,314,Yes
-33.0,UCO Autosport,Universidad de Córdoba,Spain,Combustion with Driver,228,Yes
-34.0,TecnoCampus MotorSports,TecnoCampus Mataró-Maresme,Spain,Electric with Driver,73,Yes
-35.0,Bimasakti Racing Team,Universitas Gadjah Mada,Indonesia,Combustion with Driver,247,Yes
-36.0,Formula Student Vitoria,University of the Basque Country UPV/EHU (Campus of Araba),Spain,Electric with Driver,74,Yes
-37.0,Full Blue Racing,University of Cambridge,United Kingdom,Combustion with Driver,375,Yes
-38.0,FUEM,Universidad Europea de Madrid,Spain,Combustion with Driver,383,Yes
-39.0,Marseille Racing,Aix Marseille Université,France,Combustion with Driver,313,Yes
-40.0,VallRacing Team,Universidad de Valladolid,Spain,Combustion with Driver,333,Yes
-41.0,Delta Racing,UAS Mannheim,Germany,Electric with Driver,68,Yes
-42.0,DHBW Engineering Stuttgart e.V.,DHBW Stuttgart,Germany,Electric with Driver,77,Yes
-43.0,Dynamics UPC Manresa,UPC Manresa - EPSEM,Spain,Combustion with Driver,225,Yes
+CAR NUMBER,TEAM,UNIVERSITY,CATEGORY,COUNTRY
+488,UniPR Racing Team,Università degli Studi di Parma,Driverless Electric,Italy
+477,DHBW Engineering,DHBW Stuttgart,"Electric with Driver, Driverless Electric",Germany
+73,TecnoCampus Motorsports,TecnoCampus,Electric with Driver,Spain
+10,Formula Technion,"Technion, Israel Institute of Technology",Electric with Driver,Israel
+427,EPFL Racing Team,EPFL,"Electric with Driver, Driverless Electric",Switzerland
+165,Scuderia Mensa HS RheinMain Racing,UAS RheinMain,Electric with Driver,Germany
+228,Córdoba Racing Team (CRT UCO),Universidad de Córdoba,Combustion with Driver,Spain
+212,Formula Gades,University of Cadiz,Combustion with Driver,Spain
+296,Ü Motorsport,Universidad Rey Juan Carlos,Combustion with Driver,Spain
+373,MAD Formula Team,Universidad Carlos iii de Madrid,Combustion with Driver,Spain
+214,UJI Motorsport,Universitat Jaume I,Hybrid with Driver,Spain
+443,Bodensee Racing Team,UAS Konstanz,"Electric with Driver, Driverless Electric",Germany
+492,ARUS,University of Seville,"Electric with Driver, Driverless Electric",Spain
+65,PHISEC Racing,Polytechnic University of Coimbra,Electric with Driver,Portugal
+79,e-Tech Racing,UPC EEBE,Electric with Driver,Spain
+57,Eni Metz Racing Team,Ecole Nationale d'Ingénieurs de Metz ,Electric with Driver,France
+454,BCN eMotorsport,UPC Barcelona,"Electric with Driver, Driverless Electric",Spain
+133,ISC FS Racing Team,Universidad Pontificia de Comillas,Electric with Driver,Spain
+64,MART,Universidad de Málaga,Electric with Driver,Spain
+48,Formula Student Bizkaia,University of the Basque Country (UPV/EHU),Electric with Driver,Spain
+269,UFV Racing,Universidad Francisco de Vitoria,Combustion with Driver,Spain
+13,Valais Wallis Racing Team,HES-SO Valais-Wallis,Electric with Driver,Switzerland
+71,Aixtreme Racing,FH-Aachen,Electric with Driver,Germany
+111,BlueStreamline,Transilvania University of Brasov,Combustion with Driver,Romania
+11,BlueStreamlinEV,Transilvania University of Brasov,Electric with Driver,Romania
+83,Canarias Racing Team,University of La Laguna,Electric with Driver,Spain
+05,ISEL Formula Student,Instituto Superior de Engenharia de Lisboa,Electric with Driver,Portugal
+119,eMotion Racing,UAS Ruhr West,Electric with Driver,Germany
+18,Formula USAL,University of Salamanca ,Electric with Driver,Spain
+14,Tecnun eRacing,Tecnun-University of Navarra,Electric with Driver,Spain
+25,EUSS Motorsport,Escola Universitària Salesiana de Sarrià,Electric with Driver,Spain
+46,Squadra Corse PoliTO,Politecnico di Torino,Electric with Driver,Italy
+94,Rennstall Esslingen,UAS Esslingen,Electric with Driver,Germany
+415,UPC ecoRacing,"Escola Superior d'Enginyeries Industrial, Aeroespacial i Audiovisual de Terrassa(UPC)","Electric with Driver, Driverless Electric",Spain
+383,Formula UEM,Universidad Europea de Madrid,Combustion with Driver,Spain
+450,FST Lisboa,Universidade de Lisboa - Instituto Superior Técnico,"Electric with Driver, Driverless Electric",Portugal
+02,Aurora Racing,Shenzhen Technology University,Electric with Driver,China
+28,Uniovi eTech Racing,Universidad de Oviedo,Electric with Driver,Spain
+261,UPCT Racing Team,Universidad Politécnica de Cartagena,Combustion with Driver,Spain
+312,UCLM Racing Team,Universidad de Castilla-La Mancha,Combustion with Driver,Spain
+207,NOVA Formula Student,NOVA University of Lisbon,Combustion with Driver,Portugal
+333,VallRacing Team,Universidad de Valladolid (UVa),Combustion with Driver,Spain
+288,Nova Racing Team,EPSEVG - Universitat Politècnica de Catalunya  ,Combustion with Driver,Spain
+125,Dynamics UPC Manresa,Escola Politècnica Superior d'Enginyeria de Manresa,Electric with Driver,Spain
+226,Os.Car Racing Team,UAS Vienna,Hybrid with Driver,Austria
+72,Bremergy,Universität Bremen,Electric with Driver,Germany
+81,EPSA,Centrale Lyon,Electric with Driver,France
+468,Delta Racing,UAS Mannheim,"Electric with Driver, Driverless Electric",Germany 
+211,UWE Formula Student,"University of the West of England, Bristol",Hybrid with Driver,United Kingdom
+22,Deefholt Dynamics e.V.,PHWT- Private Hochschule für Wirtschaft und Technik,Electric with Driver,Germany
+84,Campus Motorsport Hannover,UAS Hannover,Electric with Driver,Germany
+164,Kaiserslautern Racing Team e.V.,"""	Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau + UAS""",Electric with Driver,Germany
+224,Formula Student Arts et Métiers,FSAM Lille,Combustion with Driver,France
+63,SIGMA RACING,SIGMA CLERMONT,Electric with Driver,France
+99,Black Forest Formula,Hochschule Offenburg,Electric with Driver,Germany
+455,BGRacing,Ben Gurin university of the Negev,"Electric with Driver, Driverless Electric",Israel
+75,Team Spark,University of Iceland,Electric with Driver,Iceland
+34,UAH MOTORSPORT,UNIVERSIDAD DE ALCALÁ DE HENARES,Electric with Driver,Spain
+7,Team Sakthi Racing,Kumaraguru College of Technology,Combustion with Driver,
+5,NED Racers,NED University of Engineering & Technology,Combustion with Driver,

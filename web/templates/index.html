@@ -155,35 +155,11 @@
         </div>
 
 
-
-        <script>
-            document.getElementById('filter-button').addEventListener('click', () => {
-                const selectedCategory = globalThis.category_selected;
-                const selectedSubcategory = globalThis.subcategory_selected;
-
-                if (selectedCategory && selectedSubcategory) {
-                    const tableId = `${selectedSubcategory}-${selectedCategory}-results`;
-                    const resultTable = document.getElementById(tableId);
-
-                    if (resultTable) {
-                        resultTable.style.display = 'block';
-                        resultTable.scrollIntoView({ behavior: 'smooth' });
-                        loadSubcat(selectedCategory, selectedSubcategory);
-                    } else {
-                        alert('No results available for the selected category and subcategory.');
-                    }
-
-                } else {
-                    alert('Please select a category and subcategory first.');
-                }
-            });
-        </script>
-
         {% for subcategory in data[category_key]['times'] %}
         <section class="mt-2 results-table" id="{{ subcategory }}-{{ category_key }}-results" style="display: none;">
             <div class="mt-4 text-center">
-                <button id="filter-button"
-                    class="px-6 py-2 my-5 bg-[#444444] text-white font-bold rounded hover:bg-[#C8102E] transition-colors duration-300  ">
+                <button
+                    class="px-6 py-2 my-5 bg-[#444444] text-white font-bold rounded hover:bg-[#C8102E] transition-colors duration-300 filter-button">
                     Filter Results
                 </button>
             </div>
@@ -216,6 +192,25 @@
         {% endfor %}
     </section>
     {% endfor %}
+
+
+    
+        <script>
+            document.getElementsByClassName('filter-button').forEach(button => {
+                button.addEventListener('click', function () {
+                    const filterButton = document.getElementById('filter-button');
+                    filterButton.classList.toggle('bg-[#C8102E]');
+                    filterButton.classList.toggle('bg-[#444444]');
+                    filterButton.classList.toggle('text-white');
+                    filterButton.classList.toggle('text-black');
+
+                    const resultTables = document.querySelectorAll('.results-table');
+                    resultTables.forEach(table => {
+                        table.style.display = table.style.display === 'none' ? 'block' : 'none';
+                    });
+                });
+            });
+        </script>
 
 
     <!-- Footer -->

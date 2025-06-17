@@ -25,15 +25,18 @@ def index():
 # -----------------------------
 #   Teams
 # -----------------------------
-@app.route("/teams")
+@app.route("/graphic_manager")
 def teams():
-    return render_template("teams.html", teams=backend.teams())
+    return render_template("graphic_manager.html", teams=backend.teams())
 
 
-@app.route("/team")
-def team():
-    return render_template("team.html", team=backend.team())
 
+@app.route("/vmix")
+def vmix():
+    
+    current_num = backend.team()["number"]
+    
+    return render_template("vmix.html", current_num=current_num)
 
 # -----------------------------
 #   Best Run
@@ -66,19 +69,21 @@ def standings():
 # -----------------------------
 #   API
 # -----------------------------
-@app.route("/api/team", methods=["GET", "POST"])
-def team_api():
+@app.route("/api/select_team", methods=["GET", "POST"])
+def select_team():
     if request.method == "GET":
         return jsonify(backend.team())
 
     elif request.method == "POST":
+        print(request.json)
+
         data = {}
         data["number"] = request.json["number"]
-        data["name"] = request.json["name"]
-        data["uni"] = request.json["uni"]
-        data["flag"] = request.json["flag"]
 
         return jsonify({"message": backend.saveTeam(data)})
+
+
+
 
 
 @app.route("/api/best")

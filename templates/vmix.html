@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Current Team</title>
+
+    <link rel="stylesheet" type="text/css" href="/static/css/team.css">
+    <script src="/static/js/vmix.js"></script>
+</head>
+
+<body>
+    {% include 'graphics/current_team.html' %}
+
+    <script>currentNum = "{{ current_num }}";</script>
+    {% include 'config.html' %}
+</body>
+
+</html>

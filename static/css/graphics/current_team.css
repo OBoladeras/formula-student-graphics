@@ -1,0 +1,152 @@
+#current_team_object {
+    display: flex;
+    position: absolute;
+    left: 135px;
+    bottom: 75px;
+}
+
+
+#current_team_red_top {
+    background-color: #c8012e;
+    width: 30px;
+    height: 30px;
+    scale: 0;
+}
+
+#current_team_white_box {
+    background-color: white;
+    height: 30px;
+    width: 0px;
+}
+
+#current_team_container {
+    display: flex;
+    transform-origin: 60px 15px;
+}
+
+#current_team_scrolling_container {
+    height: 90px;
+    width: 0;
+    overflow: hidden;
+    margin-top: -15px;
+    margin-left: -45px;
+
+    z-index: 1;
+}
+
+#current_team_scrolling_image {
+    height: 100%;
+    width: auto;
+    display: block;
+}
+
+
+
+
+
+.current_team_show #current_team_red_top {
+    animation: current_team_animateRed 0.1s forwards;
+}
+
+.current_team_show #current_team_white_box {
+    animation: current_team_showWhite 0.3s forwards;
+    animation-delay: 0.1s;
+}
+
+.current_team_show {
+    animation: current_team_swipe_left 0.3s forwards;
+    animation-delay: 0.1s;
+}
+
+
+.current_team_show #current_team_container {
+    animation: current_team_fall 0.4s forwards;
+    animation-delay: 0.4s;
+}
+
+.current_team_show #current_team_scrolling_container {
+    animation: current_team_show_image 1s forwards;
+    animation-delay: 0.8s;
+}
+
+
+
+
+.current_team_hide #current_team_scrolling_container {
+    animation: current_team_show_image 1s reverse forwards;
+    animation-delay: 0s;
+}
+
+.current_team_hide #current_team_container {
+    animation: current_team_fall 0.25s reverse forwards;
+    animation-delay: 1s;
+}
+
+.current_team_hide #current_team_white_box {
+    animation: current_team_showWhite 0.1s reverse forwards;
+    animation-delay: 1.25s;
+}
+
+.current_team_hide {
+    animation: current_team_swipe_left 0.1s reverse forwards;
+    animation-delay: 1.25s;
+}
+
+
+.current_team_hide #current_team_red_top {
+    animation: current_team_animateRed 0.1s reverse forwards;
+    animation-delay: 1.35s;
+}
+
+
+
+@keyframes current_team_animateRed {
+    0% {
+        scale: 0;
+    }
+
+    100% {
+        scale: 1;
+    }
+}
+
+@keyframes current_team_showWhite {
+    from {
+        width: 0px;
+    }
+
+    to {
+        width: 60px;
+    }
+}
+
+@keyframes current_team_swipe_left {
+    from {
+        transform: translateX(0);
+    }
+
+    to {
+        transform: translateX(-65px);
+    }
+}
+
+@keyframes current_team_fall {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(-90deg);
+    }
+
+}
+
+@keyframes current_team_show_image {
+    from {
+        width: 0;
+    }
+
+    to {
+        width: 529px;
+    }
+}
