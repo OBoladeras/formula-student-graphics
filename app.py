@@ -30,7 +30,6 @@ def update_current_team(team_number: str) -> None:
         json.dump(savedData, f, indent=4)
 
 
-
 @app.route("/favicon.ico")
 def favicon():
     return send_file("static/favicon.ico", mimetype="image/x-icon")
@@ -67,7 +66,11 @@ def teams():
 
     teams = sorted(teams[1:], key=lambda x: int(x["number"]))
 
-    return render_template("graphic_manager.html", teams=teams, graphics_data=graphics_status)
+    with open("data.json", "r") as f:
+        data = json.load(f)
+    graphics_status = data.get("graphics_status", {})
+
+    return render_template("graphic_manager.html", teams=teams, graphics_status=graphics_status)
 
 
 @app.route("/vmix")
@@ -146,6 +149,22 @@ def graphics_status(graphic_name):
             json.dump(data, f)
 
         return jsonify({"message": "Graphic status updated successfully."})
+
+
+@app.route("/api/update_location", methods=["POST"])
+def update_location():
+    if request.method == "POST":
+        location = request.json.get("location", "")
+        print(f"Updating location to: {location}")
+
+        with open("data.json", "r") as f:
+            data = json.load(f)
+
+        with open("data.json", "w") as f:
+            data["location"] = location
+            json.dump(data, f)
+
+        return jsonify({"message": "Location updated successfully.", "status": "success"})
 
 
 """

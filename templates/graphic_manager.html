@@ -4,7 +4,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Graphics Manager</title>
-    <script src="/static/js/graphic_manager.js"></script>
     <script src="https://cdn.tailwindcss.com"></script>
 
     <script>globalThis.graphic_status = {};</script>
@@ -19,13 +18,14 @@
             <p>Click on the "Update" button to apply the selected team.</p>
             <p>To change the team, select a different team from the list on the left.</p>
 
+            <!-- Current Team -->
             <section>
                 <h2 class="text-2xl font-semibold text-gray-700 mt-6">Current Team</h2>
                 <p>Current team is the team that will be displayed on the graphics.</p>
 
                 <div>
                     <!-- show the visualizer status, showed or not -->
-                    {% if graphics_data["current_team"] == True %}
+                    {% if graphics_status["current_team"] == True %}
                     <div class="bg-green-100 text-green-800 p-3 rounded-lg max-w-xs text-center mx-auto my-4"
                         id="current_team_status">
                         <p class="font-semibold">Visualizer is active.</p>
@@ -39,18 +39,99 @@
                     <script>graphic_status["current_team"] = false;</script>
                     {% endif %}
 
-                    <button id="toggleGraphicButton" onclick="toggleGraphic('current_team')"
+                    <button id="toggleGraphicButton_current_team" onclick="toggleGraphic('current_team')"
                         class="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
-                        {% if graphics_data["current_team"] == True %}
+                        {% if graphics_status["current_team"] == True %}
                         Hide Graphic
                         {% else %}
                         Show Graphic
                         {% endif %}
                     </button>
                 </div>
-                <img id="current_team" src="/static/images/current_team/image.png" alt="" class="mt-4 w-2xl h-auto">
+                <img id="current_team" src="" alt="" class="mt-4 w-2xl h-auto">
+            </section>
+
+            <!-- Location -->
+            <section>
+                <h2 class="text-2xl font-semibold text-gray-700 mt-6">Location</h2>
+                <p>Location is where the camera is located. It shows the current location of the team.</p>
+
+                <div>
+                    <!-- show the visualizer status, showed or not -->
+                    {% if graphics_status["location"] == True %}
+                    <div class="bg-green-100 text-green-800 p-3 rounded-lg max-w-xs text-center mx-auto my-4"
+                        id="location_status">
+                        <p class="font-semibold">Visualizer is active.</p>
+                    </div>
+                    <script>graphic_status["location"] = true;</script>
+                    {% else %}
+                    <div class="bg-red-100 text-red-800 p-3 rounded-lg max-w-xs text-center mx-auto my-4"
+                        id="location_status">
+                        <p class="font-semibold">Visualizer is not active.</p>
+                    </div>
+                    <script>graphic_status["location"] = false;</script>
+                    {% endif %}
+
+                    <div class="flex items-center justify-between">
+                        <button id="toggleGraphicButton_location" onclick="toggleGraphic('location')"
+                            class="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition graphic_button">
+                            {% if graphics_status["location"] == True %}
+                            Hide Graphic
+                            {% else %}
+                            Show Graphic
+                            {% endif %}
+                        </button>
+
+                        <input type="text" id="location_text" placeholder="Enter new location"
+                            onkeydown="document.getElementById('location_object').children[1].textContent = this.value"
+                            class="mt-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
+                        <button id="update_location_button" onclick="update_location()"
+                            class="mt-4 px-6 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
+                            Update Location
+                        </button>
+
+                        <script>
+                            function update_location() {
+                                const locationText = document.getElementById('location_text').value;
+                                if (locationText) {
+                                    fetch('/api/update_location', {
+                                        method: 'POST',
+                                        headers: {
+                                            'Content-Type': 'application/json'
+                                        },
+                                        body: JSON.stringify({ location: locationText })
+                                    })
+                                        .then(response => response.json())
+                                        .then(data => {
+                                            if (data.status === 'success') {
+                                                document.getElementById('notification').classList.remove('hidden');
+                                                setTimeout(() => {
+                                                    document.getElementById('notification').classList.add('hidden');
+                                                }, 3000);
+                                            } else {
+                                                alert('Failed to update location.');
+                                            }
+                                        });
+                                } else {
+                                    alert('Please enter a valid location.');
+                                }
+                            }
+                        </script>
+                    </div>
+                </div>
+
+                {% include 'graphics/location.html' %}
+                <script>location_show();</script>
+                <style>
+                    #location_object {
+                        position: static;
+                        margin: 20px;
+                        background-color: gray;
+                    }
+                </style>
             </section>
         </div>
+
 
         <!-- Team Selector -->
         <div class="bg-white shadow-xl rounded-2xl p-6 space-y-4 h-full">
@@ -96,96 +177,24 @@
                                 <td class="p-2">{{ team.number }}</td>
                                 <td class="p-2">{{ team.name }}</td>
                             </tr>
+
+                            {% if team.selected %}
+                            <script>document.getElementById('current_team').src = `/static/images/current_team/{{team.number}}.png`;</script>
+                            {% endif %}
                             {% endfor %}
                         </tbody>
                     </table>
                 </div>
             </form>
         </div>
-
-
-        <div id="notification"
-            class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hidden">
-            Team updated successfully!
-        </div>
-
     </div>
 
-    <script>
-        document.querySelectorAll('.clickable-row').forEach(row => {
-            row.addEventListener('click', function () {
-                const radio = this.querySelector('input[type="radio"]');
-                radio.checked = true;
-                document.querySelectorAll('.clickable-row').forEach(r => r.classList.remove('bg-blue-100'));
-                this.classList.add('bg-blue-100');
+    <div id="notification"
+        class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hidden">
+        Team updated successfully!
+    </div>
 
-                current_team_selected = radio.value;
-
-                // Update the graphic preview
-                const current_team = document.getElementById('current_team');
-                current_team.src = `/static/images/current_team/${current_team_selected}.png`;
-            });
-        });
-    </script>
-
-    <script>
-        function toggleGraphic(graphic_name) {
-            graphic_Visible = graphic_status[graphic_name];
-            graphicVisible = !graphic_Visible;
-            graphic_status[graphic_name] = graphicVisible;
-
-            const button = document.getElementById("toggleGraphicButton");
-
-            if (graphicVisible) {
-                showGraphic(graphic_name);
-                button.textContent = "Hide Graphic";
-            } else {
-                hideGraphic(graphic_name);
-                button.textContent = "Show Graphic";
-            }
-        }
-
-        function showGraphic(graphic_name) {
-            graphic_status = document.getElementById(graphic_name + "_status");
-
-            graphic_status.classList.remove("bg-red-100", "text-red-800");
-            graphic_status.classList.add("bg-green-100", "text-green-800");
-            text = graphic_status.querySelector("p");
-            text.textContent = "Visualizer is active.";
-
-
-            fetch(`/graphics_status/${graphic_name}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    show: true
-                })
-            })
-        }
-
-        function hideGraphic(graphic_name) {
-            graphic_status = document.getElementById(graphic_name + "_status");
-            graphic_status.classList.remove("bg-green-100", "text-green-800");
-            graphic_status.classList.add("bg-red-100", "text-red-800");
-
-            text = graphic_status.querySelector("p");
-            text.textContent = "Visualizer is not active.";
-
-            fetch(`/graphics_status/${graphic_name}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({
-                    show: false
-                })
-            })
-        }
-    </script>
-
-    {% include 'config.html' %}
+    <script src="/static/js/graphic_manager.js"></script>
 </body>
 
 </html>

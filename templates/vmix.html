@@ -3,20 +3,19 @@
 
 <head>
     <title>Vmix</title>
-
-    <link rel="stylesheet" type="text/css" href="/static/css/team.css">
     <script src="/static/js/vmix.js"></script>
 </head>
 
 <body>
+    {% include 'graphics/location.html' %}
     {% include 'graphics/current_team.html' %}
+
 
     <script>
         globalThis.current_team_number = -10;
         globalThis.graphics_status = {};
+        globalThis.current_location = "";
     </script>
-
-    {% include 'config.html' %}
 </body>
 
 </html>
