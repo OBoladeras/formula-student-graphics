@@ -146,7 +146,7 @@ def graphics_status(graphic_name):
         with open("data.json", "w") as f:
             data["graphics_status"][graphic_name] = show
             print(data)
-            json.dump(data, f)
+            json.dump(data, f, indent=4)
 
         return jsonify({"message": "Graphic status updated successfully."})
 
@@ -162,7 +162,7 @@ def update_location():
 
         with open("data.json", "w") as f:
             data["location"] = location
-            json.dump(data, f)
+            json.dump(data, f, indent=4)
 
         return jsonify({"message": "Location updated successfully.", "status": "success"})
 

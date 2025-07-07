@@ -3,16 +3,6 @@ function location_show() {
     const allObject = document.getElementById('location_object');
     allObject.classList.add('location_show');
 
-    const audio = new Audio('/static/audios/location.mp3');
-    audio.volume = 0.5;
-    audio.currentTime = 0;
-    audio.play();
-
-    setTimeout(() => {
-        audio.currentTime = 0;
-        audio.play();
-    }, 800);
-
     setTimeout(() => {
         allObject.children[0].style.width = '113px';
         allObject.children[0].style.height = '42px';
@@ -30,10 +20,6 @@ function location_hide() {
     const endTransition = 1.5;
     const allObject = document.getElementById('location_object');
     allObject.classList.add('location_hide');
-
-    const audio = new Audio('/static/audios/location.mp3');
-    audio.playbackRate = 0.5;
-    audio.play();
 
     setTimeout(() => {
         allObject.children[0].style.width = '0';

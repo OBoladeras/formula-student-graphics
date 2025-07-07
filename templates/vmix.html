@@ -9,12 +9,14 @@
 <body>
     {% include 'graphics/location.html' %}
     {% include 'graphics/current_team.html' %}
-
+    {% include 'graphics/speaker_info.html' %}
 
     <script>
         globalThis.current_team_number = -10;
         globalThis.graphics_status = {};
         globalThis.current_location = "";
+        globalThis.current_speaker1 = {"name": "", "info": ""};
+        globalThis.current_speaker2 = {"name": "", "info": ""};
     </script>
 </body>
 
