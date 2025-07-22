@@ -4,19 +4,21 @@
 <head>
     <title>Vmix</title>
     <script src="/static/js/vmix.js"></script>
+    <style>@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');</style>
 </head>
 
 <body>
     {% include 'graphics/location.html' %}
     {% include 'graphics/current_team.html' %}
     {% include 'graphics/speaker_info.html' %}
+    {% include 'graphics/best_time.html' %}
 
     <script>
         globalThis.current_team_number = -10;
         globalThis.graphics_status = {};
         globalThis.current_location = "";
-        globalThis.current_speaker1 = {"name": "", "info": ""};
-        globalThis.current_speaker2 = {"name": "", "info": ""};
+        globalThis.current_speaker1 = { "name": "", "info": "" };
+        globalThis.current_speaker2 = { "name": "", "info": "" };
     </script>
 </body>
 

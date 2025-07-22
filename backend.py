@@ -129,16 +129,15 @@ class times():
 
             table1 = soup.find('table', id='GridView_Resultats')
             table1_html = str(table1)
-            df1 = pd.read_html(StringIO(table1_html))[0]
+            df1 = pd.read_html(StringIO(table1_html), decimal=',', thousands='.')[0]
 
             table2 = soup.find('table')
             table2_html = str(table2)
-            df2 = pd.read_html(StringIO(table2_html))[0]
+            df2 = pd.read_html(StringIO(table2_html), decimal=',', thousands='.')[0]
 
             allRuns = df1.values.tolist()
             bestRuns = df2.values.tolist()
 
-            # Get the best time for each category
             clean = []
             for i in bestRuns[0]:
                 j = split_first_last_hyphen(i)
@@ -155,7 +154,6 @@ class times():
 
                 clean.append(tmp)
 
-            # Get the name of the team for each best time
             for i in clean:
                 for j in allRuns:
                     try:
@@ -170,13 +168,11 @@ class times():
                 data["fuel"]["time"] = clean[0][4]
                 data["fuel"]["number"] = clean[0][1]
                 data["fuel"]["uni"] = clean[0][3]
-                data["fuel"]["name"] = clean[0][2]
 
             if len(clean[1]) == 5:
                 data["electric"]["time"] = clean[1][4]
                 data["electric"]["number"] = clean[1][1]
                 data["electric"]["uni"] = clean[1][3]
-                data["electric"]["name"] = clean[1][2]
         elif race == "endurance":
             list = self.readEndurance()
 

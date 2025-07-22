@@ -1,0 +1,58 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+
+#best_time_object_ev,
+#best_time_object_cv {
+    display: flex;
+    flex-direction: column;
+    position: absolute;
+}
+
+#best_time_object_ev {
+    left: 135px;
+    bottom: 75px;
+}
+
+#best_time_object_cv {
+    right: 135px;
+    bottom: 75px;
+}
+
+.best_time_university {
+    width: 240px;
+    height: 17.5px;
+    font-size: 10pt;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: linear-gradient(to right, white, #232323, #232323, white);
+}
+
+.best_time_time {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    color: white;
+    width: 80px;
+    height: 80px;
+    font-size: 19pt;
+    background-color: #232323;
+}
+
+.best_time_car_number {
+    width: 80px;
+    height: 80px;
+    font-size: 35pt;
+    background-color: white;
+    color: black;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

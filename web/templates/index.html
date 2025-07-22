@@ -1,17 +1,27 @@
 <!doctype html>
 <html lang="en">
 
+<!--
+Dont look at the code, lucky it works, I hope that also work the race days if not, I'm so sorry 🥲
+
+If you really want to see the code, you can find it here:
+https://github.com/OBoladeras/formula-student-graphics
+
+-->
+
 <head>
     <meta charset="utf-8">
     <title>FSS ON-LINE RESULTS 2025</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="icon" href="/static/logo.png" type="image/x-icon">
 
+    <!-- Fonts -->
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
 
         * {
-            font-family: 'Montserrat';
+            font-family: 'Montserrat', sans-serif;
             font-weight: 300;
         }
 
@@ -46,6 +56,8 @@
             -webkit-animation: reveal-center 1s ease-out forwards;
         }
     </style>
+
+    <!-- Hover background slide for subcategory buttons -->
     <style>
         .subcategory-select {
             position: relative;
@@ -77,11 +89,9 @@
         globalThis.category_selected = null;
         globalThis.subcategory_selected = null;
     </script>
-
 </head>
 
 <body class="bg-[#232323] text-white font-sans mt-12 mx-4 sm:mx-10 md:mx-20">
-
     <!-- Header -->
     <header class="w-full">
         <div class="flex flex-col md:flex-row justify-between items-center w-full">
@@ -105,18 +115,11 @@
                 </div>
                 <div
                     class="mt-6 opacity-0 animate-slide-in-left delay-[1.2s] text-sm md:text-base text-justify leading-relaxed w-80">
-                    Lorem ipsum dolor sit amet, consectetuer
-                    adipiscing elit, sed diam nonummy nibh
-                    euismod tincidunt ut laoreet dolore
-                    magna aliquam erat volutpat. Ut wisi
-                    enim ad minim veniam, quis nostrud
-                    exerci tation ullamcorper suscipit lobortis
-                    nisl ut aliquip ex ea commodo consequat.
-                    Duis autem vel eum iriure dolor in hendrerit in vulputate velit esse molestie consequat, vel illum
-                    dolore eu feugiat nulla
-                    facilisis at vero eros et accumsan et iusto
-                    odio dignissim qui blandit praesent luptatum zzril delenit augue duis dolore te feugait nulla
-                    facilisi.
+                    Welcome to the official results portal for Formula Student Spain 2025. Here you will find the latest
+                    rankings, event timings, and performance data from all dynamic and static disciplines. Our mission
+                    is to deliver accurate, real-time updates so teams, sponsors, and fans can follow the competition
+                    effortlessly. Explore leaderboards, compare scores, and track your favorite teams as they push
+                    engineering boundaries.
                 </div>
             </div>
         </div>
@@ -139,12 +142,15 @@
 
     {% set categories = ['combustion&electric', 'driverless', 'classic-cup'] %}
     {% set subcategories = ['endurance', 'acceleration', 'autocross', 'skidpad'] %}
-    {% for category_key in data %}
-    <section id="{{ category_key }}-results" class="mt-2 mx-12 bg-[#C8102E] results-section" style="display: none;">
 
+    {# ------------------------------------------------------------------ #}
+    {# RESULTS SECTIONS PER CATEGORY #}
+    {# ------------------------------------------------------------------ #}
+    {% for category_key in data %}
+    <section id="{{ category_key }}-results" class="mt-2 mx-2 sm:mx-12 bg-[#C8102E] results-section"
+        style="display: none;">
         <div class="mx-auto grid grid-cols-1 md:grid-cols-{{data[category_key]['times']|length}} mt-6 text-2xl">
             {% for subcategory in data[category_key]['times'] %}
-            <!-- Use data attributes instead of id -->
             <div class="relative py-4 px-4 bg-[#991031] text-center font-bold cursor-pointer group uppercase font-medium italic subcategory-select transition-all duration-300 ease-in-out transform"
                 data-subcategory="{{ subcategory }}" data-category="{{ category_key }}"
                 onclick="loadSubcat('{{ category_key }}', '{{ subcategory }}')">
@@ -154,117 +160,114 @@
             {% endfor %}
         </div>
 
-
         {% for subcategory in data[category_key]['times'] %}
         <section class="mt-2 results-table" id="{{ subcategory }}-{{ category_key }}-results" style="display: none;">
             <div class="mt-4 text-center">
-                <button
+                <button type="button"
                     class="px-6 py-2 my-5 bg-[#444444] text-white font-bold rounded hover:bg-[#C8102E] transition-colors duration-300 filter-button">
                     Filter Results
                 </button>
             </div>
 
-            <div class="mx-12 pb-12 overflow-x-auto">
-                <table id="{{ subcategory }}-{{ category_key }}-results"
-                    class="w-full text-sm text-white bg-neutral-800 border border-gray-700 overflow-hidden min-w-[900px] text-2xl">
-                    <thead class="bg-[#444444] text-xs uppercase text-white text-l">
-                        <tr>
-                            {% if subcategory in ('endurance', 'trackdrive') %}
-                            {% set table_headings = ["#", "Num", "Team", "Driver",
-                            "Lap", "Car", "Last Time", "Prev Time", "Best Time", "In Lap", "2nd Best"] %}
-                            {% else %}
-                            {% set table_headings = ["#", "Num", "Round", "Driver", "Team", "University", "Result"] %}
-                            {% endif %}
+            <div class="mx-2 sm:mx-12 pb-12 overflow-x-auto">
+                <div class="inline-block min-w-full align-middle">
+                    <div class="overflow-x-auto border border-gray-700 rounded-lg">
+                        <table id="{{ subcategory }}-{{ category_key }}-results"
+                            class="min-w-[900px] w-full text-xs sm:text-sm md:text-base text-white bg-neutral-800 border border-gray-700 overflow-hidden">
+                            <thead class="bg-[#444444] text-[10px] sm:text-xs md:text-sm uppercase text-white">
+                                <tr>
+                                    {% if subcategory in ('endurance', 'trackdrive') %}
+                                    {% set table_headings = ["#", "Num", "Team", "Driver", "Lap", "Car", "Last Time",
+                                    "Prev Time", "Best Time", "In Lap", "2nd Best"] %}
+                                    {% else %}
+                                    {% set table_headings = ["#", "Num", "Round", "Driver", "Team", "University",
+                                    "Result"] %}
+                                    {% endif %}
 
-                            {% for heading in table_headings %}
-                            {% if loop.first %}<th class="px-3 py-4 text-center font-bold border-r border-white">{{
-                                heading }}</th>{% else %}
-                            <th class="px-3 py-4 text-center font-bold border-l border-white">{{ heading }}</th>
-                            {% endif %}
-                            {% endfor %}
-                        </tr>
-                    </thead>
-
-                    <tbody class="divide-y divide-white text-sm text-black"></tbody>
-                </table>
+                                    {% for heading in table_headings %}
+                                    {% if loop.first %}
+                                    <th scope="col"
+                                        class="px-3 py-4 text-center font-bold border-r border-white whitespace-nowrap">
+                                        {{ heading }}</th>
+                                    {% else %}
+                                    <th scope="col"
+                                        class="px-3 py-4 text-center font-bold border-l border-white whitespace-nowrap">
+                                        {{ heading }}</th>
+                                    {% endif %}
+                                    {% endfor %}
+                                </tr>
+                            </thead>
+                            <tbody class="divide-y divide-white text-[10px] sm:text-xs md:text-sm text-black"></tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </section>
         {% endfor %}
     </section>
     {% endfor %}
 
-
-    
-        <script>
-            document.getElementsByClassName('filter-button').forEach(button => {
-                button.addEventListener('click', function () {
-                    const filterButton = document.getElementById('filter-button');
-                    filterButton.classList.toggle('bg-[#C8102E]');
-                    filterButton.classList.toggle('bg-[#444444]');
-                    filterButton.classList.toggle('text-white');
-                    filterButton.classList.toggle('text-black');
-
-                    const resultTables = document.querySelectorAll('.results-table');
-                    resultTables.forEach(table => {
-                        table.style.display = table.style.display === 'none' ? 'block' : 'none';
-                    });
-                });
-            });
-        </script>
-
-
-    <!-- Footer -->
     <footer class="mt-20 text-center text-sm text-gray-400 py-8">
         &copy; 2025 Formula Student Spain. All rights reserved.
     </footer>
 
-    <!-- Scripts -->
     <script>
         function loadSubcat(cat, sub) {
             fetch(`/api/results/${cat}/${sub}`)
                 .then(res => res.json())
                 .then(json => {
-                    const tableId = `${sub}-${cat}-results`;
-                    const resultTable = document.getElementById(tableId);
-
-                    if (!resultTable) {
-                        console.warn('No table found with ID:', tableId);
+                    const sectionId = `${sub}-${cat}-results`;
+                    const resultSection = document.getElementById(sectionId);
+                    if (!resultSection) {
+                        console.warn('No section found with ID:', sectionId);
                         return;
                     }
 
-                    if (resultTable) {
-                        const tbody = resultTable.querySelector('tbody');
-                        tbody.innerHTML = '';
-
-                        data = json.rows;
-
-                        data.forEach(team => {
-                            const row = document.createElement('tr');
-                            row.className = 'odd:bg-white even:bg-[#E5E5E5] hover:bg-[#E5E5E5] transition';
-                            team.forEach(info => {
-                                const cell = document.createElement('td');
-                                cell.className = 'px-3 py-4 text-center text-lg';
-                                if (String(info).endsWith('.png') || String(info).endsWith('.jpg') || String(info).endsWith('.jpeg')) {
-                                    const img = document.createElement('img');
-                                    img.src = info;
-                                    img.alt = '';
-                                    img.className = 'w-12 mx-auto h-12 object-cover';
-                                    cell.appendChild(img);
-                                } else {
-                                    cell.textContent = info;
-                                }
-                                row.appendChild(cell);
-                            });
-                            tbody.appendChild(row);
-                        });
-                    } else {
-                        console.warn('No s\'ha trobat cap taula amb ID:', tableId);
+                    const resultTable = resultSection.querySelector('table');
+                    if (!resultTable) {
+                        console.warn('No <table> found inside section:', sectionId);
+                        return;
                     }
+
+                    const tbody = resultTable.querySelector('tbody');
+                    if (!tbody) {
+                        console.warn('No <tbody> in table:', sectionId);
+                        return;
+                    }
+
+                    tbody.innerHTML = '';
+                    const data = json.rows || [];
+
+                    data.forEach(team => {
+                        const row = document.createElement('tr');
+                        row.className = 'odd:bg-white even:bg-[#E5E5E5] hover:bg-[#E5E5E5] transition';
+                        team.forEach(info => {
+                            const cell = document.createElement('td');
+                            cell.className = 'px-2 sm:px-3 py-2 sm:py-4 text-center text-[11px] sm:text-sm md:text-base text-black whitespace-nowrap';
+
+                            const str = String(info).toLowerCase();
+                            if (str.endsWith('.png') || str.endsWith('.jpg') || str.endsWith('.jpeg') || str.endsWith('.gif') || str.endsWith('.webp') || str.endsWith('.svg')) {
+                                const img = document.createElement('img');
+                                img.src = info;
+                                img.alt = '';
+                                img.className = 'w-full h-auto max-h-[50px] object-contain mx-auto';
+                                cell.appendChild(img);
+                            } else {
+                                cell.textContent = info;
+                            }
+                            row.appendChild(cell);
+                        });
+                        tbody.appendChild(row);
+                    });
+                })
+                .catch(err => {
+                    console.error('Error loading subcategory data', err);
                 });
-        }        
+        }
     </script>
 
     <script>
+        /* ------------------ CATEGORY & SUBCATEGORY TOGGLING ------------------ */
         const categorySelect = document.querySelectorAll('.category-select');
         const subcategorySelect = document.querySelectorAll('.subcategory-select');
         const resultsSections = document.querySelectorAll('.results-section');
@@ -274,11 +277,15 @@
                 const selectedCategory = categoryEl.id;
                 globalThis.category_selected = selectedCategory;
 
+                // underline animation bars
                 categorySelect.forEach((cat) => {
-                    cat.querySelector('div').classList.add('scale-x-0');
+                    const bar = cat.querySelector('div');
+                    if (bar) bar.classList.add('scale-x-0');
                 });
-                categoryEl.querySelector('div').classList.remove('scale-x-0');
+                const activeBar = categoryEl.querySelector('div');
+                if (activeBar) activeBar.classList.remove('scale-x-0');
 
+                // show only the selected category results block
                 resultsSections.forEach((section) => {
                     section.style.display = 'none';
                 });
@@ -310,7 +317,6 @@
                 subEl.classList.add('bg-[#C8102E]');
                 subEl.classList.add('active');
 
-
                 document.querySelectorAll('.results-table').forEach((table) => {
                     table.style.display = 'none';
                 });
@@ -321,9 +327,10 @@
                 const resultTable = document.getElementById(table_id);
                 if (resultTable) {
                     resultTable.style.display = 'block';
-                    // resultTable.scrollIntoView({ behavior: 'smooth' });
+                    // Optional smooth scroll: uncomment if desired
+                    // resultTable.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 } else {
-                    console.warn('No s\'ha trobat cap taula amb ID:', table_id);
+                    console.warn("No s'ha trobat cap taula amb ID:", table_id);
                 }
             });
         });

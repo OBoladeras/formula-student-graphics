@@ -1,12 +1,12 @@
 import csv
 import json
 import secrets
-# from backend import files, times
+from backend import files, times
 from flask import Flask, render_template, jsonify, send_file, request
 
 
-# backend = files()
-# raceTimes = times()
+backend = files()
+raceTimes = times()
 app = Flask(__name__)
 app.secret_key = secrets.token_urlsafe(16)
 
@@ -35,12 +35,14 @@ def favicon():
     return send_file("static/favicon.ico", mimetype="image/x-icon")
 
 
-@app.route("/", methods=["GET", "POST"])
-def index():
-    #    if request.method == "POST":
-    #         return jsonify({"message": backend.race(request.json["race"])})
+@app.route("/")
+@app.route("/vmix")
+def vmix():
+    with open("data.json", "r") as f:
+        data = json.load(f)
+    graphics_status = data.get("graphics_status", {})
 
-    return render_template("index.html")  # , race=backend.race())
+    return render_template("vmix.html", current_team_number=get_current_team(), graphics_status=graphics_status)
 
 
 # -----------------------------
@@ -73,22 +75,7 @@ def teams():
     return render_template("graphic_manager.html", teams=teams, graphics_status=graphics_status)
 
 
-@app.route("/vmix")
-def vmix():
-    with open("data.json", "r") as f:
-        data = json.load(f)
-    graphics_status = data.get("graphics_status", {})
-
-    return render_template("vmix.html", current_team_number=get_current_team(), graphics_status=graphics_status)
-
-
 """
-# -----------------------------
-#   Best Run
-#       SKIDPAD
-#       ACCELERATION
-#       AUTOCROS
-# -----------------------------
 @app.route("/bestrun")
 def bestrun():
     return render_template("bestrun.html")
@@ -167,12 +154,12 @@ def update_location():
         return jsonify({"message": "Location updated successfully.", "status": "success"})
 
 
-"""
 @app.route("/api/best")
 def best_api():
     return jsonify(raceTimes.bestTime(backend.race()))
 
 
+"""
 @app.route("/api/endurance")
 def endurance_api():
     return jsonify(raceTimes.endurance())

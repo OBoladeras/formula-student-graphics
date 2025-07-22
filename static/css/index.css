@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+
 body {
     display: flex;
     flex-direction: column;
@@ -6,6 +9,7 @@ body {
     margin: 0;
 
     background-color: #f4f4f4;
+    font-family: 'Montserrat', sans-serif;
 }
 
 .sport-button {

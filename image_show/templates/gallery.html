@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Image Gallery</title>
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <style>
+        .slide {
+            transition: opacity 0.3s ease-in-out;
+        }
+    </style>
+</head>
+
+<body class="bg-black text-white overflow-hidden">
+
+    <div class="w-screen h-screen flex items-center justify-center relative">
+        {% for image in images %}
+        <img src="{{ image }}"
+            class="absolute w-full h-full object-contain slide {% if not loop.first %}opacity-0{% endif %}">
+        {% endfor %}
+    </div>
+
+    <script>
+        const slides = document.querySelectorAll('.slide');
+        let current = 0;
+
+        function showSlide(index) {
+            slides.forEach((slide, i) => {
+                slide.classList.toggle('opacity-0', i !== index);
+            });
+        }
+
+        function nextSlide() {
+            current = (current + 1) % slides.length;
+            showSlide(current);
+        }
+
+        setInterval(nextSlide, 5000);
+    </script>
+</body>
+
+</html>

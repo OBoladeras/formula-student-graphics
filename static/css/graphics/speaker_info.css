@@ -34,13 +34,16 @@
     overflow: hidden;
 }
 
-#speaker_infoName {
+#speaker_infoName1,
+#speaker_infoName2 {
     display: flex;
     gap: 7.5px;
 }
 
-#speaker_infoName h1,
-h2 {
+#speaker_infoName1 h1,
+#speaker_infoName1 h2,
+#speaker_infoName2 h1,
+#speaker_infoName2 h2 {
     font-size: 24pt;
     font-weight: 300;
 
@@ -48,7 +51,8 @@ h2 {
     padding: 0;
 }
 
-#speaker_infoName h2 {
+#speaker_infoName1 h2,
+#speaker_infoName2 h2 {
     font-weight: bold;
 }
 
