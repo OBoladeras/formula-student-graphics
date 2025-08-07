@@ -8,56 +8,6 @@ from io import StringIO
 from bs4 import BeautifulSoup
 
 
-class files():
-    def __init__(self) -> None:
-        if not os.path.exists("teams.csv"):
-            print("teams.csv not found")
-            exit(1)
-
-    def teams(self) -> tuple:
-        teams = []
-        currentTeam = self.team()
-
-        with open("teams.csv", "r", encoding="UTF-8") as f:
-            reader = csv.reader(f)
-
-            for row in reader:
-                data = {}
-                data["number"] = row[0]
-                data["name"] = row[1]
-
-                teams.append(data)
-
-        for i in range(1, len(teams)):
-            if teams[i]["number"] == currentTeam["number"]:
-                teams[i]["selected"] = "true"
-                break
-
-        return sorted(teams[1:], key=lambda x: int(x["number"]))
-
-
-
-
-    def race(self, race: str = "") -> str:
-        try:
-            with open("data.json", "r", encoding="UTF-8") as f:
-                data = json.load(f)
-        except FileNotFoundError:
-            data = {}
-
-        if race != "":
-            with open("data.json", "w", encoding="UTF-8") as f:
-                data["race"] = race
-                json.dump(data, f)
-        else:
-            try:
-                race = data["race"]
-            except KeyError:
-                race = "skidpad"
-
-        return race
-
-
 class times():
     def __init__(self) -> None:
         pass
@@ -82,6 +32,27 @@ class times():
         df.dropna(how='all', axis=0, inplace=True)
 
         return df.values.tolist()[2:]
+
+    def readDlAutocross(self) -> list:
+        url = "http://www.pde-racing.com/tol/temps1434.asp"
+
+        response = requests.get(url)
+        decoded_data = html.unescape(response.text)
+
+        rows = decoded_data.split('\n')
+
+        structured_data = []
+        for row in rows:
+            fields = row.split('$')
+            if len(fields) > 1:
+                structured_data.append(fields)
+
+        df = pd.DataFrame(structured_data)
+
+        df.dropna(how='all', axis=1, inplace=True)
+        df.dropna(how='all', axis=0, inplace=True)
+
+        print(df.values.tolist()[2:])
 
     def bestTime(self, race: str) -> dict:
         def split_first_last_hyphen(s):
@@ -116,11 +87,11 @@ class times():
         }, "race": race}
 
         if race == "skidpad":
-            url = 'http://fss2024.ddns.net/SkidPad.aspx'
+            url = 'http://fss2025.ddns.net/SkidPad.aspx'
         elif race == "acceleration":
-            url = 'http://fss2024.ddns.net/Acceleracio.aspx'
+            url = 'http://fss2025.ddns.net/Acceleracio.aspx'
         elif race == "autocross":
-            url = 'http://fss2024.ddns.net/Autocross.aspx'
+            url = 'http://fss2025.ddns.net/Autocross.aspx'
 
         if race in ["skidpad", "acceleration", "autocross"]:
             response = requests.get(url)
@@ -129,11 +100,13 @@ class times():
 
             table1 = soup.find('table', id='GridView_Resultats')
             table1_html = str(table1)
-            df1 = pd.read_html(StringIO(table1_html), decimal=',', thousands='.')[0]
+            df1 = pd.read_html(StringIO(table1_html),
+                               decimal=',', thousands='.')[0]
 
             table2 = soup.find('table')
             table2_html = str(table2)
-            df2 = pd.read_html(StringIO(table2_html), decimal=',', thousands='.')[0]
+            df2 = pd.read_html(StringIO(table2_html),
+                               decimal=',', thousands='.')[0]
 
             allRuns = df1.values.tolist()
             bestRuns = df2.values.tolist()
@@ -208,87 +181,80 @@ class times():
         for i in list:
             tmp = {}
 
-            tmp["name"] = i[4]
-            tmp["class"] = i[5].lower()
-            tmp['number'] = i[3]
-            tmp['best'] = i[14]
+            tmp['team'] = i[3]
+            tmp['best_time'] = i[14]
             if i[8] == "Retirado":
                 tmp['last'] = "DNF"
             else:
                 tmp['last'] = i[8]
+            tmp['laps'] = i[16]
 
             data.append(tmp)
 
-        return data[:9]
-
-    def standings(self, race: str) -> list:
-        data = [race, ]
-        if race == "skidpad":
-            url = 'http://fss2024.ddns.net/SkidPad.aspx'
-        elif race == "acceleration":
-            url = 'http://fss2024.ddns.net/Acceleracio.aspx'
-        elif race == "autocross":
-            url = 'http://fss2024.ddns.net/Autocross.aspx'
-
-        if race == "endurance":
-            list = self.readEndurance()
-            teams = files().teams()
-
-            for i in list:
-                tmp = {"flag": ""}
-
-                for j in teams:
-
-                    number = i[3].strip()
-                    if str(number[0]) == "0":
-                        number = number[1:]
-
-                    if j["number"].strip() == number:
-                        tmp["flag"] = j["flag"]
-
-                tmp["name"] = f"#{i[3]} {i[4]}"
-                tmp["class"] = i[5]
-                tmp["lap"] = i[7]
-                if i[8] == "Retirado":
-                    tmp['last'] = "DNF"
-                else:
-                    tmp['last'] = i[8]
-                tmp['best'] = i[14]
-
-                data.append(tmp)
-        else:
-            response = requests.get(url)
-            html_content = response.text
-            soup = BeautifulSoup(html_content, 'html.parser')
-
-            table = soup.find('table', id='GridView_Resultats')
-            table_html = str(table)
-            df = pd.read_html(StringIO(table_html))[0]
-
-            allRuns = df.values.tolist()
-
-            numbers = []
-            for i in allRuns:
-                if i[0] in numbers:
-                    continue
-
-                tmp = {}
-                tmp["name"] = f"#{i[0]} {i[3]}"
-                tmp["uni"] = i[4]
-                if race in ["skidpad", "acceleration"]:
-                    tmp["time"] = f"{str(i[-1])[0]},{str(i[-1])[1:]}"
-                else:
-                    tmp["time"] = f"{str(i[-1])[:2]},{str(i[-1])[2:]}"
-
-                for j in files().teams():
-                    if str(j["number"]).strip() == str(i[0]).strip():
-                        tmp["flag"] = j["flag"]
-
-                numbers.append(i[0])
-                data.append(tmp)
+        data = sorted(data, key=lambda x: float(x["laps"]), reverse=True)
 
         return data
 
+    def autocross(self) -> list:
+        data = []
+        url = "http://fss2025.ddns.net/Autocross.aspx"
+
+        response = requests.get(url)
+        html_content = response.text
+        soup = BeautifulSoup(html_content, 'html.parser')
+
+        table = soup.find('table', id='GridView_Resultats')
+        table_html = str(table)
+        df = pd.read_html(StringIO(table_html), decimal=',', thousands='.')[0]
+
+        allRuns = df.values.tolist()
+
+        with open("teams.csv", "r") as f:
+            reader = csv.DictReader(f)
+            file_data = list(reader)
+
+        best_ev = 0
+        best_cv = 0
+        for i in allRuns:
+            tmp = {}
+            tmp['team'] = str(i[0])
+            tmp['best_time'] = i[-1]
+            tmp['last'] = i[-1]
+            tmp['laps'] = i[1]
+
+            for j in file_data:
+                tmp['category'] = "ev"
+                if str(j["CAR NUMBER"]) == str(tmp['team']):
+                    if "combustion" in j["CATEGORY"].lower():
+                        tmp['category'] = "cv"
+                    break
+
+            if tmp['category'] == "ev":
+                if best_ev == 0 or float(i[-1]) < float(best_ev):
+                    best_ev = i[-1]
+            elif tmp['category'] == "cv":
+                if best_cv == 0 or float(i[-1]) < float(best_cv):
+                    best_cv = i[-1]
+
+            data.append(tmp)
+
+        cleanData = []
+        for i in data:
+            teams = [j["team"] for j in cleanData]
+            if i['team'] in teams:
+                continue
+
+            if i['category'] == "ev":
+                i['last'] = f"{float(i['last']) - best_ev:.3f}"
+            elif i['category'] == "cv":
+                i['last'] = f"{float(i['last']) - best_cv:.3f}"
+
+            cleanData.append(i)
+
+        cleanData = sorted(cleanData, key=lambda x: float(x["best_time"]))
+
+        return cleanData
+
 
 if __name__ == "__main__":
-    pass
+    times().readDlAutocross()

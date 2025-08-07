@@ -4,17 +4,18 @@
     align-content: center;
 
     position: absolute;
-    left: 135px;
+    left: 70px;
     top: 75px;
 }
 
 #location_object p {
-    background: linear-gradient(to right, #c8012e, transparent);
+    background: linear-gradient(to right, #c8012e, #c8012e, #c8012e, transparent);
     height: 42px;
     align-content: center;
-    padding: 0 70px 0 5px;
+    margin: 0;
+    padding: 0 50px 0 5px;
 
-    font-size: 20pt;
+    font-size: 18pt;
     font-weight: bold;
     font-style: italic;
     color: white;

@@ -1,0 +1,79 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+
+* {
+    font-family: 'Montserrat', sans-serif;
+}
+
+body {
+    margin: 75px 135px;
+}
+
+
+
+
+.autocross_university {
+    width: 246px;
+    height: 16px;
+    font-size: 7pt;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white;
+    background: linear-gradient(to right, transparent, #232323, #232323, transparent);
+}
+
+.autocross_car_number {
+    width: 31px;
+    height: 31px;
+    font-size: 12pt;
+    font-weight: 600;
+
+    background-color: white;
+    color: #232323;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.autocross_time_container {
+    margin-top: -1px;
+    display: flex;
+    background-color: #232323;
+    color: white;
+
+    height: 41px;
+}
+
+.autocross_best_time,
+.autocross_difference {
+    margin: 0px;
+    width: 107.5px;
+    height: 20px;
+    font-size: 9pt;
+    font-weight: 500;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+
+.autocross_best_time_result,
+.autocross_difference_result {
+    margin: 0px;
+
+    width: 107.5px;
+    height: 20px;
+    font-size: 9pt;
+    font-weight: 200;
+    background-color: #2f2f2f;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+img {
+    display: block;
+}

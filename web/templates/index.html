@@ -162,12 +162,32 @@ https://github.com/OBoladeras/formula-student-graphics
 
         {% for subcategory in data[category_key]['times'] %}
         <section class="mt-2 results-table" id="{{ subcategory }}-{{ category_key }}-results" style="display: none;">
-            <div class="mt-4 text-center">
-                <button type="button"
-                    class="px-6 py-2 my-5 bg-[#444444] text-white font-bold rounded hover:bg-[#C8102E] transition-colors duration-300 filter-button">
-                    Filter Results
-                </button>
+            <div class="mt-4 text-center flex flex-col items-center gap-3">
+                <div>
+                    <button type="button" onclick="loadSubcat('{{ category_key }}', '{{ subcategory }}')"
+                        class="px-6 py-2 bg-[#444444] text-white font-bold rounded hover:bg-[#991031] transition-colors duration-300 filter-button">
+                        Update data
+                    </button>
+                </div>
+
+                <label for="bestOnly-{{ subcategory }}-{{ category_key }}"
+                    class="flex items-center gap-3 cursor-pointer mb-4">
+                    <div class="relative">
+                        <input type="checkbox" id="bestOnly-{{ subcategory }}-{{ category_key }}"
+                            onchange="loadSubcat('{{ category_key }}', '{{ subcategory }}')" class="sr-only peer">
+                        <div
+                            class="w-11 h-6 bg-gray-400 rounded-full peer peer-checked:bg-[#991031] transition duration-300">
+                        </div>
+                        <div
+                            class="absolute top-0.5 left-0.5 w-5 h-5 bg-white rounded-full shadow-md transition peer-checked:translate-x-full duration-300">
+                        </div>
+                    </div>
+                    <span class="text-white text-sm">Show only best run per car</span>
+                </label>
+
             </div>
+
+
 
             <div class="mx-2 sm:mx-12 pb-12 overflow-x-auto">
                 <div class="inline-block min-w-full align-middle">
@@ -177,10 +197,13 @@ https://github.com/OBoladeras/formula-student-graphics
                             <thead class="bg-[#444444] text-[10px] sm:text-xs md:text-sm uppercase text-white">
                                 <tr>
                                     {% if subcategory in ('endurance', 'trackdrive') %}
-                                    {% set table_headings = ["#", "Num", "Team", "Driver", "Lap", "Car", "Last Time",
+                                    {% set table_headings = ["#", "Num", "Car", "Team", "Lap", "Last Time",
                                     "Prev Time", "Best Time", "In Lap", "2nd Best"] %}
+                                    {% elif subcategory == "autocross" and category_key == "driverless" %}
+                                    {% set table_headings = ["#", "Num", "Car", "Team", "Last Time", "Difference", "Best
+                                    Time"] %}
                                     {% else %}
-                                    {% set table_headings = ["#", "Num", "Round", "Driver", "Team", "University",
+                                    {% set table_headings = ["#", "Num", "Car", "Team", "Round", "Driver", "University",
                                     "Result"] %}
                                     {% endif %}
 
@@ -237,28 +260,62 @@ https://github.com/OBoladeras/formula-student-graphics
 
                     tbody.innerHTML = '';
                     const data = json.rows || [];
+                    const checkboxId = `bestOnly-${sub}-${cat}`;
+                    const showBestOnly = document.getElementById(checkboxId)?.checked;
 
-                    data.forEach(team => {
+                    let filteredData = data;
+
+                    if (showBestOnly) {
+                        const bestRunsMap = new Map();
+
+                        data.forEach((run) => {
+                            const carNum = run[1]; // Assuming column index 1 is "Num"
+                            const bestSoFar = bestRunsMap.get(carNum);
+
+                            const currentTime = parseFloat(run.find(col => typeof col === 'string' && col.includes(':') === false)) || Infinity;
+
+                            if (!bestSoFar || currentTime < bestSoFar._time) {
+                                bestRunsMap.set(carNum, { row: run, _time: currentTime });
+                            }
+                        });
+
+                        filteredData = Array.from(bestRunsMap.values()).map(e => e.row);
+                    }
+
+                    filteredData.forEach(team => {
                         const row = document.createElement('tr');
                         row.className = 'odd:bg-white even:bg-[#E5E5E5] hover:bg-[#E5E5E5] transition';
+
                         team.forEach(info => {
                             const cell = document.createElement('td');
                             cell.className = 'px-2 sm:px-3 py-2 sm:py-4 text-center text-[11px] sm:text-sm md:text-base text-black whitespace-nowrap';
 
                             const str = String(info).toLowerCase();
-                            if (str.endsWith('.png') || str.endsWith('.jpg') || str.endsWith('.jpeg') || str.endsWith('.gif') || str.endsWith('.webp') || str.endsWith('.svg')) {
-                                const img = document.createElement('img');
-                                img.src = info;
-                                img.alt = '';
-                                img.className = 'w-full h-auto max-h-[50px] object-contain mx-auto';
-                                cell.appendChild(img);
+                            if (str.match(/\.(png|jpe?g|gif|webp|svg)$/)) {
+                                const cellImage = new Image();
+                                cellImage.alt = '';
+                                cellImage.className = 'w-full h-auto max-h-[50px] object-contain mx-auto';
+
+                                const testImg = new Image();
+                                testImg.onload = () => {
+                                    cellImage.src = info;
+                                    cell.appendChild(cellImage);
+                                };
+                                testImg.onerror = () => {
+                                    cellImage.src = '/static/cars/uknown.png';
+                                    cell.appendChild(cellImage);
+                                };
+                                testImg.src = info;
                             } else {
                                 cell.textContent = info;
                             }
+
                             row.appendChild(cell);
                         });
+
                         tbody.appendChild(row);
                     });
+
                 })
                 .catch(err => {
                     console.error('Error loading subcategory data', err);

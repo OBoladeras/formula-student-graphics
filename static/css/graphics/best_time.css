@@ -5,33 +5,49 @@
 }
 
 
+#best_time_down_ev,
+#best_time_down_cv {
+    transition: all 0.8s;
+
+    height: 80px;
+    overflow: hidden;
+}
+
+
 #best_time_object_ev,
 #best_time_object_cv {
     display: flex;
     flex-direction: column;
     position: absolute;
+
+    zoom: 0.85;
+    width: 240px;
+
+    transition: all 0.5s;
+    overflow: hidden;
 }
 
 #best_time_object_ev {
-    left: 135px;
-    bottom: 75px;
+    right: 70px;
+    top: 75px;
 }
 
 #best_time_object_cv {
-    right: 135px;
-    bottom: 75px;
+    right: 70px;
+    top: 225px;
 }
 
 .best_time_university {
     width: 240px;
     height: 17.5px;
-    font-size: 10pt;
+    font-size: 8.5pt;
+    margin-bottom: -1px;
 
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    background: linear-gradient(to right, white, #232323, #232323, white);
+    background: linear-gradient(to right, transparent, #232323, #232323, transparent);
 }
 
 .best_time_time {
@@ -42,16 +58,17 @@
     color: white;
     width: 80px;
     height: 80px;
-    font-size: 19pt;
+    font-size: 16.5pt;
     background-color: #232323;
 }
 
 .best_time_car_number {
     width: 80px;
     height: 80px;
-    font-size: 35pt;
+    font-size: 28pt;
+    font-weight: 600;
     background-color: white;
-    color: black;
+    color: #232323;
     display: flex;
     align-items: center;
     justify-content: center;

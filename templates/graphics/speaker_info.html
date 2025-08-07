@@ -1,26 +1,26 @@
 <div id="speaker_info_object1">
     <div id="speaker_infoRedBar">
         <div id="speaker_infoName1">
-            <h1>Chloe</h1>
-            <h2>Silva</h2>
+            <h1>{{ current_speaker1.name.split(' ')[0] }}</h1>
+            <h2>{{ current_speaker1.name.split(' ')[1] }}</h2>
         </div>
     </div>
 
     <div id="speaker_infoContent">
-        <p id="speaker_infoTitle1">Speaker</p>
+        <p id="speaker_infoTitle1">{{ current_speaker1.info }}</p>
     </div>
 </div>
 
 <div id="speaker_info_object2">
     <div id="speaker_infoRedBar">
         <div id="speaker_infoName2">
-            <h1>Chloe</h1>
-            <h2>Silva</h2>
+            <h1>{{ current_speaker2.name.split(' ')[0] }}</h1>
+            <h2>{{ current_speaker2.name.split(' ')[1] }}</h2>
         </div>
     </div>
 
     <div id="speaker_infoContent">
-        <p id="speaker_infoTitle2">Speaker</p>
+        <p id="speaker_infoTitle2">{{ current_speaker2.info }}</p>
     </div>
 </div>
 

@@ -1,0 +1,83 @@
+{% set index = 0 %}
+{% for index in [0, 1, 2] %}
+<div id="last_run_times_team_{{ index }}" class="last_run_times_team" data-team-number="{{ last_run_times[0] }}">
+    <div id="last_run_times_university_{{ index }}" class="last_run_times_university">{{ last_run_times[2] }}</div>
+    <div style="display: flex;">
+        <div id="last_run_times_car_number_container_{{ index }}">
+            <div id="last_run_times_car_number_ev" class="last_run_times_car_number">{{ last_run_times[0] }}</div>
+            {% if 'Combustion' in last_run_times[3] %}
+            <img src="../../static/icons/cv.png" width="31" height="31"
+                style="padding: 4.5px 0px; background-color: white;">
+            {% else %}
+            <img src="../../static/icons/ev.png" width="31" height="31"
+                style="padding: 4.5px 0px; background-color: white;">
+            {% endif %}
+        </div>
+        <div style="display: flex; align-items: flex-end;" id="last_run_times_team_ev_container_{{ index }}">
+            <div style="overflow: hidden;">
+                <img id="last_run_times_team_ev" style="width: 214px; height: 32px; margin-top: -1px"
+                    src="../../static/icons/team_parts/{{ last_run_times[0] }}.png" alt="Team Logo">
+                <div class="last_run_times_time_container">
+                    <div>
+                        <p class="last_run_times_best_time">Last Time</p>
+                        <p class="last_run_times_best_time_result"
+                            id="last_run_times_best_time_result_{{ index }}">
+                        </p>
+                    </div>
+                    <div>
+                        <p class="last_run_times_difference">
+                            {% if race == 'endurance' %}
+                            Last
+                            {% else %}
+                            Difference
+                            {% endif %}
+                        </p>
+                        <p class="last_run_times_difference_result"
+                            id="last_run_times_difference_result_{{ last_run_times[0] }}">
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endfor %}
+
+
+<script>
+    function hide_last_run_times(i) {
+        last_run_times_university = document.getElementById(`last_run_times_university_${i}`);
+        last_run_times_university.style.height = '0px';
+
+        setTimeout(() => {
+            last_run_times_team_ev_container = document.getElementById(`last_run_times_team_ev_container_${i}`);
+            last_run_times_team_ev_container.style.width = '0px';
+
+            setTimeout(() => {
+                last_run_times_car_number_container = document.getElementById(`last_run_times_car_number_container_${i}`);
+                last_run_times_car_number_container.style.transform = 'scaleY(0)';
+                last_run_times_car_number_container.style.opacity = '0';
+            }, 600);
+        }, 400);
+    }
+
+    function show_last_run_times(i) {
+        last_run_times_university = document.getElementById(`last_run_times_university_${i}`);
+        last_run_times_university.style.height = '30px';
+
+        setTimeout(() => {
+            last_run_times_team_ev_container = document.getElementById(`last_run_times_team_ev_container_${i}`);
+            last_run_times_team_ev_container.style.width = '214px';
+
+            setTimeout(() => {
+                last_run_times_car_number_container = document.getElementById(`last_run_times_car_number_container_${i}`);
+                last_run_times_car_number_container.style.transform = 'scaleY(1)';
+                last_run_times_car_number_container.style.opacity = '1';
+            }, 600);
+        }, 400);
+    }
+
+
+</script>
+
+<link rel="stylesheet" href="../../static/css/graphics/last_run_times.css">

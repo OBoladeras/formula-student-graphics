@@ -1,7 +1,7 @@
 #current_team_object {
     display: flex;
     position: absolute;
-    left: 135px;
+    left: 90px;
     bottom: 75px;
 }
 
@@ -138,7 +138,6 @@
     to {
         transform: rotate(-90deg);
     }
-
 }
 
 @keyframes current_team_show_image {

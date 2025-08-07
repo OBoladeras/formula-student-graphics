@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <title>Endurance</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap');
+    </style>
+
+    <link rel="stylesheet" href="/static/css/graphics/endurance.css">
+</head>
+
+<body>
+    <div style="display: flex; flex-direction: column; align-items: center; justify-content: center; width: 246px">
+        <img src="static/icons/endurance.png" id="endurance_icon" style="width: 246px; height: 79px;">
+        <div style="width: 246px; height: 816px; margin-top: 10px; background: linear-gradient(to right, #232323c5, transparent, transparent); overflow: hidden; transition: all 1.5s;"
+            id="endurance_list">
+            {% for team in teams %}
+            {% include 'graphics/endurance.html' %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <script>
+        const enduranceList = document.getElementById('endurance_list');
+
+        function getEnduranceTimes() {
+            return fetch('/api/endurance_times')
+                .then(response => response.json())
+                .then(data => {
+                    console.log('Fetched times:', data);
+                    return data;
+                })
+                .catch(error => {
+                    console.error('Error fetching times:', error);
+                    return {};
+                });
+        }
+
+        globalThis.current_bests = [];
+        globalThis.isListHidden = false;
+        globalThis.transitionGoing = false;
+
+        function updateGraphic() {
+            const yDifference = 107;
+            getEnduranceTimes().then(times => {
+
+                if (transitionGoing) {
+                    return;
+                }
+
+                const enduranceTeams = enduranceList.children;
+                newTeamList = [];
+                current_bests = [];
+                for (const team in times) {
+                    newTeamList.push(times[team].team);
+                    current_bests.push(times[team].team);
+                }
+
+                for (const divv in enduranceTeams) {
+                    if (isNaN(divv)) {
+                        continue;
+                    }
+
+                    if (isNaN(enduranceList.children[divv].getAttribute('data-team-number'))) {
+                        continue;
+                    }
+
+                    if (isListHidden) {
+                        enduranceList.children[divv].style.left = '-400px';
+                    } else {
+                        enduranceList.children[divv].style.left = '70px';
+                    }
+
+                    if (newTeamList.includes(enduranceList.children[divv].getAttribute('data-team-number'))) {
+                        enduranceList.children[divv].style.opacity = '1';
+                        enduranceList.children[divv].style.display = 'block';
+
+                        i = 0;
+                        for (const team in times) {
+                            if (enduranceList.children[divv].getAttribute('data-team-number') == times[team].team) {
+                                break;
+                            }
+                            i++;
+                        }
+                        enduranceList.children[divv].style.top = `${yDifference * (i) + 180}px`;
+                    }
+                    else {
+                        enduranceList.children[divv].style.top = `${yDifference * 8 + 180}px`;
+
+                        setTimeout(() => {
+                            enduranceList.children[divv].style.opacity = '0';
+                        }, 500);
+                    }
+                }
+
+                for (const team in times) {
+                    const teamElement = document.getElementById(`endurance_team_${times[team].team}`);
+                    if (teamElement) {
+                        const bestTimeElement = document.getElementById(`endurance_best_time_result_${times[team].team}`);
+                        const differenceElement = document.getElementById(`endurance_difference_result_${times[team].team}`);
+
+                        if (times[team].last == "DNF") {
+                            differenceElement.style.color = '#f85670';
+                            differenceElement.textContent = "DNF";
+                        }
+                        else {
+
+                            if (differenceElement.textContent < times[team].last) {
+                                differenceElement.style.color = '#f85670';
+                                differenceElement.textContent = times[team].last;
+
+                                setTimeout(() => {
+                                    differenceElement.style.color = 'white';
+                                }, 3000);
+                            }
+                            else if (differenceElement.textContent > times[team].last) {
+                                differenceElement.style.color = '#00ff00';
+                                differenceElement.textContent = times[team].last;
+
+                                setTimeout(() => {
+                                    differenceElement.style.color = 'white';
+                                }, 3000);
+                            }
+                        }
+
+                        if (bestTimeElement.innerHTML != times[team].best_time) {
+                            bestTimeElement.textContent = times[team].best_time;
+                            bestTimeElement.style.color = '#00ff00';
+                            setTimeout(() => {
+                                bestTimeElement.style.color = 'white';
+                            }, 3000);
+                        }
+
+                        if (teamElement.querySelector('.endurance_lap_number')) {
+                            teamElement.querySelector('.endurance_lap_number').textContent = times[team].laps;
+                        } else {
+                            const lapNumberElement = document.createElement('p');
+                            lapNumberElement.className = 'endurance_lap_number';
+                            lapNumberElement.textContent = times[team].laps;
+                            teamElement.appendChild(lapNumberElement);
+                        }
+                    }
+                }
+            });
+        }
+
+        setInterval(() => {
+            updateGraphic();
+        }, 15000);
+
+        updateGraphic();
+
+        function showEnduranceTeams() {
+            isListHidden = false;
+            if (transitionGoing) {
+                setTimeout(() => {
+                    showEnduranceTeams();
+                }, 1000);
+                return;
+            }
+            transitionGoing = true;
+
+            enduranceList.style.height = '816px';
+
+            endurance_icon = document.getElementById('endurance_icon');
+            endurance_icon.style.transition = 'all 0.2s';
+            endurance_icon.style.transitionDelay = '0s';
+            endurance_icon.style.width = '246px';
+
+            for (const team in current_bests) {
+                setTimeout(() => {
+                    divTeam = document.getElementById(`endurance_team_${current_bests[team]}`);
+                    if (divTeam) {
+                        divTeam.style.transition = 'left 1s, top 1s, opacity 1s';
+                        divTeam.style.left = '70px';
+
+                        setTimeout(() => {
+                            divTeam.style.transition = 'top 1s, opacity 1s';
+                        }, 1000 + team * 150 + 500);
+                    }
+                }, 100 * team + 500);
+            }
+
+            setTimeout(() => {
+                transitionGoing = false;
+            }, 1000 + current_bests.length * 150 + 500);
+        }
+
+        function hideEnduranceTeams() {
+            isListHidden = true;
+            if (transitionGoing) {
+                setTimeout(() => {
+                    hideEnduranceTeams();
+                }, 1000);
+                return;
+            }
+            transitionGoing = true;
+
+            enduranceList.style.transitionDelay = '0.5s';
+            enduranceList.style.height = '0px';
+            endurance_icon = document.getElementById('endurance_icon');
+            endurance_icon.style.transition = 'all 0.2s';
+            endurance_icon.style.transitionDelay = '1.6s';
+            endurance_icon.style.width = '0px';
+
+            for (const team in current_bests) {
+                length = current_bests.length;
+                setTimeout(() => {
+                    divTeam = document.getElementById(`endurance_team_${current_bests[length - 1 - team]}`);
+                    if (divTeam) {
+                        divTeam.style.transition = 'left 1s, top 1s, opacity 1s';
+                        divTeam.style.left = '-400px';
+
+                        setTimeout(() => {
+                            divTeam.style.transition = 'top 1s, opacity 1s';
+                        }, 1000 + team * 150);
+                    }
+                }, 100 * team);
+            }
+
+            setTimeout(() => {
+                transitionGoing = false;
+            }, 1000 + current_bests.length * 150);
+        }
+
+
+        function update() {
+            setTimeout(() => {
+                fetch('/api/endurance')
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data['show']) {
+                            if (isListHidden) {
+                                showEnduranceTeams();
+                            }
+                        } else {
+                            if (!isListHidden) {
+                                hideEnduranceTeams();
+                            }
+                        }
+                    });
+
+                update();
+            }, 1000);
+        }
+
+        update();
+    </script>
+
+    <script src="/static/js/graphics/endurance.js"></script>
+</body>
+
+</html>

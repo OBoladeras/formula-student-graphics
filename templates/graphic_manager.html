@@ -4,197 +4,246 @@
 <head>
     <meta charset="UTF-8">
     <title>Graphics Manager</title>
-    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #1e1e2f;
+            color: #ffffff;
+            margin: 0;
+            padding: 20px;
+        }
 
-    <script>globalThis.graphic_status = {};</script>
+        .container {
+            max-width: 900px;
+            margin: auto;
+            background-color: #2a2a3d;
+            padding: 30px;
+            border-radius: 16px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.4);
+        }
+
+        h1,
+        h2 {
+            color: #00ffd0;
+            text-align: center;
+        }
+
+        form label {
+            display: block;
+            margin: 12px 0 4px;
+            font-weight: bold;
+        }
+
+        input[type="text"],
+        select {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            background-color: #3a3a4f;
+            border: none;
+            border-radius: 8px;
+            color: #ffffff;
+            font-size: 1em;
+        }
+
+        button {
+            display: block;
+            width: 100%;
+            padding: 15px;
+            background-color: #00ffd0;
+            color: #1e1e2f;
+            font-size: 1.2em;
+            font-weight: bold;
+            border: none;
+            border-radius: 12px;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #00c2a0;
+        }
+
+        .section {
+            margin-top: 30px;
+        }
+
+        .speaker-section .speaker-box {
+            display: flex;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .speaker-box .speaker {
+            width: 48%;
+        }
+
+        .last-run-group {
+            display: flex;
+            gap: 24px;
+            justify-content: space-between;
+        }
+
+        .last-run-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+        }
+
+        .label {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin: 10px 0;
+            font-weight: normal;
+        }
+
+        input[type="checkbox"] {
+            appearance: none;
+            width: 50px;
+            height: 26px;
+            background: #444;
+            border-radius: 15px;
+            position: relative;
+            outline: none;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+
+        input[type="checkbox"]::before {
+            content: "";
+            position: absolute;
+            width: 22px;
+            height: 22px;
+            background: #fff;
+            border-radius: 50%;
+            top: 2px;
+            left: 2px;
+            transition: transform 0.3s ease;
+        }
+
+        input[type="checkbox"]:checked {
+            background: #00ffd0;
+        }
+
+        input[type="checkbox"]:checked::before {
+            transform: translateX(24px);
+        }
+    </style>
 </head>
 
-<body class="bg-gray-100 text-gray-800 font-sans p-8 h-screen">
-    <div class="grid grid-cols-1 md:grid-cols-2 gap-8 h-full">
-        <!-- Preview Section -->
-        <div class="bg-white shadow-xl rounded-2xl p-6 space-y-4 h-full overflow-y-auto">
-            <h1 class="text-3xl font-bold text-blue-600">Preview</h1>
-            <p>Click on a team to select it. The selected team will be highlighted.</p>
-            <p>Click on the "Update" button to apply the selected team.</p>
-            <p>To change the team, select a different team from the list on the left.</p>
-
-            <!-- Current Team -->
-            <section>
-                <h2 class="text-2xl font-semibold text-gray-700 mt-6">Current Team</h2>
-                <p>Current team is the team that will be displayed on the graphics.</p>
-
-                <div>
-                    <!-- show the visualizer status, showed or not -->
-                    {% if graphics_status["current_team"] == True %}
-                    <div class="bg-green-100 text-green-800 p-3 rounded-lg max-w-xs text-center mx-auto my-4"
-                        id="current_team_status">
-                        <p class="font-semibold">Visualizer is active.</p>
-                    </div>
-                    <script>graphic_status["current_team"] = true;</script>
-                    {% else %}
-                    <div class="bg-red-100 text-red-800 p-3 rounded-lg max-w-xs text-center mx-auto my-4"
-                        id="current_team_status">
-                        <p class="font-semibold">Visualizer is not active.</p>
-                    </div>
-                    <script>graphic_status["current_team"] = false;</script>
-                    {% endif %}
-
-                    <button id="toggleGraphicButton_current_team" onclick="toggleGraphic('current_team')"
-                        class="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition">
-                        {% if graphics_status["current_team"] == True %}
-                        Hide Graphic
-                        {% else %}
-                        Show Graphic
-                        {% endif %}
-                    </button>
-                </div>
-                <img id="current_team" src="" alt="" class="mt-4 w-2xl h-auto">
-            </section>
-
-            <!-- Location -->
-            <section>
-                <h2 class="text-2xl font-semibold text-gray-700 mt-6">Location</h2>
-                <p>Location is where the camera is located. It shows the current location of the team.</p>
-
-                <div>
-                    <!-- show the visualizer status, showed or not -->
-                    {% if graphics_status["location"] == True %}
-                    <div class="bg-green-100 text-green-800 p-3 rounded-lg max-w-xs text-center mx-auto my-4"
-                        id="location_status">
-                        <p class="font-semibold">Visualizer is active.</p>
-                    </div>
-                    <script>graphic_status["location"] = true;</script>
-                    {% else %}
-                    <div class="bg-red-100 text-red-800 p-3 rounded-lg max-w-xs text-center mx-auto my-4"
-                        id="location_status">
-                        <p class="font-semibold">Visualizer is not active.</p>
-                    </div>
-                    <script>graphic_status["location"] = false;</script>
-                    {% endif %}
-
-                    <div class="flex items-center justify-between">
-                        <button id="toggleGraphicButton_location" onclick="toggleGraphic('location')"
-                            class="mt-4 px-6 py-2 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition graphic_button">
-                            {% if graphics_status["location"] == True %}
-                            Hide Graphic
-                            {% else %}
-                            Show Graphic
-                            {% endif %}
-                        </button>
-
-                        <input type="text" id="location_text" placeholder="Enter new location"
-                            onkeydown="document.getElementById('location_object').children[1].textContent = this.value"
-                            class="mt-4 px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                        <button id="update_location_button" onclick="update_location()"
-                            class="mt-4 px-6 py-2 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition">
-                            Update Location
-                        </button>
-
-                        <script>
-                            function update_location() {
-                                const locationText = document.getElementById('location_text').value;
-                                if (locationText) {
-                                    fetch('/api/update_location', {
-                                        method: 'POST',
-                                        headers: {
-                                            'Content-Type': 'application/json'
-                                        },
-                                        body: JSON.stringify({ location: locationText })
-                                    })
-                                        .then(response => response.json())
-                                        .then(data => {
-                                            if (data.status === 'success') {
-                                                document.getElementById('notification').classList.remove('hidden');
-                                                setTimeout(() => {
-                                                    document.getElementById('notification').classList.add('hidden');
-                                                }, 3000);
-                                            } else {
-                                                alert('Failed to update location.');
-                                            }
-                                        });
-                                } else {
-                                    alert('Please enter a valid location.');
-                                }
-                            }
-                        </script>
-                    </div>
-                </div>
-
-                {% include 'graphics/location.html' %}
-                <script>location_show();</script>
-                <style>
-                    #location_object {
-                        position: static;
-                        margin: 20px;
-                        background-color: gray;
-                    }
-                </style>
-            </section>
-        </div>
-
-
-        <!-- Team Selector -->
-        <div class="bg-white shadow-xl rounded-2xl p-6 space-y-4 h-full">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-2xl font-semibold text-gray-700">Select Team</h2>
-                <button type="submit" onclick="update_team()"
-                    class="px-4 py-2 bg-green-600 text-white font-semibold rounded hover:bg-green-700 transition">
-                    Update
-                </button>
-            </div>
-
-            <div class="flex items-center space-x-4 mb-4">
-                <input type="text" id="searchInput" onkeyup="searchTable()" placeholder="Search for team name..."
-                    class="w-full px-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                <select id="columnSelect" onchange="searchTable()"
-                    class="px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500">
-                    <option value="name">Number</option>
-                    <option value="name">Name</option>
+<body>
+    <div class="container">
+        <h1>Graphics Manager</h1>
+        <form method="POST">
+            <div class="section">
+                <label for="race">Race</label>
+                <select name="race" id="race">
+                    {% for option in ['endurance', 'acceleration', 'autocross', 'skidpad'] %}
+                    <option value="{{ option }}" {% if data.race==option %}selected{% endif %}>{{ option }}</option>
+                    {% endfor %}
                 </select>
+
+                <label>
+                    <input type="checkbox" name="classic" {% if data.classic %}checked{% endif %}>
+                    Classic Mode
+                </label>
+
+                <br>
+
+                <label for="current_team_number">Current Team</label>
+                <input type="text" name="current_team_number" id="current_team_number"
+                    value="{{ data.current_team_number }}">
+                <label> <input type="checkbox" name="current_team" {% if data.graphics_status.current_team %}checked{%
+                        endif %}> Current Team </label>
+                <br>
+
+                <label for="location_text">Location</label>
+                <input type="text" name="location_text" id="location" value="{{ data.location_text }}">
+                <label> <input type="checkbox" name="location" {% if data.graphics_status.location %}checked{% endif %}>
+                    Location </label>
+
             </div>
 
-            <form>
-                <div class="overflow-y-auto border border-gray-300 rounded" style="max-height: 780px;">
-                    <table class="min-w-full table-auto">
-                        <thead class="bg-gray-200 sticky top-0">
-                            <tr>
-                                <th class="p-2"></th>
-                                <th class="p-2 text-left">Number</th>
-                                <th class="p-2 text-left">Name</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for team in teams %}
-                            <tr class="clickable-row {% if team.selected=='true' %}bg-blue-100{% endif %} hover:bg-blue-50 cursor-pointer border-t border-gray-200"
-                                data-team-id="{{ team.number }}">
-                                <td class="text-center p-2">
-                                    <input type="radio" name="selectedTeam" value="{{ team.number }}"
-                                        id="team-{{ team.number }}" {% if team.selected=='true' %}checked{% endif %}>
-                                </td>
-                                {% if team.selected=='true' %}
-                                <script>globalThis.current_team_selected = '{{team.number}}'</script>
-                                {% endif %}
-                                <td class="p-2">{{ team.number }}</td>
-                                <td class="p-2">{{ team.name }}</td>
-                            </tr>
+            <div class="section speaker-section">
+                <h2>Speakers</h2>
+                <div class="speaker-box">
+                    <div class="speaker">
+                        <label for="speaker1_name">Speaker 1 Name</label>
+                        <input type="text" name="speaker1_name" id="speaker1_name"
+                            value="{{ data.current_speaker1.name }}">
 
-                            {% if team.selected %}
-                            <script>document.getElementById('current_team').src = `/static/images/current_team/{{team.number}}.png`;</script>
-                            {% endif %}
-                            {% endfor %}
-                        </tbody>
-                    </table>
+                        <label for="speaker1_info">Speaker 1 Info</label>
+                        <input type="text" name="speaker1_info" id="speaker1_info"
+                            value="{{ data.current_speaker1.info }}">
+
+                        <label>
+                            <input type="checkbox" name="speaker_info1" {% if data.graphics_status.speaker_info1 %}checked{% endif %}> Speaker
+                            Info1
+                        </label>
+                    </div>
+
+                    <div class="speaker">
+                        <label for="speaker2_name">Speaker 2 Name</label>
+                        <input type="text" name="speaker2_name" id="speaker2_name"
+                            value="{{ data.current_speaker2.name }}">
+
+                        <label for="speaker2_info">Speaker 2 Info</label>
+                        <input type="text" name="speaker2_info" id="speaker2_info"
+                            value="{{ data.current_speaker2.info }}">
+
+                        <label>
+                            <input type="checkbox" name="speaker_info2" {% if data.graphics_status.speaker_info2 %}checked{% endif %}> Speaker
+                            Info2
+                        </label>
+                    </div>
                 </div>
-            </form>
-        </div>
-    </div>
+            </div>
 
-    <div id="notification"
-        class="fixed bottom-4 right-4 bg-green-500 text-white px-4 py-2 rounded-lg shadow-lg hidden">
-        Team updated successfully!
-    </div>
+            <div class="section">
+                <h2>Last Run Entries</h2>
+                <div class="last-run-group">
+                    {% for i in range(3) %}
+                    <div class="last-run-item">
+                        <label for="last_run_{{ i }}_number">Run {{ i + 1 }} – Team #</label>
+                        <input type="text" name="last_run_{{ i }}_number" id="last_run_{{ i }}_number"
+                            value="{{ data.last_run[i].number if data.last_run and i < data.last_run|length else '' }}">
 
-    <script src="/static/js/graphic_manager.js"></script>
+                        <label for="last_run_{{ i }}_time">Time (s)</label>
+                        <input type="text" name="last_run_{{ i }}_time" id="last_run_{{ i }}_time"
+                            value="{{ data.last_run[i].time if data.last_run and i < data.last_run|length else '' }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="section">
+                <h2>Graphics Toggles</h2>
+                <div class="checkbox-group">
+                    <label>
+                        <input type="checkbox" name="best_time_object_ev" {% if data.graphics_status.best_time_object_ev %}checked{% endif %}> Best
+                        Time
+                        Object
+                        Ev
+                    </label>
+                    <label>
+                        <input type="checkbox" name="best_time_object_cv" {% if data.graphics_status.best_time_object_cv %}checked{% endif %}> Best
+                        Time
+                        Object
+                        Cv
+                    </label>
+                    <label>
+                        <input type="checkbox" name="endurance_list" {% if data.graphics_status.endurance_list %}checked{% endif %}> Endurance
+                        List
+                    </label>
+                </div>
+            </div>
+
+            <button type="submit">💾 Save Configuration</button>
+        </form>
+    </div>
 </body>
 
 </html>

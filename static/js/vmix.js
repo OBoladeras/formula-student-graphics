@@ -42,8 +42,8 @@ function part1(data) {
         }
     }
 
-    if (!(current_location == data['location'])) {
-        current_location = data['location'];
+    if (!(current_location == data['location_text'])) {
+        current_location = data['location_text'];
         current_location_object = document.getElementById('location_object');
 
         if (graphics_status['location'] === true) {
@@ -61,7 +61,7 @@ function part1(data) {
         }
     }
 
-    if (JSON.stringify(current_speaker1) != JSON.stringify(data['current_speaker1'])) {
+    if (JSON.stringify(current_speaker1) !== JSON.stringify(data['current_speaker1'])) {
         current_speaker1 = data['current_speaker1'];
         speaker_info_object1 = document.getElementById('speaker_info_object1');
         speaker_infoName1 = document.getElementById('speaker_infoName1');
@@ -71,8 +71,14 @@ function part1(data) {
             speaker_info_hide('1');
 
             setTimeout(() => {
-                speaker_infoName1.children[0].innerHTML = current_speaker1['name'].split(' ')[0];
-                speaker_infoName1.children[1].innerHTML = current_speaker1['name'].split(' ')[1];
+                if (current_speaker1['name'].split(' ').length > 1) {
+                    speaker_infoName1.children[0].innerHTML = current_speaker1['name'].split(' ')[0];
+                    speaker_infoName1.children[1].innerHTML = current_speaker1['name'].split(' ')[1];
+                }
+                else {
+                    speaker_infoName1.children[0].innerHTML = current_speaker1['name'];
+                    speaker_infoName1.children[1].innerHTML = '';
+                }
                 speaker_infoTitle1.innerHTML = current_speaker1['info'] || 'Speaker';
 
                 speaker_info_show('1');
@@ -92,14 +98,40 @@ function part1(data) {
             speaker_info_hide('2');
 
             setTimeout(() => {
-                speaker_infoName2.children[0].innerHTML = current_speaker2['name'].split(' ')[0];
-                speaker_infoName2.children[1].innerHTML = current_speaker2['name'].split(' ')[1];
+                if (current_speaker2['name'].split(' ').length > 1) {
+                    speaker_infoName2.children[0].innerHTML = current_speaker2['name'].split(' ')[0];
+                    speaker_infoName2.children[1].innerHTML = current_speaker2['name'].split(' ')[1];
+                }
+                else {
+                    speaker_infoName2.children[0].innerHTML = current_speaker2['name'];
+                    speaker_infoName2.children[1].innerHTML = '';
+                }
                 speaker_infoTitle2.innerHTML = current_speaker2['info'] || 'Speaker';
 
                 speaker_info_show('2');
             }, 1900);
         } else {
             speaker_info_show('2');
+        }
+    }
+
+    for (let i = 0; i < 3; i++) {
+        if (data['last_run'][i] !== last_run[i]) {
+            last_run[i] = data['last_run'][i];
+
+            if (last_run[i].number == '0') {
+                hide_last_run_times(i);
+            }
+            else {
+                // If the number is different hide all the object
+                if (last_run[i].number != data['last_run'][i].number) {
+                    hide_last_run_times(i);
+                    setTimeout(() => {
+                        last_run_times_best_time_result = document.getElementById(`last_run_times_best_time_result_${i}`);
+                        // Check this part
+                    }, 600);
+                }
+            }
         }
     }
 }
@@ -177,13 +209,9 @@ function part2(data) {
 
         if (data.graphics_status.best_time_object_ev) {
             best_time_object_ev.style.display = 'flex';
-            // best_time_show('ev');
+            showBestTeam('ev');
         } else {
-            // best_time_hide('ev');
-
-            setTimeout(() => {
-                best_time_object_ev.style.display = 'none';
-            }, 100);
+            hideBestTeam('ev');
         }
     }
     if (data.graphics_status.best_time_object_cv !== graphics_status.best_time_object_cv) {
@@ -192,13 +220,9 @@ function part2(data) {
 
         if (data.graphics_status.best_time_object_cv) {
             best_time_object_cv.style.display = 'flex';
-            // best_time_show('cv');
+            showBestTeam('cv');
         } else {
-            // best_time_hide('cv');
-
-            setTimeout(() => {
-                best_time_object_cv.style.display = 'none';
-            }, 100);
+            hideBestTeam('cv');
         }
     }
 }

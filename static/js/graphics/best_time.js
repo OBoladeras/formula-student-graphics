@@ -1,6 +1,28 @@
 var best = { "fuel": "0", "electric": "0", "race": null };
 
 
+function hideBestTeam(category) {
+    const best_time_down = document.getElementById('best_time_down_' + category);
+    const best_time_object = document.getElementById('best_time_object_' + category);
+
+    best_time_down.style.height = "0px";
+
+    setTimeout(() => {
+        best_time_object.style.width = "0px";
+    }, 800);
+}
+
+function showBestTeam(category) {
+    const best_time_down = document.getElementById('best_time_down_' + category);
+    const best_time_object = document.getElementById('best_time_object_' + category);
+
+    best_time_object.style.width = "240px";
+    setTimeout(() => {
+        best_time_down.style.height = "80px";
+    }, 500);
+}
+
+
 function getBest() {
     globalThis.best = best;
 
@@ -10,7 +32,6 @@ function getBest() {
             race = data.race;
             fuel = data.fuel;
             electric = data.electric;
-            console.log('best data', data);
 
             if (best['fuel'] != fuel.time || best["race"] != race) {
                 best_time_university_cv = document.getElementById('best_time_university_cv');
@@ -18,12 +39,16 @@ function getBest() {
                 best_time_car_number_cv = document.getElementById('best_time_car_number_cv');
                 best_time_team_cv = document.getElementById('best_time_team_cv');
 
-                best_time_university_cv.innerHTML = fuel.uni;
-                best_time_time_cv.innerHTML = fuel.time;
-                best_time_car_number_cv.innerHTML = fuel.number;
+                hideBestTeam('cv');
 
-                best_time_team_cv.src = "../../static/icons/team_parts/" + fuel.number + ".png";
+                setTimeout(() => {
+                    best_time_university_cv.innerHTML = fuel.uni;
+                    best_time_time_cv.innerHTML = fuel.time;
+                    best_time_car_number_cv.innerHTML = fuel.number;
 
+                    best_time_team_cv.src = "../../static/icons/team_parts/" + fuel.number + ".png";
+                    showBestTeam('cv');
+                }, 1400);
 
                 best['fuel'] = fuel.time;
                 best['race'] = race;
@@ -35,11 +60,16 @@ function getBest() {
                 best_time_car_number_ev = document.getElementById('best_time_car_number_ev');
                 best_time_team_ev = document.getElementById('best_time_team_ev');
 
-                best_time_university_ev.innerHTML = electric.uni;
-                best_time_time_ev.innerHTML = electric.time;
-                best_time_car_number_ev.innerHTML = electric.number;
+                hideBestTeam('ev');
 
-                best_time_team_ev.src = "../../static/icons/team_parts/" + electric.number + ".png";
+                setTimeout(() => {
+                    best_time_university_ev.innerHTML = electric.uni;
+                    best_time_time_ev.innerHTML = electric.time;
+                    best_time_car_number_ev.innerHTML = electric.number;
+
+                    best_time_team_ev.src = "../../static/icons/team_parts/" + electric.number + ".png";
+                    showBestTeam('ev');
+                }, 1400);
 
                 best['electric'] = electric.time;
                 best['race'] = race;

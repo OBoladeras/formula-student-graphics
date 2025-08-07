@@ -1,0 +1,40 @@
+<div id="endurance_team_{{ team[0] }}" style="margin-bottom: 20px;" class="endurance_team"
+    data-team-number="{{ team[0] }}">
+    <div class="endurance_university">{{ team[2] }}</div>
+    <div style="display: flex;">
+        <div>
+            <div id="endurance_car_number_ev" class="endurance_car_number">{{ team[0] }}</div>
+            {% if 'Combustion' in team[3] %}
+            <img src="../../static/icons/cv.png" width="31" height="31"
+                style="padding: 4.5px 0px; background-color: white;">
+            {% else %}
+            <img src="../../static/icons/ev.png" width="31" height="31"
+                style="padding: 4.5px 0px; background-color: white;">
+            {% endif %}
+        </div>
+        <div style="display: flex; align-items: flex-end;">
+
+            <div style="overflow: hidden;">
+                <img id="endurance_team_ev" style="width: 214px; height: 32px; margin-top: -1px"
+                    src="../../static/icons/team_parts/{{ team[0] }}.png" alt="Team Logo">
+                <div class="endurance_time_container">
+                    <div>
+                        <p class="endurance_best_time">Best Time</p>
+                        <p class="endurance_best_time_result" id="endurance_best_time_result_{{ team[0] }}"></p>
+                    </div>
+                    <div>
+                        <p class="endurance_difference">
+                            {% if race == 'endurance' %}
+                            Last
+                            {% elif race == 'autocross' %}
+                            Difference
+                            {% endif %}
+                        </p>
+                        <p class="endurance_difference_result" id="endurance_difference_result_{{ team[0] }}"></p>
+                    </div>
+                </div>
+            </div>
+            <p class="endurance_lap_number">11</p>
+        </div>
+    </div>
+</div>

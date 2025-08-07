@@ -1,0 +1,32 @@
+<div id="autocross_team_{{ team[0] }}" style="margin-bottom: 20px;">
+    <div class="autocross_university">{{ team[2] }}</div>
+    <div style="display: flex;">
+        <div>
+            <div id="autocross_car_number_ev" class="autocross_car_number">{{ team[0] }}</div>
+            {% if 'Combustion' in team[3] %}
+            <img src="../../static/icons/cv.png" width="31" height="31"
+                style="padding: 4.5px 0px; background-color: white;">
+            {% else %}
+            <img src="../../static/icons/ev.png" width="31" height="31"
+                style="padding: 4.5px 0px; background-color: white;">
+            {% endif %}
+        </div>
+        <div style="display: flex; justify-content: bottom; align-items: bottom;">
+            <div style="overflow: hidden;">
+                <img id="autocross_team_ev" style="width: 214px; height: 32px; margin-top: -1px"
+                    src="../../static/icons/team_parts/{{ team[0] }}.png" alt="Team Logo">
+                <div class="autocross_time_container">
+                    <div>
+                        <p class="autocross_best_time">Best Time</p>
+                        <p class="autocross_best_time_result" id="autocross_best_time_result_{{ team[0] }}"></p>
+                    </div>
+                    <div>
+                        <p class="autocross_difference">Difference</p>
+                        <p class="autocross_difference_result" id="autocross_difference_result_{{ team[0] }}"></p>
+                    </div>
+                </div>
+            </div>
+            <p style="width: 18px; height: 18px; background-color: #c8102e;"></p>
+        </div>
+    </div>
+</div>

@@ -9,7 +9,7 @@ function location_show() {
         allObject.children[0].style.transform = 'translate(0, 0)';
         allObject.children[0].style.borderRight = '4px solid white';
 
-        allObject.children[1].style.width = '395.625px';
+        allObject.children[1].style.width = '425.625px';
         allObject.children[1].style.padding = '0 70px 0 15px';
 
         allObject.classList.remove('location_show');
