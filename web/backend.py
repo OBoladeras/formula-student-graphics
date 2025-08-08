@@ -32,11 +32,11 @@ class times():
             raise ValueError("Invalid category. Choose from: " +
                              ", ".join(self.categories))
         if category == "combustion&electric":
-            url = "http://www.pde-racing.com/tol/temps1434.asp"
+            url = "http://www.pde-racing.com/tol/temps1594.asp"
         elif category == "driverless":
-            url = "http://www.pde-racing.com/tol/temps1433.asp"
+            url = "http://www.pde-racing.com/tol/temps1593.asp"
         elif category == "classic-cup":
-            url = "http://www.pde-racing.com/tol/temps1515.asp"
+            url = "http://www.pde-racing.com/tol/temps1595.asp"
 
         response = requests.get(url)
         decoded_data = html.unescape(response.text)
@@ -178,7 +178,7 @@ class times():
         return data
 
     def readDlAutocross(self) -> list:
-        url = "http://www.pde-racing.com/tol/temps1432.asp"
+        url = "http://www.pde-racing.com/tol/temps1592.asp"
 
         response = requests.get(url)
         decoded_data = html.unescape(response.text)
