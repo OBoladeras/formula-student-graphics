@@ -87,7 +87,7 @@ class times():
         }, "race": race}
 
         if race == "skidpad":
-            url = 'http://fss2025.ddns.net/SkidPad.aspx'
+            url = 'http://fss2025.ddns.net/DL_SkidPad.aspx'
         elif race == "acceleration":
             url = 'http://fss2025.ddns.net/Acceleracio.aspx'
         elif race == "autocross":
