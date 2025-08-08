@@ -57,20 +57,24 @@ def endurance():
 
 @app.route('/api/endurance_times')
 def get_teams():
-    with open(JSON_PATH, "r") as f:
-        data = json.load(f)
-        if data['race'] == "endurance":
-            data = times().endurance()[:8]
-        elif data['race'] == "autocross":
-            data = times().autocross()[:8]
+    try:
+        with open(JSON_PATH, "r") as f:
+            data = json.load(f)
+            if data['race'] == "endurance":
+                data = times().endurance()[:8]
+            elif data['race'] == "autocross":
+                data = times().autocross()[:8]
 
-    return jsonify(data)
-
+        return jsonify(data)
+    except:
+        return jsonify([])
 
 # ------------------------------------------------------------------------------------
 # -----------------------------
 #   API
 # -----------------------------
+
+
 @app.route("/api/vmix", methods=["GET"])
 def vmix_api():
     with open("data.json", "r") as f:
@@ -88,7 +92,10 @@ def select_team():
 def best_api():
     with open("data.json", "r") as f:
         race = json.load(f)["race"]
-    return jsonify(raceTimes.bestTime(race))
+    try:
+        return jsonify(raceTimes.bestTime(race))
+    except:
+        return {}
 
 
 @app.route('/manager', methods=['GET', 'POST'])
