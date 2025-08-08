@@ -140,12 +140,35 @@ class times():
             if len(clean[0]) == 5:
                 data["fuel"]["time"] = clean[0][4]
                 data["fuel"]["number"] = clean[0][1]
+                data["fuel"]["number"] = data["fuel"]["number"][1:] if str(
+                    data["fuel"]["number"]).startswith("0") else data["fuel"]["number"]
+                data["fuel"]["number"] = data["fuel"]["number"][1:] if str(
+                    data["fuel"]["number"]).startswith("0") else data["fuel"]["number"]
                 data["fuel"]["uni"] = clean[0][3]
+                if len(data["fuel"]["uni"] ) >= 35:
+                    uni = data["fuel"]["uni"].split(" ")
+                    uniiii = ""
+                    for i in uni:
+                        if len(uniiii) < 35:
+                            uniiii += i + " "
+                    data["fuel"]["uni"] = uniiii.strip()
 
             if len(clean[1]) == 5:
                 data["electric"]["time"] = clean[1][4]
                 data["electric"]["number"] = clean[1][1]
+                data["electric"]["number"] = data["electric"]["number"][1:] if str(
+                    data["electric"]["number"]).startswith("0") else data["electric"]["number"]
+                data["electric"]["number"] = data["electric"]["number"][1:] if str(
+                    data["electric"]["number"]).startswith("0") else data["electric"]["number"]
                 data["electric"]["uni"] = clean[1][3]
+                if len(data["electric"]["uni"]) >= 35:
+                    uni = data["electric"]["uni"].split(" ")
+                    uniiii = ""
+                    for i in uni:
+                        if len(uniiii) < 35:
+                            uniiii += i + " "
+                    data["electric"]["uni"] = uniiii.strip()
+
         elif race == "endurance":
             list = self.readEndurance()
 
