@@ -57,6 +57,7 @@ class times():
         data = df.values.tolist()[2:]
         clean_data = []
         for team in data:
+            print(team)
             team.pop(0)
             team.pop(0)
             vehicle = team.pop(3).lower()
@@ -208,4 +209,4 @@ class times():
 
 
 if __name__ == "__main__":
-    times().readSkidpad("combustion&electric")
+    times().readEndurance('driverless')

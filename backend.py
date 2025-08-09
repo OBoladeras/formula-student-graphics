@@ -145,7 +145,7 @@ class times():
                 data["fuel"]["number"] = data["fuel"]["number"][1:] if str(
                     data["fuel"]["number"]).startswith("0") else data["fuel"]["number"]
                 data["fuel"]["uni"] = clean[0][3]
-                if len(data["fuel"]["uni"] ) >= 35:
+                if len(data["fuel"]["uni"]) >= 35:
                     uni = data["fuel"]["uni"].split(" ")
                     uniiii = ""
                     for i in uni:
