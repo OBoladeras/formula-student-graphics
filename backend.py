@@ -28,8 +28,14 @@ class times():
 
         df.dropna(how='all', axis=1, inplace=True)
         df.dropna(how='all', axis=0, inplace=True)
+        
+        df.iloc[:, 3] = df.iloc[:, 3].astype(str).str.lstrip('0')
+        df.iloc[:, 3] = df.iloc[:, 3].replace('', '0')
 
-        return df.values.tolist()[2:]
+
+        data = df.values.tolist()[2:]
+        print(data)
+        return data
 
     def readDlAutocross(self) -> list:
         url = "http://www.pde-racing.com/tol/temps1434.asp"
@@ -50,7 +56,14 @@ class times():
         df.dropna(how='all', axis=1, inplace=True)
         df.dropna(how='all', axis=0, inplace=True)
 
-        print(df.values.tolist()[2:])
+        df.iloc[:, 2] = df.iloc[:, 2].astype(str).str.lstrip('0')
+        df.iloc[:, 2] = df.iloc[:, 2].replace('', '0')
+
+        # Convert back to list and skip the first two rows
+        result = df.values.tolist()[2:]
+        print(result)
+        return result
+
 
     def bestTime(self, race: str) -> dict:
         def split_first_last_hyphen(s):
@@ -278,4 +291,4 @@ class times():
 
 
 if __name__ == "__main__":
-    times().readDlAutocross()
+    times().readEndurance()
