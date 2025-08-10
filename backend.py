@@ -1,6 +1,4 @@
-import os
 import csv
-import json
 import html
 import requests
 import pandas as pd
@@ -13,7 +11,7 @@ class times():
         pass
 
     def readEndurance(self) -> list:
-        url = "http://www.pde-racing.com/tol/temps1434.asp"
+        url = "http://www.pde-racing.com/tol/temps1594.asp"
 
         response = requests.get(url)
         decoded_data = html.unescape(response.text)
