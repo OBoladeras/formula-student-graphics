@@ -82,7 +82,7 @@ class times():
             if category != "driverless":
                 team.insert(2, f"static/cars/{team[1]}.png")
             else:
-                #                team[4] = team[4].split('-')[1]
+                # team[4] = team[4].split('-')[1]
                 team.insert(2, f"static/cars/{team[1].split('-')[0]}.png")
             team.pop(4)
             clean_data.append(team)

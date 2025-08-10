@@ -34,8 +34,12 @@ class times():
 
 
         data = df.values.tolist()[2:]
-        print(data)
-        return data
+        finals = []
+        for i in data:
+            if i[3] in ["477", "431", "94", "426"]:
+                finals.append(i)
+
+        return finals
 
     def readDlAutocross(self) -> list:
         url = "http://www.pde-racing.com/tol/temps1434.asp"
@@ -63,7 +67,6 @@ class times():
         result = df.values.tolist()[2:]
         print(result)
         return result
-
 
     def bestTime(self, race: str) -> dict:
         def split_first_last_hyphen(s):
